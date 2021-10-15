@@ -359,3 +359,8 @@ variable "cognitive_services" {
   description = "Configuration object - Cognitive Service Resource "
   default     = {}
 }
+variable "event_grid_topic" {
+   description = "Configuration object - Event Grid Topic"
+   default = {}
+  
+}
