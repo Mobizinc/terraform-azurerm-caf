@@ -1,11 +1,15 @@
 security_center = {
-    email               = "contact@example.com"
-    phone               = "+1-555-555-5555"
-    alert_notifications = "true"
-    alerts_to_admins    = "true"
+    # contact = {
+    #     email               = "contact@example.com"
+    #     phone               = "+1-555-555-5555"
+    #     alert_notifications = "true"
+    #     alerts_to_admins    = "true"
+    # }
     auto_provision      = "On"
-    setting_name        = "MCAS"
-    enabled             = "true"
+    settings = {
+        setting_name        = "MCAS"
+        enabled             = "true"
+    }
     policy = {
     
      asp_example1 = {
