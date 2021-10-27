@@ -190,7 +190,9 @@ locals {
   cognitive_services = {
     cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
   }
-
+  messaging = {
+    notification_hub_namespaces = try(var.messaging.notification_hub_namespaces , {})
+  }
   networking = {
     application_gateway_applications                        = try(var.networking.application_gateway_applications, {})
     application_gateway_applications_v1                     = try(var.networking.application_gateway_applications_v1, {})

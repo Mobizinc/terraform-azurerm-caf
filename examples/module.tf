@@ -123,6 +123,9 @@ module "example" {
     postgresql_servers                 = var.postgresql_servers
     synapse_workspaces                 = var.synapse_workspaces
   }
+  messaging = {
+    notification_hub = var.notification_hub_namespaces
+  }
   networking = {
     application_gateway_applications                        = var.application_gateway_applications
     application_gateway_applications_v1                     = var.application_gateway_applications_v1
