@@ -12,7 +12,7 @@ resource_groups = {
 }
 
 notification_hub_namespaces = {
-  nhub1 = {
+  nhubname1example = {
      name = "nhub1example"
      resource_group_key = "nhub_example"
      namespace_type     = "NotificationHub"
@@ -21,7 +21,7 @@ notification_hub_namespaces = {
        name = "something"
     }
   }
-  nhub2 = {
+  nhubname2example = {
      name = "nhub2example"
      resource_group_key = "nhub_example"
      namespace_type     = "NotificationHub"
@@ -31,4 +31,18 @@ notification_hub_namespaces = {
     }
   }
 
+}
+
+
+notification_hub = {
+  nhub1example {
+    name = "nhubexample"
+    namespace_key = "nhubname1example"
+    resource_group_key = "nhub_example"
+  }
+  nhub2example {
+    name = "nhubexample"
+    namespace_key = "nhubname1example"
+    resource_group_key = "nhub_example"
+  }
 }

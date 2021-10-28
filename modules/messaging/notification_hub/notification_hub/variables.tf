@@ -4,6 +4,9 @@ variable "settings" {
 variable "resource_group_name" {
   default = {}
 }
+variable "name" {
+  default = {}
+}
 variable "location" {
   default = {}
 }
