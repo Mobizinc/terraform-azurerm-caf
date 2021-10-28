@@ -126,6 +126,7 @@ module "example" {
   messaging = {
     notification_hub_namespaces = var.notification_hub_namespaces
     notification_hub = var.notification_hub
+    notification_hub_authorization_rule = var.notification_hub_authorization_rule
   }
   networking = {
     application_gateway_applications                        = var.application_gateway_applications

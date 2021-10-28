@@ -660,3 +660,6 @@ variable "notification_hub_namespaces" {
 variable "notification_hub" {
   default = {}
 }
+variable "notification_hub_authorization_rule" {
+  default = {}
+}

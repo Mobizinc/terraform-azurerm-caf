@@ -46,3 +46,16 @@ notification_hub = {
     resource_group_key = "nhub_example"
   }
 }
+
+notification_hub_authorization_rule = {
+  nhubar1example = {
+    name                  = "management-auth-rule"
+    notification_hub_name = "nhubexample"
+    namespace_name        = "nhub1example"
+    resource_group_name   = "nhub_example"
+    manage                = "true"
+    send                  = "true"
+    listen                = "true"
+      
+  }
+}
