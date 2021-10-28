@@ -192,6 +192,7 @@ locals {
   }
   messaging = {
     notification_hub_namespaces = try(var.messaging.notification_hub_namespaces , {})
+    notification_hub = try(var.messaging.notification_hub , {})
   }
   networking = {
     application_gateway_applications                        = try(var.networking.application_gateway_applications, {})

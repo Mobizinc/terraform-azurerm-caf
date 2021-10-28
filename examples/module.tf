@@ -124,7 +124,8 @@ module "example" {
     synapse_workspaces                 = var.synapse_workspaces
   }
   messaging = {
-    notification_hub = var.notification_hub_namespaces
+    notification_hub_namespaces = var.notification_hub_namespaces
+    notification_hub = var.notification_hub
   }
   networking = {
     application_gateway_applications                        = var.application_gateway_applications

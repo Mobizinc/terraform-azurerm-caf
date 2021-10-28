@@ -657,3 +657,6 @@ variable "private_dns_vnet_links" {
 variable "notification_hub_namespaces" {
   default = {}
 }
+variable "notification_hub" {
+  default = {}
+}
