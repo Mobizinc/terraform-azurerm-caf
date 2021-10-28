@@ -35,14 +35,14 @@ notification_hub_namespaces = {
 
 
 notification_hub = {
-  nhub1example {
+  nhub1example = {
     name = "nhubexample"
-    namespace_key = "nhubname1example"
+    namespace_name = "nhub1example"
     resource_group_key = "nhub_example"
   }
-  nhub2example {
+  nhub2example = {
     name = "nhubexample"
-    namespace_key = "nhubname1example"
+    namespace_name = "nhubname2example"
     resource_group_key = "nhub_example"
   }
 }
