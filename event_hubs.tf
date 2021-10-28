@@ -100,6 +100,10 @@ module "event_hubs" {
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
 }
 
+output "event_hubs" {
+  value = module.event_hubs
+}
+
 module "event_hub_auth_rules" {
   source   = "./modules/event_hubs/hubs/auth_rules"
   for_each = try(var.event_hub_auth_rules, {})
@@ -115,6 +119,9 @@ module "event_hub_auth_rules" {
     module.event_hub_namespaces,
     module.event_hubs
   ]
+}
+output "event_hub_auth_rules" {
+  value = module.event_hub_auth_rules
 }
 
 module "event_hub_consumer_groups" {

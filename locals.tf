@@ -235,14 +235,17 @@ locals {
   object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azurerm_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))
 
   security = {
-    disk_encryption_sets          = try(var.security.disk_encryption_sets, {})
-    dynamic_keyvault_secrets      = try(var.security.dynamic_keyvault_secrets, {})
-    keyvault_certificate_issuers  = try(var.security.keyvault_certificate_issuers, {})
-    keyvault_certificate_requests = try(var.security.keyvault_certificate_requests, {})
-    keyvault_certificates         = try(var.security.keyvault_certificates, {})
-    keyvault_keys                 = try(var.security.keyvault_keys, {})
-    lighthouse_definitions        = try(var.security.lighthouse_definitions, {})
-    security_center               = try(var.security.security_center, {})
+    disk_encryption_sets                 = try(var.security.disk_encryption_sets, {})
+    dynamic_keyvault_secrets             = try(var.security.dynamic_keyvault_secrets, {})
+    keyvault_certificate_issuers         = try(var.security.keyvault_certificate_issuers, {})
+    keyvault_certificate_requests        = try(var.security.keyvault_certificate_requests, {})
+    keyvault_certificates                = try(var.security.keyvault_certificates, {})
+    keyvault_keys                        = try(var.security.keyvault_keys, {})
+    lighthouse_definitions               = try(var.security.lighthouse_definitions, {})
+    security_center_policy               = try(var.security.security_center_policy, {})
+    security_center_settings             = try(var.security.security_center_settings, {})
+    security_center_subscription_pricing = try(var.security.security_center_subscription_pricing, {})
+    security_center_automation           = try(var.security.security_center_automation, {})
   }
 
   shared_services = {

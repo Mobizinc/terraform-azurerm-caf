@@ -1,5 +1,5 @@
-resource "azurerm_security_center_assessment_policy" "example" {
-  display_name        = var.display_name
-  severity            = var.settings.severity
-  description         = var.settings.description
+resource "azurerm_security_center_assessment_policy" "policy" {
+  display_name = var.settings.name
+  severity     = var.settings.severity
+  description  = var.settings.description
 }
