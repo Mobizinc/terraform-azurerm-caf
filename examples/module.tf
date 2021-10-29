@@ -181,6 +181,7 @@ module "example" {
     security_center_subscription_pricing = var.security_center_subscription_pricing
     security_center_settings             = var.security_center_settings
     security_center_automation           = var.security_center_automation
+    security_center_assessment           = var.security_center_assessment
   }
   shared_services = {
     consumption_budgets      = var.consumption_budgets

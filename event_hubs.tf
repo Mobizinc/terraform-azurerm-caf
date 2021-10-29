@@ -31,6 +31,10 @@ module "event_hub_namespace_auth_rules" {
   ]
 }
 
+output "event_hub_namespace_auth_rules" {
+  value = module.event_hub_namespace_auth_rules
+}
+
 module "event_hub_namespaces_diagnostics" {
   source   = "./modules/diagnostics"
   for_each = var.event_hub_namespaces

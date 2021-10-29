@@ -21,3 +21,7 @@ output "location" {
 output "event_hubs" {
   value = module.event_hubs
 }
+
+output "connection_string" {
+  value = azurerm_eventhub_namespace.evh.default_primary_connection_string
+}

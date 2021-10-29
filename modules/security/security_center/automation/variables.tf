@@ -13,7 +13,7 @@ variable "settings" {
 variable "event_hub" {
   default     = {}
 }
-variable "event_hub_auth_rules" {
+variable "event_hub_namespaces" {
   default     = {}
 }
 variable "trigger_url" {
@@ -23,5 +23,8 @@ variable "log_analytics" {
   default     = {}
 }
 variable "client_config" {
+  default     = {}
+}
+variable "subscriptions" {
   default     = {}
 }

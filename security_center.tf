@@ -1,12 +1,13 @@
-# module "security_center_assessment" {
-#   source     = "./modules/security/security_center/assessment"
-#   count      = try(local.security.security_center_automation, null) == null ? 0 : 1
-#   depends_on = [module.security_center_assessment_policy]
+module "security_center_assessment" {
+  source     = "./modules/security/security_center/assessment"
+  #for_each   = local.security.security_center_assessment
+  count      = try(local.security.security_center_assessment, null) == null ? 0 : 1
+  depends_on = [module.security_center_assessment_policy]
 
-#   assessment_policy_id = module.security_center_assessment_policy.id
-#   target_resource_id   = local.combined_objects_virtual_machine_scale_sets.__.id
-#   code                 = try(local.security.security_center.assessment.code, {})
-# }
+  assessment_policy_id = module.security_center_assessment_policy[local.security.security_center_assessment.assessment_policy].id
+  target_resource_id   = local.combined_objects_virtual_machine_scale_sets[local.client_config.landingzone_key][local.security.security_center_assessment.target_resource].id
+  code                 = local.security.security_center_assessment.status.code
+}
 
 module "security_center_assessment_policy" {
   source   = "./modules/security/security_center/assessment_policy"
@@ -57,8 +58,9 @@ module "security_center_automation" {
   location             = try(local.global_settings.regions[each.value.region], local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location)
   resource_group_name  = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   event_hub            = local.combined_objects_event_hub
-  event_hub_auth_rules = local.combined_objects_event_hub_auth_rules
-  trigger_url          = local.combined_objects_logic_app_trigger_http_request
+  event_hub_namespaces = local.combined_objects_event_hub_namespaces
+  trigger_url          = local.combined_objects_logic_app_workflow #combined_objects_logic_app_trigger_http_request
   log_analytics        = local.combined_objects_log_analytics
   client_config        = local.client_config.landingzone_key
+  subscriptions        = local.combined_objects_subscriptions
 }

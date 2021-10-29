@@ -613,3 +613,6 @@ variable "security_center_settings" {
 variable "security_center_automation" {
   default = {}
 }
+variable "security_center_assessment" {
+  default = {}
+}

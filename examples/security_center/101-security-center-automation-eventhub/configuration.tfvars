@@ -46,42 +46,38 @@ event_hub_auth_rules = {
 }
 
 security_center_automation = {
-        aut1 = {
-            resource_group_key = "evh_examples"
-            action = {
-                action1 = {
-                type         = "EventHub"
-                resource_id  = "ev"
-                }
-                action2 = {
-                type         = "EventHub"
-                resource_id  = "ev"
-                }
-            }
-            source = {
-              event_source = "Alerts"
-              rule_set = {
-                rule1 = {
-                  property_path  = "properties.metadata.severity"
-                  operator       = "Equals"
-                  expected_value = "High"
-                  property_type  = "String"
-                }
-                rule2 = {
-                  property_path  = "properties.metadata.severity"
-                  operator       = "Contains"
-                  expected_value = "High"
-                  property_type  = "Boolean"
-                }
-              }
-            }
+  aut1 = {
+      resource_group_key = "evh_examples"
+      action = {
+          action1 = {
+          type         = "EventHub"
+          resource_id  = "evh1"
+          connection_string = "siem"
+          }
+          action2 = {
+          type         = "EventHub"
+          resource_id  = "evh1"
+          connection_string = "siem"
+          }
+      }
+      source = {
+        event_source = "Alerts"
+        rule_set = {
+          rule1 = {
+            property_path  = "properties.metadata.severity"
+            operator       = "Equals"
+            expected_value = "High"
+            property_type  = "String"
+          }
+          rule2 = {
+            property_path  = "properties.metadata.severity"
+            operator       = "Contains"
+            expected_value = "High"
+            property_type  = "Boolean"
+          }
         }
-
-      #  aut2 = {
-      #     type = "logic_app"
-      #      resource_key = "logicapp_example"
-      #  }
-
+      }
+  }
 }
 
 security_center_subscription_pricing = {
