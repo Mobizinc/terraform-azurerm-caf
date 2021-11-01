@@ -16,6 +16,7 @@ output "notification_hub_namespace" {
 module "notification_hub" {
   source   = "./modules/messaging/notification_hub/notification_hub"
   for_each = local.messaging.notification_hub
+  depends_on = [module.notification_hub_namespaces]
 
   settings            = each.value
   resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
@@ -30,7 +31,8 @@ output "notification_hub" {
 module "notification_hub_authorization_rule" {
   source   = "./modules/messaging/notification_hub/notification_hub_authorization_rule"
   for_each = local.messaging.notification_hub_authorization_rule
-
+  depends_on = [module.notification_hub,module.notification_hub_namespaces]
+  
   settings            = each.value
   resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   
