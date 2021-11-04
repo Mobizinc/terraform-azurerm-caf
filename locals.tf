@@ -247,6 +247,7 @@ locals {
     security_center_subscription_pricing = try(var.security.security_center_subscription_pricing, {})
     security_center_automation           = try(var.security.security_center_automation, {})
     security_center_assessment           = try(var.security.security_center_assessment, {})
+    security_center_workspace            = try(var.security.security_center_workspace, {})
   }
 
   shared_services = {

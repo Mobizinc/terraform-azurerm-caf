@@ -38,40 +38,41 @@ SCHEMA
 }
 
 security_center_automation = {
-        aut1 = {
-            resource_group_key = "evh_examples"
-            action = {
-                action1 = {
-                type         = "LogicApp"
-                resource_id  = "applogic1"
-                }
-                action2 = {
-                type         = "LogicApp"
-                resource_id  = "trigger_http_request1"
-                }
-            }
-            source = {
-              event_source = "Alerts"
-              rule_set = {
-                rule1 = {
-                  property_path  = "properties.metadata.severity"
-                  operator       = "Equals"
-                  expected_value = "High"
-                  property_type  = "String"
-                }
-                rule2 = {
-                  property_path  = "properties.metadata.severity"
-                  operator       = "Contains"
-                  expected_value = "High"
-                  property_type  = "Boolean"
-                }
-              }
-            }
+  aut1 = {
+      resource_group_key = "evh_examples"
+      action = {
+          action1 = {
+          type         = "LogicApp"
+          resource_id  = "applogic1"
+          }
+          action2 = {
+          type         = "LogicApp"
+          resource_id  = "applogic1"
+          }
+      }
+      source = {
+        event_source = "Alerts"
+        rule_set = {
+          rule1 = {
+            property_path  = "properties.metadata.severity"
+            operator       = "Equals"
+            expected_value = "High"
+            property_type  = "String"
+          }
+          rule2 = {
+            property_path  = "properties.metadata.severity"
+            operator       = "Contains"
+            expected_value = "High"
+            property_type  = "Boolean"
+          }
         }
-
-      #  aut2 = {
-      #     type = "logic_app"
-      #      resource_key = "logicapp_example"
-      #  }
-
+      }
+      scopes = {
+        subscription = {
+          key    = ""
+          lz_key = "" # optional
+          id     = "/subscriptions/7b822bcb-9762-46f6-8877-d5b0212572ce"
+        }
+      }
+  }
 }

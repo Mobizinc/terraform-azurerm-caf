@@ -256,8 +256,3 @@ security_center_assessment = {
     code = "Healthy"
   }
 }
-
-security_center_subscription_pricing = {
-  tier          = "Standard"
-  resource_type = "VirtualMachines"
-}

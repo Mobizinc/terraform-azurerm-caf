@@ -1,12 +1,11 @@
 module "security_center_assessment" {
   source     = "./modules/security/security_center/assessment"
-  #for_each   = local.security.security_center_assessment
   count      = try(local.security.security_center_assessment, null) == null ? 0 : 1
   depends_on = [module.security_center_assessment_policy]
 
-  assessment_policy_id = module.security_center_assessment_policy[local.security.security_center_assessment.assessment_policy].id
-  target_resource_id   = local.combined_objects_virtual_machine_scale_sets[local.client_config.landingzone_key][local.security.security_center_assessment.target_resource].id
-  code                 = local.security.security_center_assessment.status.code
+  assessment_policy_id = try(module.security_center_assessment_policy[local.security.security_center_assessment.assessment_policy].id, null)
+  target_resource_id   = try(local.combined_objects_virtual_machine_scale_sets[local.client_config.landingzone_key][local.security.security_center_assessment.target_resource].id, null)
+  code                 = try(local.security.security_center_assessment.status.code, null)
 }
 
 module "security_center_assessment_policy" {
@@ -52,15 +51,27 @@ module "security_center_subscription_pricing" {
 module "security_center_automation" {
   source               = "./modules/security/security_center/automation"
   for_each             = try(local.security.security_center_automation, {})
-
+  
   name                 = each.key
+  global_settings      = local.global_settings
   settings             = each.value
   location             = try(local.global_settings.regions[each.value.region], local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location)
   resource_group_name  = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   event_hub            = local.combined_objects_event_hub
   event_hub_namespaces = local.combined_objects_event_hub_namespaces
-  trigger_url          = local.combined_objects_logic_app_workflow #combined_objects_logic_app_trigger_http_request
+  logic_app_workflow   = local.combined_objects_logic_app_workflow
+  trigger_url          = local.combined_objects_logic_app_trigger_http_request
   log_analytics        = local.combined_objects_log_analytics
   client_config        = local.client_config.landingzone_key
   subscriptions        = local.combined_objects_subscriptions
+}
+
+module "security_center_workspace" {
+  source        = "./modules/security/security_center/workspace"
+  count         = try(local.security.security_center_workspace, null) == null ? 0 : 1
+
+  workspace_id  = module.log_analytics[local.security.security_center_workspace.workspace].id
+  subscriptions = local.combined_objects_subscriptions
+  settings      = local.security.security_center_workspace
+  client_config = local.client_config.landingzone_key
 }

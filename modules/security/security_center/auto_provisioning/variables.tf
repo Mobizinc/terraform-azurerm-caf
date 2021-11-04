@@ -1,3 +1,3 @@
 variable "auto_provision" {
-  default     = null
+  default = null
 }

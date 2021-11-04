@@ -616,3 +616,6 @@ variable "security_center_automation" {
 variable "security_center_assessment" {
   default = {}
 }
+variable "security_center_workspace" {
+  default = {}
+}

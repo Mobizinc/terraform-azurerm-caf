@@ -1,3 +1,6 @@
+variable "global_settings" {
+  default     = null
+}
 variable "name" {
   default     = null
 }
@@ -16,6 +19,9 @@ variable "event_hub" {
 variable "event_hub_namespaces" {
   default     = {}
 }
+variable "logic_app_workflow" {
+  default     = null
+}
 variable "trigger_url" {
   default     = {}
 }
@@ -26,5 +32,8 @@ variable "client_config" {
   default     = {}
 }
 variable "subscriptions" {
+  default     = {}
+}
+variable "logic_app_id" {
   default     = {}
 }
