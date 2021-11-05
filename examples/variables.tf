@@ -601,3 +601,21 @@ variable "logic_app_trigger_custom" {
 variable "private_dns_vnet_links" {
   default = {}
 }
+variable "security_center_policy" {
+  default = {}
+}
+variable "security_center_subscription_pricing" {
+  default = {}
+}
+variable "security_center_settings" {
+  default = {}
+}
+variable "security_center_automation" {
+  default = {}
+}
+variable "security_center_assessment" {
+  default = {}
+}
+variable "security_center_workspace" {
+  default = {}
+}

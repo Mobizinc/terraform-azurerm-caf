@@ -1,4 +1,4 @@
-resource "azurerm_security_center_contact" "example" {
+resource "azurerm_security_center_contact" "contact" {
   email               = var.email
   phone               = var.phone
   alert_notifications = var.alert_notifications 
