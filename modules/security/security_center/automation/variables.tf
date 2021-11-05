@@ -34,6 +34,3 @@ variable "client_config" {
 variable "subscriptions" {
   default     = {}
 }
-variable "logic_app_id" {
-  default     = {}
-}

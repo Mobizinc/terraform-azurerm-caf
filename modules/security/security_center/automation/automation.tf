@@ -1,16 +1,5 @@
-# resource "azurecaf_name" "caf_name_automation" {
-
-#   name          = var.name
-#   resource_type = "azurerm_security_center_automation"
-#   prefixes      = var.global_settings.prefixes
-#   random_length = var.global_settings.random_length
-#   clean_input   = true
-#   passthrough   = var.global_settings.passthrough
-#   use_slug      = var.global_settings.use_slug
-# }
-
 resource "azurerm_security_center_automation" "automation" {
-  name                = var.name #azurecaf_name.caf_name_automation.result
+  name                = var.name
   location            = var.location
   resource_group_name = var.resource_group_name
 
@@ -19,7 +8,7 @@ resource "azurerm_security_center_automation" "automation" {
     content {
     type              = action.value.type
     resource_id       = action.value.type == "EventHub" ? var.event_hub_namespaces[try(var.settings.lz_key, var.client_config)][action.value.resource_id].id : (action.value.type == "LogicApp" ? var.logic_app_workflow[try(var.settings.lz_key, var.client_config)][action.value.resource_id].id : var.log_analytics[try(var.settings.lz_key, var.client_config)][action.value.resource_id].id)
-    connection_string = action.value.type == "EventHub" ? var.event_hub_namespaces[try(var.settings.lz_key, var.client_config)][action.value.resource_id].connection_string : null
+    connection_string = action.value.type == "EventHub" ? var.event_hub_namespaces[try(var.settings.lz_key, var.client_config)][action.value.resource_id].primary_connection_string : null
     trigger_url       = action.value.type == "LogicApp" ? try(var.trigger_url[try(var.settings.lz_key, var.client_config)][action.value.resource_id].callback_url, null) : null
     }
   }

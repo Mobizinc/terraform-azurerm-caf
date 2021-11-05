@@ -13,7 +13,6 @@ resource_groups = {
 
 log_analytics = {
   law1 = {
-    #location            = "region1"
     name               = "securitycenterworkspaceexample"
     resource_group_key = "evh_examples"
   }

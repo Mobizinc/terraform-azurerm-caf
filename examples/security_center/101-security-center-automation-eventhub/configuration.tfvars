@@ -52,12 +52,12 @@ security_center_automation = {
           action1 = {
           type         = "EventHub"
           resource_id  = "evh1"
-          connection_string = "siem"
+          primary_connection_string = "siem"
           }
           action2 = {
           type         = "EventHub"
           resource_id  = "evh1"
-          connection_string = "siem"
+          primary_connection_string = "siem"
           }
       }
       source = {
