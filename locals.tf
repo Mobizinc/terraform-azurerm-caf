@@ -281,4 +281,8 @@ locals {
     virtual_machines = try(var.enable.virtual_machines, true)
   }
 
+  communication_services = {
+    communication_services = try(var.communication_services, {})
+  }
+
 }
