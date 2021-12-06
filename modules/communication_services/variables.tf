@@ -7,3 +7,9 @@ variable "global_settings" {
 variable "settings" {
   default = null
 }
+variable "diagnostics" {
+  default = null
+}
+variable "location" {
+  default = null
+}

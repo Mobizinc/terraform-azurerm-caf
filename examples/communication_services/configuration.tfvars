@@ -17,10 +17,24 @@ communication_services = {
     name               = "acs1"
     resource_group_key = "acs"
     data_location      = "United States"
+    diagnostic_profiles = {
+      central_logs_region1 = {
+        definition_key   = "azure_communication_service"
+        destination_type = "log_analytics"
+        destination_key  = "central_logs"
+      }
+    }
   }
   acs2 = {
     name               = "acs2"
     resource_group_key = "acs"
     data_location      = "Europe"
+    diagnostic_profiles = {
+      central_logs_region1 = {
+        definition_key   = "azure_communication_service"
+        destination_type = "log_analytics"
+        destination_key  = "central_logs"
+      }
+    }
   }
 }
