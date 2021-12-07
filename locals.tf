@@ -75,6 +75,7 @@ locals {
     container_groups                    = try(var.compute.container_groups, {})
     dedicated_hosts                     = try(var.compute.dedicated_hosts, {})
     dedicated_host_groups               = try(var.compute.dedicated_host_groups, {})
+    machine_learning_compute_instance   = try(var.compute.machine_learning_compute_instance, {})
     proximity_placement_groups          = try(var.compute.proximity_placement_groups, {})
     vmware_clusters                     = try(var.compute.vmware_clusters, {})
     vmware_private_clouds               = try(var.compute.vmware_private_clouds, {})
@@ -91,6 +92,8 @@ locals {
     app_config                         = try(var.database.app_config, {})
     azurerm_redis_caches               = try(var.database.azurerm_redis_caches, {})
     cosmos_dbs                         = try(var.database.cosmos_dbs, {})
+    database_migration_services        = try(var.database.database_migration_services, {})
+    database_migration_projects        = try(var.database.database_migration_projects, {})
     databricks_workspaces              = try(var.database.databricks_workspaces, {})
     machine_learning_workspaces        = try(var.database.machine_learning_workspaces, {})
     mariadb_databases                  = try(var.database.mariadb_databases, {})
@@ -130,6 +133,11 @@ locals {
     }
     linked_services = {
       azure_blob_storage = try(var.data_factory.linked_services.azure_blob_storage, {})
+      cosmosdb           = try(var.data_factory.linked_services.cosmosdb, {})
+      web                = try(var.data_factory.linked_services.web, {})
+      mysql              = try(var.data_factory.linked_services.mysql, {})
+      postgresql         = try(var.data_factory.linked_services.postgresql, {})
+      sql_server         = try(var.data_factory.linked_services.sql_server, {})
     }
   }
 
@@ -208,6 +216,8 @@ locals {
     express_route_circuits                                  = try(var.networking.express_route_circuits, {})
     front_door_waf_policies                                 = try(var.networking.front_door_waf_policies, {})
     front_doors                                             = try(var.networking.front_doors, {})
+    frontdoor_rules_engine                                  = try(var.networking.frontdoor_rules_engine, {})
+    frontdoor_custom_https_configuration                    = try(var.networking.frontdoor_custom_https_configuration, {})
     ip_groups                                               = try(var.networking.ip_groups, {})
     load_balancers                                          = try(var.networking.load_balancers, {})
     local_network_gateways                                  = try(var.networking.local_network_gateways, {})
@@ -228,6 +238,7 @@ locals {
     virtual_wans                                            = try(var.networking.virtual_wans, {})
     vnet_peerings                                           = try(var.networking.vnet_peerings, {})
     vnets                                                   = try(var.networking.vnets, {})
+    virtual_subnets                                         = try(var.networking.virtual_subnets, {})
     vpn_gateway_connections                                 = try(var.networking.vpn_gateway_connections, {})
     vpn_sites                                               = try(var.networking.vpn_sites, {})
   }
@@ -260,6 +271,7 @@ locals {
     netapp_accounts        = try(var.storage.netapp_accounts, {})
     storage_account_blobs  = try(var.storage.storage_account_blobs, {})
     storage_account_queues = try(var.storage.storage_account_queues, {})
+    storage_containers     = try(var.storage.storage_containers, {})
   }
 
   webapp = {
