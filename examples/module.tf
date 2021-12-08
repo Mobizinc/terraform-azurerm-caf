@@ -76,6 +76,7 @@ module "example" {
   }
 
   compute = {
+    aks_proxy                           = var.aks_proxy
     aks_clusters                        = var.aks_clusters
     availability_sets                   = var.availability_sets
     azure_container_registries          = var.azure_container_registries

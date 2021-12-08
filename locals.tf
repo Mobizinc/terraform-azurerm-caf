@@ -68,6 +68,7 @@ locals {
   }, var.cloud)
 
   compute = {
+    aks_proxy                           = try(var.compute.aks_proxy, {})
     aks_clusters                        = try(var.compute.aks_clusters, {})
     availability_sets                   = try(var.compute.availability_sets, {})
     azure_container_registries          = try(var.compute.azure_container_registries, {})

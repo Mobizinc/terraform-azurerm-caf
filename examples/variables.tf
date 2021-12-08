@@ -663,3 +663,6 @@ variable "notification_hub" {
 variable "notification_hub_authorization_rule" {
   default = {}
 }
+variable "aks_proxy" {
+  default = {}
+}
