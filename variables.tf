@@ -359,3 +359,7 @@ variable "cognitive_services" {
   description = "Configuration object - Cognitive Service Resource "
   default     = {}
 }
+variable "marketplace_agreements" {
+  description = "Marketplace Agreement"
+  default = {}
+}
