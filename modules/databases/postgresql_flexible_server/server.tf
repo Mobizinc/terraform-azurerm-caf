@@ -6,8 +6,8 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
   version             = var.settings.version
   sku_name            = var.settings.sku_name
   zone                = try(var.settings.zone, "1")
-  delegated_subnet_id = var.delegated_subnet_id
-  private_dns_zone_id = var.private_dns_zone_id
+  delegated_subnet_id = var.subnet_id
+  private_dns_zone_id = var.private_dns
   administrator_login          = var.settings.administrator_login
   administrator_login_password = try(var.settings.administrator_login_password, azurerm_key_vault_secret.postgresql_admin_password.0.value)
 
