@@ -13,14 +13,15 @@ variable "location" {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   type        = string
 }
-variable "keyvault_id" {}
-variable "vnets" {}
+//variable "keyvault_id" {}
+//variable "vnets" {}
 variable "subnet_id" {}
-variable "resource_groups" {}
+variable "subnet_name" {}
+
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = map(any)
 }
-variable "private_dns" {
+variable "private_dns_id" {
   default = {}
 }

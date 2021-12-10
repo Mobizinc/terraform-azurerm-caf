@@ -7,22 +7,22 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
   sku_name            = var.settings.sku_name
   zone                = try(var.settings.zone, "1")
   delegated_subnet_id = var.subnet_id
-  private_dns_zone_id = var.private_dns
+  private_dns_zone_id = var.private_dns_id
   administrator_login          = var.settings.administrator_login
-  administrator_login_password = try(var.settings.administrator_login_password, azurerm_key_vault_secret.postgresql_admin_password.0.value)
+  administrator_password = try(var.settings.administrator_login_password, null)
 
   storage_mb                        = try(var.settings.storage_mb, null)
   create_mode                       = try(var.settings.create_mode, "Default")
-  public_network_access_enabled     = try(var.settings.public_network_access_enabled, false)
+  
   tags                              = local.tags
 
 
 
 }
-
+/*
 # Generate postgresql server random admin password if not provided in the attribute administrator_login_password
 resource "random_password" "postgresql_admin" {
-  count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
+  count = try(var.settings.administrator_password, null) == null ? 1 : 0
 
   length           = 128
   special          = true
@@ -35,7 +35,7 @@ resource "random_password" "postgresql_admin" {
 resource "azurerm_key_vault_secret" "postgresql_admin_password" {
   count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
 
-  name         = format("%s-password", azurerm_postgresql_flexible_server.postgresql.result)
+  name         = format("%s-password", azurerm_postgresql_flexible_server.postgresql.name)
   value        = random_password.postgresql_admin.0.result
   key_vault_id = var.keyvault_id
 
@@ -45,7 +45,7 @@ resource "azurerm_key_vault_secret" "postgresql_admin_password" {
     ]
   }
 }
-
+*/
 
 
 
