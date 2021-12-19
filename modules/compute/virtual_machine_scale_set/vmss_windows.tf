@@ -27,18 +27,17 @@ resource "azurecaf_name" "windows_computer_name_prefix" {
 
 
 # Name of the Network Interface Cards
-resource "azurecaf_name" "windows_nic" {
-  for_each = local.os_type == "windows" ? var.settings.network_interfaces : {}
-
-  name          = try(each.value.name, null)
-  resource_type = "azurerm_network_interface"
-  prefixes      = var.global_settings.prefixes
-  random_length = var.global_settings.random_length
-  clean_input   = true
-  passthrough   = var.global_settings.passthrough
-  use_slug      = var.global_settings.use_slug
-}
-
+#resource "azurecaf_name" "windows_nic" {
+#  for_each = local.os_type == "windows" ? var.settings.network_interfaces : {}
+#
+#  name          = try(each.value.name, null)
+#  resource_type = "azurerm_network_interface"
+#  prefixes      = var.global_settings.prefixes
+#  random_length = var.global_settings.random_length
+#  clean_input   = true
+#  passthrough   = var.global_settings.passthrough
+#  use_slug      = var.global_settings.use_slug
+#}
 
 # Name for the OS disk
 resource "azurecaf_name" "os_disk_windows" {
@@ -82,22 +81,17 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
     for_each = try(var.settings.network_interfaces, {})
 
     content {
-      name                          = azurecaf_name.windows_nic[network_interface.key].result
+      name                          = try(network_interface.value.name, null)
       primary                       = try(network_interface.value.primary, false)
       enable_accelerated_networking = try(network_interface.value.enable_accelerated_networking, false)
       enable_ip_forwarding          = try(network_interface.value.enable_ip_forwarding, false)
       network_security_group_id     = try(network_interface.value.network_security_group_id, null)
 
       ip_configuration {
-        name    = azurecaf_name.windows_nic[network_interface.key].result
-        primary = try(network_interface.value.primary, false)
-        #subnet_id                                    = try(var.vnets[var.client_config.landingzone_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, var.vnets[network_interface.value.lz_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id)
-        subnet_id = coalesce(
-          try(network_interface.value.subnet_id, null),
-          try(var.vnets[var.client_config.landingzone_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, null),
-          try(var.vnets[network_interface.value.lz_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, null)
-        )
-        load_balancer_backend_address_pool_ids       = try(local.load_balancer_backend_address_pool_ids, null)
+        name                                         = try(network_interface.value.name, null)
+        primary                                      = try(network_interface.value.primary, false)
+        subnet_id                                    = try(var.vnets[var.client_config.landingzone_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, var.vnets[network_interface.value.lz_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id)
+        load_balancer_backend_address_pool_ids       = try([var.load_balancers[try(var.client_config.landingzone_key, network_interface.value.load_balancers.lz_key)][network_interface.value.load_balancers.lb_key].backend_address_pool_id], null)
         application_gateway_backend_address_pool_ids = try(local.application_gateway_backend_address_pool_ids, null)
         application_security_group_ids               = try(local.application_security_group_ids, null)
       }
