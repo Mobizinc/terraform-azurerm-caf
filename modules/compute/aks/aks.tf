@@ -355,7 +355,15 @@ resource "azurerm_kubernetes_cluster" "aks" {
       }
     }
   }
-
+  dynamic "http_proxy_config" {
+    for_each = try(var.settings.http_proxy_config[*], {})
+    content {
+      http_proxy     = try(http_proxy_config.value.http_proxy, null)
+      https_proxy    = try(http_proxy_config.value.https_proxy, null)
+      no_proxy       = try(http_proxy_config.value.no_proxy, null)
+           
+    }
+  }
   node_resource_group                 = azurecaf_name.rg_node.result
   private_cluster_enabled             = try(var.settings.private_cluster_enabled, null)
   private_dns_zone_id                 = try(var.private_dns_zone_id, null)
