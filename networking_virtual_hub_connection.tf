@@ -4,7 +4,7 @@
 # Virtual WAN peerings with vnets
 #
 #
-
+/*
 output "virtual_hub_connections" {
   value = azurerm_virtual_hub_connection.vhub_connection
 }
@@ -90,3 +90,4 @@ locals {
     }
   }
 }
+*/
