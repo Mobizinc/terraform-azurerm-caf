@@ -26,7 +26,6 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
 
   administrator_login    = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_username, "pgadmin") : null
   administrator_password = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_password, azurerm_key_vault_secret.postgresql_administrator_password.0.value) : null
-
   backup_retention_days = try(var.settings.backup_retention_days, null)
 
   dynamic "maintenance_window" {
