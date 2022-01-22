@@ -33,17 +33,17 @@ resource "azurecaf_name" "linux_computer_name_prefix" {
 }
 
 # Name of the Network Interface Cards
-resource "azurecaf_name" "linux_nic" {
-  for_each = local.os_type == "linux" ? var.settings.network_interfaces : {}
-
-  name          = try(each.value.name, null)
-  resource_type = "azurerm_network_interface"
-  prefixes      = var.global_settings.prefixes
-  random_length = var.global_settings.random_length
-  clean_input   = true
-  passthrough   = var.global_settings.passthrough
-  use_slug      = var.global_settings.use_slug
-}
+#resource "azurecaf_name" "linux_nic" {
+#  for_each = local.os_type == "linux" ? var.settings.network_interfaces : {}
+#
+#  name          = try(each.value.name, null)
+#  resource_type = "azurerm_network_interface"
+#  prefixes      = var.global_settings.prefixes
+#  random_length = var.global_settings.random_length
+#  clean_input   = true
+#  passthrough   = var.global_settings.passthrough
+#  use_slug      = var.global_settings.use_slug
+#}
 
 # Name for the OS disk
 resource "azurecaf_name" "os_disk_linux" {
@@ -62,6 +62,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   for_each = local.os_type == "linux" ? var.settings.vmss_settings : {}
 
   admin_username      = each.value.admin_username
+  admin_password      = each.value.disable_password_authentication == false ? each.value.admin_password : null
   instances           = each.value.instances
   location            = var.location
   name                = azurecaf_name.linux[each.key].result
@@ -70,7 +71,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   tags                = merge(local.tags, try(each.value.tags, null))
 
   computer_name_prefix            = azurecaf_name.linux_computer_name_prefix[each.key].result
-  custom_data                     = try(each.value.custom_data, null) == null ? null : filebase64(format("%s/%s", path.cwd, each.value.custom_data))
+  #custom_data                     = try(each.value.custom_data, null) == null ? null : filebase64(format("%s/%s", path.cwd, each.value.custom_data))
   disable_password_authentication = try(each.value.disable_password_authentication, true)
   eviction_policy                 = try(each.value.eviction_policy, null)
   max_bid_price                   = try(each.value.max_bid_price, null)
@@ -82,6 +83,11 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   zone_balance                    = try(each.value.zone_balance, null)
   zones                           = try(each.value.zones, null)
 
+custom_data = try(
+    local.dynamic_custom_data[each.value.custom_data][each.value.name],
+    try(filebase64(format("%s/%s", path.cwd, each.value.custom_data)), base64encode(each.value.custom_data)),
+    null
+  )
   dynamic "admin_ssh_key" {
     for_each = lookup(each.value, "disable_password_authentication", true) == true ? [1] : []
 
@@ -95,21 +101,21 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
     for_each = try(var.settings.network_interfaces, {})
 
     content {
-      name                          = azurecaf_name.linux_nic[network_interface.key].result
+      name                          = try(network_interface.value.name, null)
       primary                       = try(network_interface.value.primary, false)
       enable_accelerated_networking = try(network_interface.value.enable_accelerated_networking, false)
       enable_ip_forwarding          = try(network_interface.value.enable_ip_forwarding, false)
       network_security_group_id     = try(network_interface.value.network_security_group_id, null)
 
       ip_configuration {
-        name    = azurecaf_name.linux_nic[network_interface.key].result
+        name    = try(network_interface.value.name, null)
         primary = try(network_interface.value.primary, false)
         subnet_id = coalesce(
           try(network_interface.value.subnet_id, null),
           try(var.vnets[var.client_config.landingzone_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, null),
           try(var.vnets[network_interface.value.lz_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, null)
         )
-        load_balancer_backend_address_pool_ids       = try(local.load_balancer_backend_address_pool_ids, null)
+        load_balancer_backend_address_pool_ids       = try([var.load_balancers[try(var.client_config.landingzone_key, network_interface.value.load_balancers.lz_key)][network_interface.value.load_balancers.lb_key].backend_address_pool_id], null)
         application_gateway_backend_address_pool_ids = try(local.application_gateway_backend_address_pool_ids, null)
         application_security_group_ids               = try(local.application_security_group_ids, null)
       }
