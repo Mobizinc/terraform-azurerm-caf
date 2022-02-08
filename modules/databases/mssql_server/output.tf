@@ -29,3 +29,11 @@ output "resource_group_name" {
 output "location" {
   value = var.location
 }
+
+output "administrator_login_password" {
+  value = try(azurerm_mssql_server.mssql.administrator_login_password, null)
+}
+
+output "administrator_login" {
+  value = try(azurerm_mssql_server.mssql.administrator_login, null)
+}
