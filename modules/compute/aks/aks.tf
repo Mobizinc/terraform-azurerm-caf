@@ -234,7 +234,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   lifecycle {
     ignore_changes = [
       windows_profile,
-      no_proxy,
+      http_proxy_config,
     ]
   }
   tags = merge(local.tags, lookup(var.settings, "tags", {}))
