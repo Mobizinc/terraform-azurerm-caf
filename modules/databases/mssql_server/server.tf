@@ -81,7 +81,7 @@ resource "azurerm_key_vault_secret" "sql_admin_password" {
 
   lifecycle {
     ignore_changes = [
-      value
+      key_vault_id
     ]
   }
 }
