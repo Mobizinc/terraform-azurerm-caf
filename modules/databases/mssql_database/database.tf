@@ -29,6 +29,12 @@ resource "azurerm_mssql_database" "mssqldb" {
   zone_redundant              = try(var.settings.zone_redundant, null)
   tags                        = local.tags
 
+  lifecycle {
+    ignore_changes = [
+      server_id
+    ]
+  }
+
   dynamic "threat_detection_policy" {
     for_each = lookup(var.settings, "threat_detection_policy", {}) == {} ? [] : [1]
 
