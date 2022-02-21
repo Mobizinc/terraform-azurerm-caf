@@ -67,7 +67,7 @@ resource "azurerm_key_vault_secret" "postgresql_administrator_username" {
 
   lifecycle {
     ignore_changes = [
-      value
+      key_vault_id
     ]
   }
 }
@@ -93,7 +93,7 @@ resource "azurerm_key_vault_secret" "postgresql_administrator_password" {
 
   lifecycle {
     ignore_changes = [
-      value
+      key_vault_id
     ]
   }
 }
