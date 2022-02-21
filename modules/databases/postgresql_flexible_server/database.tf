@@ -27,4 +27,10 @@ resource "azurerm_key_vault_secret" "postgresql_database_name" {
   name         = format("%s-ON-%s", each.value.name, azurecaf_name.postgresql_flexible_server.result)
   value        = each.value.name
   key_vault_id = var.remote_objects.keyvault_id
+  lifecycle {
+    ignore_changes = [
+      key_vault_id
+    ]
+  }
+  
 }
