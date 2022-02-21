@@ -11,10 +11,5 @@ terraform {
     azurecaf = {
       source = "aztfmod/azurecaf"
     }
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "2.89.0"
-
-    }
   }
 }
