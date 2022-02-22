@@ -7,7 +7,15 @@
 #  recovery_vault_name                       = azurerm_recovery_services_vault.asr.name
 #  source_recovery_fabric_name               = azurerm_site_recovery_fabric.recovery_fabric[each.value.source_recovery_fabric_key].name
 #  source_vm_id                              = local.os_type == "linux" ? try(azurerm_linux_virtual_machine.vm["linux"].id, null) : try(azurerm_windows_virtual_machine.vm["windows"].id, null)
-#  recovery_replication_policy_id            = azurerm_site_recovery_replication_policy.policy.id
+
+### NEED TO UPDATE THIS TO REPLICATION POLICIES. COPIED FROM BACKUP POLICY ID
+#  recovery_replication_policy_id            = coalesce(
+#    try(var.settings.backup.backup_policy_id, null),
+#    try(var.recovery_vaults[var.client_config.landingzone_key][var.settings.backup.vault_key].backup_policies.virtual_machines[var.settings.backup.policy_key].id, null),
+#    try(var.recovery_vaults[var.settings.backup.lz_key][var.settings.backup.vault_key].backup_policies.virtual_machines[var.settings.backup.policy_key].id, null)
+#  )
+
+
 #  source_recovery_protection_container_name = azurerm_site_recovery_protection_container.protection_container[each.value.source_protection_container_key].name
 #
 #  target_resource_group_id                = var.resource_group_name
