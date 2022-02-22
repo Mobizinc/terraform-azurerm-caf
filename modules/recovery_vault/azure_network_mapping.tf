@@ -9,3 +9,5 @@
    source_network_id           = try(var.vnets[var.client_config.landingzone_key][each.value.source_network_id.vnet_key].id, try(var.vnets[each.value.source_network_id.lz_key][each.value.source_network_id.vnet_key].id, each.value.source_network_id))
    target_network_id           = try(var.vnets[var.client_config.landingzone_key][each.value.vnet_key].id, try(var.vnets[each.value.target_network_id.lz_key][each.value.target_network_id.vnet_key].id, each.value.target_network_id))
  }
+
+ 

@@ -63,7 +63,7 @@ resource "azurerm_key_vault_secret" "postgresql_admin_password" {
 
   lifecycle {
     ignore_changes = [
-      value
+      key_vault_id
     ]
   }
 }
@@ -74,6 +74,12 @@ resource "azurerm_key_vault_secret" "sql_admin" {
   name         = format("%s-username", azurecaf_name.postgresql.result)
   value        = var.settings.administrator_login
   key_vault_id = var.keyvault_id
+
+  lifecycle {
+    ignore_changes = [
+      key_vault_id
+    ]
+  }  
 }
 
 
