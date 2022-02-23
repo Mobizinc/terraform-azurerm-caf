@@ -127,11 +127,17 @@ recovery_vaults = {
         # }
         source_recovery_fabric_key      = "fabric_primary"
         source_vm_key                   = "example_vm1"
-        replication_policy_key          = "repl1"
+        # source_vm = {
+        #   lz_key = ""
+        #   vm_key = ""
+        # }
+        #source_vm_id = ""
+        policy_key                      = "repl1"
         source_protection_container_key = "container_primary"
         target_resource_group_key       = "secondary"
         target_recovery_fabric_key      = "fabric_secondary"
         target_protection_container_key = "container_secondary"
+        target_availability_set_key     = ""
         managed_disks = {
           mg_disk1 = {
             vm_disk_key = "data1"
@@ -141,10 +147,12 @@ recovery_vaults = {
             target_replica_disk_type    = "Premium_LRS"
           }
         }
-        network_interface = {
-          source_network_interface_key  = "nic0"
-          target_subnet_name            = "asrr_subnet"
-          recovery_public_ip_address_id = "public_ip_secondary"
+        network_interfaces = {
+          nic0 = {
+            source_network_interface_key  = "nic0"
+            target_subnet_name            = "asrr_subnet"
+            recovery_public_ip_address_id = "public_ip_secondary"
+          }
         }
 
       }

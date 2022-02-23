@@ -20,8 +20,16 @@ output "backup_policies" {
 }
 
 output "replication_policies" {
-  description = "Ouput the set of replication policies in the vault"
+  description = "Output the set of replication policies in the vault"
   value       = azurerm_site_recovery_replication_policy.policy
+}
+
+output "recovery_fabric" {
+  description = "Output the set of recovery fabric in the vault"
+  value       = {
+   name = azurerm_site_recovery_fabric.recovery_fabric.name
+   id   = azurerm_site_recovery_fabric.recovery_fabric.id
+  }
 }
 
 output "resource_group_name" {

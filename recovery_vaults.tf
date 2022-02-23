@@ -12,6 +12,8 @@ module "recovery_vaults" {
   resource_group_name = local.resource_groups[each.value.resource_group_key].name
   location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   vnets               = try(local.combined_objects_networking, {})
+  virtual_machines    = try(local.combined_objects_virtual_machines, {})
+  availability_sets   = local.combined_objects_availability_sets
   private_endpoints   = try(each.value.private_endpoints, {})
   private_dns         = local.combined_objects_private_dns
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}

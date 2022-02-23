@@ -63,3 +63,11 @@ output "nics" {
 }
 
 
+output "os_disks" {
+  value = {
+    for key, value in var.settings.networking_interfaces : key => {
+      id   = azurerm_network_interface.nic[key].id
+      name = azurerm_network_interface.nic[key].name
+    }
+  }
+}
