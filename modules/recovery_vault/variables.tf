@@ -18,6 +18,7 @@ variable "base_tags" {
 variable "private_endpoints" {}
 variable "vnets" {}
 variable "virtual_machines" {}
+variable "disk_encryption_sets" {}
 variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }

@@ -138,15 +138,33 @@ recovery_vaults = {
         target_recovery_fabric_key      = "fabric_secondary"
         target_protection_container_key = "container_secondary"
         target_availability_set_key     = ""
-        managed_disks = {
+        managed_os_disk = {
           mg_disk1 = {
-            vm_disk_key = "data1"
-            staging_storage_account_key = "recovery_cache_primary"
+            storage_account = {
+              key = "recovery_cache_primary"
+              # lz_key = ""
+            }
             target_resource_group_key   = "secondary"
             target_disk_type            = "Premium_LRS"
             target_replica_disk_type    = "Premium_LRS"
+            disk_encryption_set = {
+              # lz_key = ""
+              # disk_encryption_set_key= ""
+            }
           }
         }
+        # managed_disks = {
+        #   mg_disk1 = {
+        #     vm_disk_key = "data1"
+        #     storage_account = {
+        #       key = "recovery_cache_primary"
+        #       # lz_key = ""
+        #     }
+        #     target_resource_group_key   = "secondary"
+        #     target_disk_type            = "Premium_LRS"
+        #     target_replica_disk_type    = "Premium_LRS"
+        #   }
+        # }
         network_interfaces = {
           nic0 = {
             source_network_interface_key  = "nic0"
