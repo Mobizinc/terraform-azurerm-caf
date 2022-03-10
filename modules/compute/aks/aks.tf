@@ -219,7 +219,17 @@ resource "azurerm_kubernetes_cluster" "aks" {
   #     ssh_key         = try(var.settings.linux_profile.ssh_key,null)
   #   }
   # }
-
+  
+  dynamic "http_proxy_config" {
+    for_each = try(var.settings.http_proxy_config[*], {})
+    content {
+      http_proxy     = try(http_proxy_config.value.http_proxy, null)
+      https_proxy    = try(http_proxy_config.value.https_proxy, null)
+      no_proxy       = try(http_proxy_config.value.no_proxy, null)
+      trusted_ca     = try(http_proxy_config.value.trusted_ca, null )        
+    }
+  }
+  
   dynamic "network_profile" {
     for_each = try(var.settings.network_profile[*], {})
     content {
@@ -251,7 +261,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   lifecycle {
     ignore_changes = [
-      windows_profile, private_dns_zone_id
+      windows_profile, private_dns_zone_id, http_proxy_config["no_proxy"]
     ]
   }
   tags = merge(local.tags, lookup(var.settings, "tags", {}))
