@@ -28,4 +28,3 @@ case "${METHOD}" in
 esac
 
 
-
