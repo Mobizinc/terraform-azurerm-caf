@@ -4,7 +4,7 @@ terraform {
       source = "aztfmod/azurecaf"
     }
   }
-  required_version = ">= 0.13"
+
 }
 
 
@@ -27,13 +27,13 @@ locals {
     ]
   ])
 
-  #load_balancer_backend_address_pool_ids = flatten([
-  #  for nic, nic_value in var.settings.network_interfaces : [
-  #    for lb, lb_value in try(nic_value.load_balancers, {}) : [
-  #      try(var.load_balancers[try(var.client_config.landingzone_key, lb_value.lz_key)][lb_value.lb_key].backend_address_pool_id, null)
-  #    ]
-  #  ]
-  #])
+  load_balancer_backend_address_pool_ids = flatten([
+    for nic, nic_value in var.settings.network_interfaces : [
+      for lb, lb_value in try(nic_value.load_balancers, {}) : [
+        try(var.load_balancers[try(var.client_config.landingzone_key, lb_value.lz_key)][lb_value.lb_key].backend_address_pool_id, null)
+      ]
+    ]
+  ])
 
   application_security_group_ids = flatten([
     for nic, nic_value in var.settings.network_interfaces : [
@@ -44,5 +44,4 @@ locals {
   ])
 
 }
-
 
