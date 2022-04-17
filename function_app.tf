@@ -8,7 +8,7 @@ module "function_apps" {
   client_config        = local.client_config
   dynamic_app_settings = try(each.value.dynamic_app_settings, {})
   combined_objects     = local.dynamic_app_settings_combined_objects
-  resource_groups            = local.combined_objects_resource_groups
+  resource_groups      = local.combined_objects_resource_groups
   resource_group_name = coalesce(
     try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
