@@ -8,6 +8,12 @@ variable "location" {
 
 variable "resource_group_name" {
   description = "(Required) Resource group of the App Service"
+  default = null
+}
+
+variable "resource_groups" {
+  description = "combined objetcs of the resource groups. Either resource_group_name or resource_groups is required."
+  default     = {}
 }
 
 variable "app_service_plan_id" {

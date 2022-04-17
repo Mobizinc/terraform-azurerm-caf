@@ -8,6 +8,7 @@ module "function_apps" {
   client_config        = local.client_config
   dynamic_app_settings = try(each.value.dynamic_app_settings, {})
   combined_objects     = local.dynamic_app_settings_combined_objects
+  resource_groups            = local.combined_objects_resource_groups
   resource_group_name = coalesce(
     try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
@@ -33,6 +34,10 @@ module "function_apps" {
 
   remote_objects = {
     subnets = try(local.combined_objects_networking[try(each.value.settings.lz_key, local.client_config.landingzone_key)][each.value.settings.vnet_key].subnets, null)
+    resource_groups    = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
+    private_dns        = local.combined_objects_private_dns
+    vnets              = local.combined_objects_networking
+    private_endpoints  = try(each.value.private_endpoints, {})
   }
 }
 
