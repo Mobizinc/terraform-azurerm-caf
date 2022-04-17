@@ -39,8 +39,7 @@ module "function_apps" {
     private_dns        = local.combined_objects_private_dns
     vnets              = local.combined_objects_networking
     private_endpoints  = try(each.value.private_endpoints, {})
-    resource_groups    = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
-  }
+    }
 }
 
 output "function_apps" {
