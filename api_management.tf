@@ -14,6 +14,8 @@ module "api_management" {
   remote_objects = {
     resource_group     = local.combined_objects_resource_groups
     managed_identities = local.combined_objects_managed_identities
+    private_dns        = local.combined_objects_private_dns
+    private_endpoints  = try(each.value.private_endpoints, {})
   }
 }
 output "api_management" {
