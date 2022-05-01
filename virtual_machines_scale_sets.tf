@@ -13,7 +13,8 @@ module "virtual_machine_scale_sets" {
     module.application_security_groups,
     module.packer_service_principal,
     module.packer_build,
-    module.proximity_placement_groups
+    module.proximity_placement_groups,
+    module.storage_accounts
   ]
   for_each = local.compute.virtual_machine_scale_sets
 
@@ -38,6 +39,7 @@ module "virtual_machine_scale_sets" {
   recovery_vaults                  = local.combined_objects_recovery_vaults
   settings                         = each.value
   vnets                            = local.combined_objects_networking
+  storage_accounts                 = local.combined_objects_storage_accounts
   location                         = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
   resource_group_name              = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
 }
