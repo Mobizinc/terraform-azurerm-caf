@@ -372,6 +372,12 @@ monitor_autoscale_settings = {
               time_aggregation = "Average"
               operator         = "GreaterThan"
               threshold        = 90
+              ## You can also add application insights id using below configuration
+              # app_insights     = {
+              #   lz_key = ""
+              #   key = ""
+              # }
+              
               # You can optionally fill the following fields
               # metric_namespace         = "microsoft.compute/virtualmachinescalesets"
               # divide_by_instance_count = true
