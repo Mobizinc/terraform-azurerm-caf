@@ -15,12 +15,11 @@ resource_groups = {
 
 cosmos_dbs = {
   cosmosdb_account_re1 = {
-    name                          = "cosmosdb-ex101"
-    resource_group_key            = "cosmosdb_region1"
-    offer_type                    = "Standard"
-    kind                          = "GlobalDocumentDB"
-    enable_automatic_failover     = "true"
-    public_network_access_enabled = false
+    name                      = "cosmosdb-ex101"
+    resource_group_key        = "cosmosdb_region1"
+    offer_type                = "Standard"
+    kind                      = "GlobalDocumentDB"
+    enable_automatic_failover = "true"
 
     consistency_policy = {
       consistency_level       = "BoundedStaleness"
