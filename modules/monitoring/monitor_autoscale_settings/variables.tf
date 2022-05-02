@@ -2,6 +2,9 @@ variable "global_settings" {}
 variable "resource_group_name" {}
 variable "location" {}
 variable "target_resource_id" {}
+variable "app_insights" {
+  default = {}
+}
 variable "virtual_machine_scale_sets" {
   default = {}
 }
