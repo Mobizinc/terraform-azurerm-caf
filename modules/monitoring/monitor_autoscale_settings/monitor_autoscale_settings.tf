@@ -31,7 +31,7 @@ resource "azurerm_monitor_autoscale_setting" "this" {
         content {
           metric_trigger {
             metric_name              = rule.value.metric_trigger.metric_name
-            metric_resource_id       = can(rule.value.metric_trigger.metric_resource_id) ? rule.value.metric_trigger.metric_resource_id : try(var.app_insights[try(rule.value.app_insight.lz_key, var.client_config.landingzone_key)][rule.value.app_insight.key].id, var.target_resource_id)
+            metric_resource_id       = can(rule.value.metric_trigger.metric_resource_id) ? rule.value.metric_trigger.metric_resource_id : try(var.app_insights[try(rule.value.metric_trigger.app_insight.lz_key, var.client_config.landingzone_key)][rule.value.metric_trigger.app_insight.key].id, var.target_resource_id)
             time_grain               = rule.value.metric_trigger.time_grain
             statistic                = rule.value.metric_trigger.statistic
             time_window              = rule.value.metric_trigger.time_window
