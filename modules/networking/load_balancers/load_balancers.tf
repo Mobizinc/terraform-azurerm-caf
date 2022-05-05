@@ -157,5 +157,11 @@ resource "azurerm_network_interface_backend_address_pool_association" "vm_nic_ba
   network_interface_id    = var.existing_resources.virtual_machines[each.value.vm_key].nics[each.value.nic_key].id
   ip_configuration_name   = var.existing_resources.virtual_machines[each.value.vm_key].nics[each.value.nic_key].name # The Name of the IP Configuration within the Network Interface
   backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool.0.id
+  lifecycle {
+    ignore_changes = [
+      network_interface_id,
+      ip_configuration_name
+    ]
+  }  
 }
 
