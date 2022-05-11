@@ -190,7 +190,7 @@ resource "azurerm_function_app" "function_app" {
 
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
   depends_on     = [azurerm_function_app.function_app]
-  count          = lookup(var.settings, "subnet_key", null) == null && lookup(var.settings, "subnet_id", null) == null ? 0 : 1
+  count          = lookup(var.settings.settings, "subnet_key", null) == null && lookup(var.settings.settings, "subnet_id", null) == null ? 0 : 1
   app_service_id = azurerm_function_app.function_app.id
   subnet_id = coalesce(
     try(var.remote_objects.subnets[var.settings.subnet_key].id, null),
