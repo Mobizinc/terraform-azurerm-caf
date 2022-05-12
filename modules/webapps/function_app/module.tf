@@ -27,7 +27,7 @@ resource "azurerm_function_app" "function_app" {
   tags                       = local.tags
 
   app_settings = local.app_settings
-
+  key_vault_reference_identity_id = can(var.settings.key_vault_reference_identity.key) ? var.combined_objects.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.key_vault_reference_identity.key].id : try(var.settings.key_vault_reference_identity.id, null)
   dynamic "auth_settings" {
     for_each = lookup(var.settings, "auth_settings", {}) != {} ? [1] : []
 
@@ -111,6 +111,8 @@ resource "azurerm_function_app" "function_app" {
       identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
     }
   }
+  
+
 
   dynamic "site_config" {
     for_each = lookup(var.settings, "site_config", {}) != {} ? [1] : []
@@ -190,10 +192,10 @@ resource "azurerm_function_app" "function_app" {
 
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
   depends_on     = [azurerm_function_app.function_app]
-  count          = lookup(var.settings, "subnet_key", null) == null && lookup(var.settings, "subnet_id", null) == null ? 0 : 1
+  count          = lookup(var.settings.settings, "subnet_key", null) == null && lookup(var.settings.settings, "subnet_id", null) == null ? 0 : 1
   app_service_id = azurerm_function_app.function_app.id
   subnet_id = coalesce(
-    try(var.remote_objects.subnets[var.settings.subnet_key].id, null),
-    try(var.settings.subnet_id, null)
+    try(var.remote_objects.subnets[var.settings.settings.subnet_key].id, null),
+    try(var.settings.settings.subnet_id, null)
   )
 }
