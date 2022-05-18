@@ -115,10 +115,10 @@ resource "azurerm_function_app" "function_app" {
 
 
   dynamic "site_config" {
-    for_each = lookup(var.settings, "site_config", {}) != {} ? [1] : []
+    for_each = lookup(var.settings.settings, "site_config", {}) != {} ? [1] : []
 
     content {
-      always_on                        = lookup(var.settings.site_config, "always_on", false)
+      always_on                        = lookup(var.settings.settings.site_config, "always_on", false)
       app_scale_limit                  = lookup(var.settings.site_config, "app_scale_limit", null)
       elastic_instance_minimum         = lookup(var.settings.site_config, "elastic_instance_minimum", null)
       health_check_path                = lookup(var.settings.site_config, "health_check_path", null)
@@ -126,7 +126,7 @@ resource "azurerm_function_app" "function_app" {
       pre_warmed_instance_count        = lookup(var.settings.site_config, "pre_warmed_instance_count", null)
       runtime_scale_monitoring_enabled = lookup(var.settings.site_config, "runtime_scale_monitoring_enabled", null)
       dotnet_framework_version         = lookup(var.settings.site_config, "dotnet_framework_version", null)
-      ftps_state                       = lookup(var.settings.site_config, "ftps_state", null)
+      ftps_state                       = lookup(var.settings.settings.site_config, "ftps_state", null)
       http2_enabled                    = lookup(var.settings.site_config, "http2_enabled", null)
       java_version                     = lookup(var.settings.site_config, "java_version", null)
       linux_fx_version                 = lookup(var.settings.site_config, "linux_fx_version", null)
