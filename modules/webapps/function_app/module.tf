@@ -126,7 +126,7 @@ resource "azurerm_function_app" "function_app" {
       pre_warmed_instance_count        = lookup(var.settings.settings.site_config, "pre_warmed_instance_count", null)
       runtime_scale_monitoring_enabled = lookup(var.settings.settings.site_config, "runtime_scale_monitoring_enabled", null)
       dotnet_framework_version         = lookup(var.settings.settings.site_config, "dotnet_framework_version", null)
-      ftps_state                       = lookup(var.settings.settings.settings.site_config, "ftps_state", null)
+      ftps_state                       = lookup(var.settings.settings.site_config, "ftps_state", null)
       http2_enabled                    = lookup(var.settings.settings.site_config, "http2_enabled", null)
       java_version                     = lookup(var.settings.settings.site_config, "java_version", null)
       linux_fx_version                 = lookup(var.settings.settings.site_config, "linux_fx_version", null)
