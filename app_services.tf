@@ -30,7 +30,7 @@ module "app_services" {
     private_dns        = local.combined_objects_private_dns
     vnets              = local.combined_objects_networking
     private_endpoints  = try(each.value.private_endpoints, {})
-    }  
+  }  
 }
 
 output "app_services" {
