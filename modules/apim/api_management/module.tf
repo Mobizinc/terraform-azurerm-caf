@@ -10,12 +10,12 @@ resource "azurecaf_name" "apim" {
 
 resource "azurerm_api_management" "apim" {
   name = azurecaf_name.apim.result
-
   location            = var.location
   resource_group_name = var.resource_group_name
   publisher_name      = var.settings.publisher_name
   publisher_email     = var.settings.publisher_email
   sku_name            = var.settings.sku_name
+  public_network_access_enabled = try(var.settings.public_network_access_enabled, true)
   dynamic "additional_location" {
     for_each = try(var.settings.additional_location, null) != null ? [var.settings.additional_location] : []
 
