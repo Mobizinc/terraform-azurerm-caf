@@ -148,7 +148,17 @@ resource "azurerm_kubernetes_cluster" "aks" {
   dns_prefix                 = try(var.settings.dns_prefix, try(var.settings.dns_prefix_private_cluster, random_string.prefix.result))
   dns_prefix_private_cluster = try(var.settings.dns_prefix_private_cluster, null)
   automatic_channel_upgrade  = try(var.settings.automatic_channel_upgrade, null)
-
+ 
+  dynamic "http_proxy_config" {
+    for_each = try(var.settings.http_proxy_config[*], {})
+    content {
+      http_proxy     = try(http_proxy_config.value.http_proxy, null)
+      https_proxy    = try(http_proxy_config.value.https_proxy, null)
+      no_proxy       = try(http_proxy_config.value.no_proxy, null)
+      trusted_ca     = try(http_proxy_config.value.trusted_ca, null )        
+     }
+   }
+  
   dynamic "addon_profile" {
     for_each = lookup(var.settings, "addon_profile", null) == null ? [] : [1]
 
@@ -370,7 +380,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   lifecycle {
     ignore_changes = [
-      windows_profile, private_dns_zone_id
+      windows_profile, private_dns_zone_id, http_proxy_config["no_proxy"]
     ]
   }
   tags = merge(local.tags, lookup(var.settings, "tags", {}))
