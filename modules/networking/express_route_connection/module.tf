@@ -8,6 +8,12 @@ resource "azurerm_express_route_connection" "erc" {
   enable_internet_security = try(var.settings.enable_internet_security, null)
   routing_weight           = try(var.settings.routing_weight, null)
 
+  lifecycle {
+     ignore_changes = [
+       express_route_gateway_id
+     ]
+  }
+
   dynamic "routing" {
     for_each = can(var.settings.routing) ? [1] : []
 
