@@ -153,6 +153,11 @@ module "example" {
       kusto_iothub_data_connections          = var.kusto_iothub_data_connections
     }
   }
+  data_protection = {
+    backup_vaults          = var.backup_vaults
+    backup_vault_policies  = var.backup_vault_policies
+    backup_vault_instances = var.backup_vault_instances
+  }
   messaging = {
     signalr_services      = var.signalr_services
     servicebus_namespaces = var.servicebus_namespaces
@@ -337,6 +342,7 @@ module "example" {
     api_management_gateway              = var.api_management_gateway
     api_management_gateway_api          = var.api_management_gateway_api
     api_management_group                = var.api_management_group
+    api_management_subscription         = var.api_management_subscription
   }
   purview = {
     purview_accounts = var.purview_accounts

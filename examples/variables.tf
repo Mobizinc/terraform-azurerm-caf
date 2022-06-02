@@ -816,6 +816,9 @@ variable "api_management_gateway_api" {
 variable "api_management_group" {
   default = {}
 }
+variable "api_management_subscription" {
+  default = {}
+}
 variable "lb" {
   default = {}
 }
@@ -913,5 +916,14 @@ variable "public_ip_prefixes" {
   default = {}
 }
 variable "runbooks" {
+  default = {}
+}
+variable "backup_vaults" {
+  default = {}
+}
+variable "backup_vault_policies" {
+  default = {}
+}
+variable "backup_vault_instances" {
   default = {}
 }
