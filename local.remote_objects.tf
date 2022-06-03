@@ -9,6 +9,7 @@ locals {
     app_service_environments                       = try(local.combined_objects_app_service_environments, null)
     app_service_plans                              = try(local.combined_objects_app_service_plans, null)
     app_services                                   = try(local.combined_objects_app_services, null)
+    static_webapps                                 = try(local.combined_objects_static_webapps, null)
     application_gateway_platforms                  = try(local.combined_objects_application_gateway_platforms, null)
     application_gateway_waf_policies               = try(local.combined_objects_application_gateway_waf_policies, null)
     application_gateways                           = try(local.combined_objects_application_gateways, null)

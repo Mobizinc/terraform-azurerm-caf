@@ -18,14 +18,27 @@ diagnostics_definition = {
     }
 
   }
+  postgresql_servers = {
+    name = "operational_logs_and_metrics"
+    categories = {
+      log = [
+        ["PostgreSQLLogs", true, true, 14],
+       
+     
+      ]
+      metric = [
+        ["AllMetrics", true, true, 14],
+      ]
+    }
+  }
 
   default_all = {
     name = "operational_logs_and_metrics"
     categories = {
-      log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["AuditEvent", true, false, 7],
-      ]
+      # log = [
+      #   # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
+      #   ["AuditEvent", true, false, 7],
+      # ]
       metric = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["AllMetrics", true, false, 7],

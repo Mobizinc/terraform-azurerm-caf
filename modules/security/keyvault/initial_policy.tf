@@ -1,3 +1,5 @@
+
+  
 # Initial policy is used to address a a bootstrap condition during the launchpad deployment
 module "initial_policy" {
   source = "../keyvault_access_policies"
