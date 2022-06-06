@@ -47,7 +47,7 @@ resource "azurerm_logic_app_standard" "logic_app" {
 
     content {
       type         = var.identity.type
-      identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
+      #identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
     }
   }
 
