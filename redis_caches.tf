@@ -5,6 +5,8 @@ module "redis_caches" {
   for_each   = local.database.azurerm_redis_caches
 
   base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
+  client_config       = local.client_config
+  resource_groups     = local.combined_objects_resource_groups
   diagnostic_profiles = try(each.value.diagnostic_profiles, null)
   diagnostics         = local.combined_diagnostics
   global_settings     = local.global_settings
@@ -13,6 +15,12 @@ module "redis_caches" {
   redis               = each.value.redis
   subnet_id           = can(each.value.subnet_id) || can(each.value.subnet_key) == false ? try(each.value.subnet_id, null) : local.combined_objects_networking[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id
   tags                = try(each.value.tags, null)
+  remote_objects = {
+    vnets              = local.combined_objects_networking
+    private_dns        = local.combined_objects_private_dns
+    resource_groups    = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
+    private_endpoints  = try(each.value.private_endpoints, {})
+    }
 
 }
 

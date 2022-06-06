@@ -1,4 +1,3 @@
-
 resource "azurecaf_name" "plan" {
   name          = var.name
   resource_type = "azurerm_function_app"
@@ -22,13 +21,15 @@ resource "azurerm_function_app" "function_app" {
   enabled                    = try(var.settings.enabled, null)
   https_only                 = try(var.settings.https_only, null)
   os_type                    = try(var.settings.os_type, null)
-  version                    = try(var.settings.version, null)
+  version                    = try(var.settings.version, "~4")
   storage_account_name       = var.storage_account_name
   storage_account_access_key = var.storage_account_access_key
   tags                       = local.tags
 
   app_settings = local.app_settings
 
+  key_vault_reference_identity_id = can(var.settings.key_vault_reference_identity.key) ? var.combined_objects.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.key_vault_reference_identity.key].id : try(var.settings.key_vault_reference_identity.id, null)
+ 
   dynamic "auth_settings" {
     for_each = lookup(var.settings, "auth_settings", {}) != {} ? [1] : []
 
@@ -112,30 +113,30 @@ resource "azurerm_function_app" "function_app" {
       identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
     }
   }
+  
 
-  key_vault_reference_identity_id = can(var.settings.key_vault_reference_identity.key) ? var.combined_objects.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.key_vault_reference_identity.key].id : try(var.settings.key_vault_reference_identity.id, null)
 
   dynamic "site_config" {
-    for_each = lookup(var.settings, "site_config", {}) != {} ? [1] : []
+    for_each = lookup(var.settings.settings, "site_config", {}) != {} ? [1] : []
 
     content {
-      always_on                        = lookup(var.settings.site_config, "always_on", false)
-      app_scale_limit                  = lookup(var.settings.site_config, "app_scale_limit", null)
-      elastic_instance_minimum         = lookup(var.settings.site_config, "elastic_instance_minimum", null)
-      health_check_path                = lookup(var.settings.site_config, "health_check_path", null)
-      min_tls_version                  = lookup(var.settings.site_config, "min_tls_version", null)
-      pre_warmed_instance_count        = lookup(var.settings.site_config, "pre_warmed_instance_count", null)
-      runtime_scale_monitoring_enabled = lookup(var.settings.site_config, "runtime_scale_monitoring_enabled", null)
-      dotnet_framework_version         = lookup(var.settings.site_config, "dotnet_framework_version", null)
-      ftps_state                       = lookup(var.settings.site_config, "ftps_state", null)
-      http2_enabled                    = lookup(var.settings.site_config, "http2_enabled", null)
-      java_version                     = lookup(var.settings.site_config, "java_version", null)
-      linux_fx_version                 = lookup(var.settings.site_config, "linux_fx_version", null)
-      use_32_bit_worker_process        = lookup(var.settings.site_config, "use_32_bit_worker_process", null)
-      websockets_enabled               = lookup(var.settings.site_config, "websockets_enabled", null)
-      scm_type                         = lookup(var.settings.site_config, "scm_type", null)
-      scm_use_main_ip_restriction      = lookup(var.settings.site_config, "scm_use_main_ip_restriction", null)
-      vnet_route_all_enabled           = lookup(var.settings.site_config, "vnet_route_all_enabled", null)
+      always_on                        = lookup(var.settings.settings.site_config, "always_on", false)
+      app_scale_limit                  = lookup(var.settings.settings.site_config, "app_scale_limit", null)
+      elastic_instance_minimum         = lookup(var.settings.settings.site_config, "elastic_instance_minimum", null)
+      health_check_path                = lookup(var.settings.settings.site_config, "health_check_path", null)
+      min_tls_version                  = lookup(var.settings.settings.site_config, "min_tls_version", null)
+      pre_warmed_instance_count        = lookup(var.settings.settings.site_config, "pre_warmed_instance_count", null)
+      runtime_scale_monitoring_enabled = lookup(var.settings.settings.site_config, "runtime_scale_monitoring_enabled", null)
+      dotnet_framework_version         = lookup(var.settings.settings.site_config, "dotnet_framework_version", null)
+      ftps_state                       = lookup(var.settings.settings.site_config, "ftps_state", null)
+      http2_enabled                    = lookup(var.settings.settings.site_config, "http2_enabled", null)
+      java_version                     = lookup(var.settings.settings.site_config, "java_version", null)
+      linux_fx_version                 = lookup(var.settings.settings.site_config, "linux_fx_version", null)
+      use_32_bit_worker_process        = lookup(var.settings.settings.site_config, "use_32_bit_worker_process", null)
+      websockets_enabled               = lookup(var.settings.settings.site_config, "websockets_enabled", null)
+      scm_type                         = lookup(var.settings.settings.site_config, "scm_type", null)
+      scm_use_main_ip_restriction      = lookup(var.settings.settings.site_config, "scm_use_main_ip_restriction", null)
+      vnet_route_all_enabled           = lookup(var.settings.settings.site_config, "vnet_route_all_enabled", null)
 
       dynamic "cors" {
         for_each = try(var.settings.site_config.cors, {})
@@ -193,10 +194,10 @@ resource "azurerm_function_app" "function_app" {
 
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
   depends_on     = [azurerm_function_app.function_app]
-  count          = lookup(var.settings, "subnet_key", null) == null && lookup(var.settings, "subnet_id", null) == null ? 0 : 1
+  count          = lookup(var.settings.settings, "subnet_key", null) == null && lookup(var.settings.settings, "subnet_id", null) == null ? 0 : 1
   app_service_id = azurerm_function_app.function_app.id
   subnet_id = coalesce(
-    try(var.remote_objects.subnets[var.settings.subnet_key].id, null),
-    try(var.settings.subnet_id, null)
+    try(var.remote_objects.subnets[var.settings.settings.subnet_key].id, null),
+    try(var.settings.settings.subnet_id, null)
   )
 }

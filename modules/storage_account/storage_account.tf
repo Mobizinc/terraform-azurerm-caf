@@ -25,7 +25,7 @@ resource "azurerm_storage_account" "stg" {
   account_replication_type  = try(var.storage_account.account_replication_type, "LRS")
   account_kind              = try(var.storage_account.account_kind, "StorageV2")
   access_tier               = try(var.storage_account.access_tier, "Hot")
-  enable_https_traffic_only = try(var.storage_account.nfsv3_enabled, false) ? false : true
+  enable_https_traffic_only = try(var.storage_account.enable_https_traffic_only, true)
   #if using nfsv3_enabled, then https must be disabled
   min_tls_version          = try(var.storage_account.min_tls_version, "TLS1_2")
   allow_blob_public_access = try(var.storage_account.allow_blob_public_access, false)

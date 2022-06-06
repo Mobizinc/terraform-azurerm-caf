@@ -126,6 +126,7 @@ locals {
     mssql_servers                      = try(var.database.mssql_servers, {})
     mysql_databases                    = try(var.database.mysql_databases, {})
     mysql_servers                      = try(var.database.mysql_servers, {})
+    mysql_flexible_servers             = try(var.database.mysql_flexible_servers, {})
     postgresql_flexible_servers        = try(var.database.postgresql_flexible_servers, {})
     postgresql_servers                 = try(var.database.postgresql_servers, {})
     synapse_workspaces                 = try(var.database.synapse_workspaces, {})
@@ -224,6 +225,7 @@ locals {
     logic_app_trigger_http_request  = try(var.logic_app.logic_app_trigger_http_request, {})
     logic_app_trigger_recurrence    = try(var.logic_app.logic_app_trigger_recurrence, {})
     logic_app_workflow              = try(var.logic_app.logic_app_workflow, {})
+    logic_app_standard              = try(var.logic_app.logic_app_standard , {})
   }
 
   cognitive_services = {
