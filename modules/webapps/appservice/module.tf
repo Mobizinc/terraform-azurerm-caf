@@ -34,6 +34,8 @@ resource "azurerm_app_service" "app_service" {
   }
 
   key_vault_reference_identity_id = can(var.settings.key_vault_reference_identity.key) ? var.combined_objects.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.key_vault_reference_identity.key].id : try(var.settings.key_vault_reference_identity.id, null)
+ 
+  app_settings = local.app_settings
   
   dynamic "site_config" {
     for_each = lookup(var.settings.settings, "site_config", {}) != {} ? [1] : []
@@ -95,7 +97,7 @@ resource "azurerm_app_service" "app_service" {
     }
   }
 
-  app_settings = local.app_settings
+  
 
   dynamic "connection_string" {
     for_each = var.connection_strings
@@ -270,7 +272,7 @@ resource "azurerm_app_service" "app_service" {
 
   lifecycle {
     ignore_changes = [
-      app_settings["WEBSITE_RUN_FROM_PACKAGE"],
+      
       site_config[0].scm_type
     ]
   }
