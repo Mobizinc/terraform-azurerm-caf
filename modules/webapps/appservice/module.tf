@@ -34,14 +34,12 @@ resource "azurerm_app_service" "app_service" {
   }
 
   key_vault_reference_identity_id = can(var.settings.key_vault_reference_identity.key) ? var.combined_objects.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.key_vault_reference_identity.key].id : try(var.settings.key_vault_reference_identity.id, null)
- 
-  app_settings = local.app_settings
   
   dynamic "site_config" {
     for_each = lookup(var.settings.settings, "site_config", {}) != {} ? [1] : []
 
     content {
-      # numberOfWorkers         = lookup(each.value.site_config, "numberOfWorkers", 1)  # defined in ARM template below
+      # numberOfWorkers           = lookup(each.value.site_config, "numberOfWorkers", 1)  # defined in ARM template below
       always_on                 = lookup(var.settings.settings.site_config, "always_on", false)
       app_command_line          = lookup(var.settings.settings.site_config, "app_command_line", null)
       default_documents         = lookup(var.settings.settings.site_config, "default_documents", null)
@@ -97,7 +95,7 @@ resource "azurerm_app_service" "app_service" {
     }
   }
 
-  
+  app_settings = local.app_settings
 
   dynamic "connection_string" {
     for_each = var.connection_strings
@@ -272,7 +270,7 @@ resource "azurerm_app_service" "app_service" {
 
   lifecycle {
     ignore_changes = [
-      
+      app_settings["WEBSITE_RUN_FROM_PACKAGE"],
       site_config[0].scm_type
     ]
   }
@@ -281,7 +279,7 @@ resource "azurerm_app_service" "app_service" {
 resource "azurerm_template_deployment" "site_config" {
   depends_on = [azurerm_app_service.app_service]
 
-  count = lookup(var.settings, "numberOfWorkers", {}) != {} ? 1 : 0
+  count = lookup(var.settings.settings, "numberOfWorkers", {}) != {} ? 1 : 0
 
   name                = azurecaf_name.app_service.result
   resource_group_name = var.resource_group_name
@@ -289,7 +287,7 @@ resource "azurerm_template_deployment" "site_config" {
   template_body = file(local.arm_filename)
 
   parameters = {
-    "numberOfWorkers" = tonumber(var.settings.numberOfWorkers)
+    "numberOfWorkers" = tonumber(var.settings.settings.numberOfWorkers)
     "name"            = azurecaf_name.app_service.result
   }
 
