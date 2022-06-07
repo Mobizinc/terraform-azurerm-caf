@@ -63,15 +63,15 @@ resource "azurerm_app_service" "app_service" {
       scm_type                  = lookup(var.settings.settings.site_config, "scm_type", null)
 
       dynamic "cors" {
-        for_each = lookup(var.settings.site_config, "cors", {}) != {} ? [1] : []
+        for_each = lookup(var.settings.settings.site_config, "cors", {}) != {} ? [1] : []
 
         content {
-          allowed_origins     = lookup(var.settings.site_config.cors, "allowed_origins", null)
-          support_credentials = lookup(var.settings.site_config.cors, "support_credentials", null)
+          allowed_origins     = lookup(var.settings.settings.site_config.cors, "allowed_origins", null)
+          support_credentials = lookup(var.settings.settings.site_config.cors, "support_credentials", null)
         }
       }
       dynamic "ip_restriction" {
-        for_each = try(var.settings.site_config.ip_restriction, {})
+        for_each = try(var.settings.settings.site_config.ip_restriction, {})
 
         content {
           ip_address                = lookup(ip_restriction.value, "ip_address", null)
