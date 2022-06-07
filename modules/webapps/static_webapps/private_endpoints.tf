@@ -1,8 +1,9 @@
+
 module "private_endpoint" {
   source   = "../../networking/private_endpoint"
   for_each = var.remote_objects.private_endpoints
 
-  resource_id         = azurerm_static_site.static_site.id
+  resource_id         = each.value.resource_id
   location            = var.location
   name                = each.value.name
   resource_group_name = var.resource_group_name
