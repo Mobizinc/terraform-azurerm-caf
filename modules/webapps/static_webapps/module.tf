@@ -63,3 +63,22 @@ resource "azurerm_template_deployment" "static_webapp" {
   deployment_mode = "Incremental"
 }
 
+resource "null_resource" "get_static_webapps_id" {
+  count      = var.remote_objects.private_endpoints != "" ? 1 : 0
+  provisioner "local-exec" {
+    command = format("az staticwebapp show -n %s  --query 'id' | tr -d \\\" | tr -d '\n'  > ${path.module}/static_webapps_id.txt" , var.name )
+  }
+
+  depends_on = [azurerm_template_deployment.static_webapp]
+}
+
+data "local_file" "static_webapps_id" {
+  
+    filename = "${path.module}/static_webapps_id.txt"
+  depends_on = [null_resource.get_static_webapps_id]
+
+}
+
+
+
+

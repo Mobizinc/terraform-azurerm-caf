@@ -2,8 +2,8 @@
 module "private_endpoint" {
   source   = "../../networking/private_endpoint"
   for_each = var.remote_objects.private_endpoints
-
-  resource_id         = each.value.resource_id
+  
+  resource_id         = data.local_file.static_webapps_id.content
   location            = var.location
   name                = each.value.name
   resource_group_name = var.resource_group_name
