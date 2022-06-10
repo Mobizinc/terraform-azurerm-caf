@@ -279,7 +279,7 @@ resource "azurerm_app_service" "app_service" {
 resource "azurerm_template_deployment" "site_config" {
   depends_on = [azurerm_app_service.app_service]
 
-  count = lookup(var.settings.settings, "numberOfWorkers", {}) != {} ? 1 : 0
+  count = lookup(var.settings, "numberOfWorkers", {}) != {} ? 1 : 0
 
   name                = azurecaf_name.app_service.result
   resource_group_name = var.resource_group_name
@@ -287,7 +287,7 @@ resource "azurerm_template_deployment" "site_config" {
   template_body = file(local.arm_filename)
 
   parameters = {
-    "numberOfWorkers" = tonumber(var.settings.settings.numberOfWorkers)
+    "numberOfWorkers" = tonumber(var.settings.numberOfWorkers)
     "name"            = azurecaf_name.app_service.result
   }
 
