@@ -92,6 +92,7 @@ locals {
     servicebus_topics                              = try(local.combined_objects_servicebus_topics, null)
     servicebus_queues                              = try(local.combined_objects_servicebus_queues, null)
     signalr_services                               = try(local.combined_objects_signalr_services, null)
+    static_webapps                                 = try(local.combined_objects_static_webapps, null)
     storage_accounts                               = try(local.combined_objects_storage_accounts, null)
     storage_containers                             = try(local.combined_objects_storage_containers, null)
     synapse_workspaces                             = try(local.combined_objects_synapse_workspaces, null)
