@@ -46,6 +46,3 @@ variable "combined_objects" {
 variable "dynamic_app_settings" {
   default = {}
 }
-variable "keyvaults" {
-  default = {}
-}
