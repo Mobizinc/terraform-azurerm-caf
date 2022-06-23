@@ -74,7 +74,7 @@ resource "azurerm_lb_rule" "lb_rule" {
   frontend_port                  = each.value.frontend_port
   backend_port                   = each.value.backend_port
   frontend_ip_configuration_name = each.value.frontend_ip_configuration_name
-  backend_address_pool_ids = try(flatten([
+  backend_address_pool_ids = can(settings.backend_address_pool_id) ? settings.backend_address_pool : try(flatten([
     for backend_address_pool in try(azurerm_lb_backend_address_pool.backend_address_pool, []) : [
       backend_address_pool.id
     ]
