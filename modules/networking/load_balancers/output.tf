@@ -16,15 +16,14 @@ output "frontend_ip_configuration" {
   value = azurerm_lb.lb.frontend_ip_configuration
 }
 
-output "bap" {
-  count           = try(var.settings.backend_address_pool_name, null) == null ? 0 : 1
-  value = {
-    for backend_address_pool_name, value in var.settings : backend_address_pool_name => {
-      id   = azurerm_lb_backend_address_pool.backend_address_pool.0.id
-      name = azurerm_lb_backend_address_pool.backend_address_pool.0.name
-    }
-  }
-}
+# output "bap" {
+#   value = {
+#     for backend_address_pool_name, value in var.settings : backend_address_pool_name => {
+#       id   = azurerm_lb_backend_address_pool.backend_address_pool.0.id
+#       name = azurerm_lb_backend_address_pool.backend_address_pool.0.name
+#     }
+#   }
+# }
 
 output "backend_address_pool_id" {
   value = azurerm_lb_backend_address_pool.backend_address_pool.0.id
