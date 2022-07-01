@@ -35,6 +35,9 @@
             "repositoryToken": {
                 "type": "securestring"
             }
+	    "resourceTags": {
+                "type": "object"
+            }
 
         },
         "resources": [
@@ -43,7 +46,7 @@
                 "name": "[parameters('name')]",
                 "type": "Microsoft.Web/staticSites",
                 "location": "[parameters('location')]",
-                
+                "tags": "[parameters('resourceTags')]",
                 "properties": {
                     "repositoryUrl": "[parameters('repositoryUrl')]",
                     "branch": "[parameters('branch')]",
