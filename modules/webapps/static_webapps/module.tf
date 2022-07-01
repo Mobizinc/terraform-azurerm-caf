@@ -25,6 +25,7 @@ resource "azurerm_resource_group_template_deployment" "example" {
     "skucode"          = { value = var.settings.sku }
     "branch"           = { value = var.settings.github_branch }
     "repositoryToken"  = { value = data.azurerm_key_vault_secret.example.value }
+    "resourceTags"     = { value = merge(var.base_tags, local.module_tag, var.tags) }
   })
   template_content     = file(local.arm_filename)
 }
