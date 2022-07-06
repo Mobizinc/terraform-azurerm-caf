@@ -20,6 +20,7 @@ resource "azurerm_resource_group_template_deployment" "example" {
   parameters_content  = jsonencode({
   
     "name"             = { value = var.settings.name }
+    "location"         = { value = var.settings.location }
     "sku"              = { value = var.settings.sku }
     "repositoryUrl"    = { value = var.settings.github_repo }
     "skucode"          = { value = var.settings.sku }
