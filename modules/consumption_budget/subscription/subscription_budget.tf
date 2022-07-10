@@ -30,7 +30,7 @@ resource "azurerm_consumption_budget_subscription" "this" {
     content {
       operator  = notification.value.operator
       threshold = notification.value.threshold
-
+      threshold_type = try(notification.value.threshold_type, "Actual")
       contact_emails = try(notification.value.contact_emails, [])
       contact_groups = try(notification.value.contact_groups, try(flatten([
         for key, value in var.local_combined_resources["monitor_action_groups"][try(notification.value.lz_key, var.client_config.landingzone_key)] : value.id
