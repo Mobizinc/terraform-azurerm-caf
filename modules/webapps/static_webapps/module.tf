@@ -11,6 +11,9 @@ data "azurerm_key_vault_secret" "example" {
   
 }
 
+data "azurerm_subscription" "current" {
+}
+
 resource "azurerm_resource_group_template_deployment" "example" {
   depends_on          = [data.azurerm_key_vault_secret.example]
   
