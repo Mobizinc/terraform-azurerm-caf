@@ -1,8 +1,16 @@
+resource "time_sleep" "static_webapps" {
+  depends_on = [azurerm_resource_group_template_deployment.example]
+  
+  create_duration  = "30s"
+  destroy_duration = "30s"
+}
+
 module "private_endpoint" {
+  depends_on = [time_sleep.static_webapps]
   source   = "../../networking/private_endpoint"
   for_each = var.remote_objects.private_endpoints
-  
-  resource_id         = each.value.resource_id 
+
+  resource_id         = format("/subscriptions/%s/resourceGroups/%s/providers/Microsoft.Web/staticSites/%s", data.azurerm_subscription.current.subscription_id, var.resource_group_name, var.name)
   location            = var.location
   name                = each.value.name
   resource_group_name = var.resource_group_name
