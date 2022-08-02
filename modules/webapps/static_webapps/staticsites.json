@@ -46,7 +46,10 @@
                 "name": "[parameters('name')]",
                 "type": "Microsoft.Web/staticSites",
                 "location": "[parameters('location')]",
-                "tags": "[parameters('resourceTags')]",              
+                "tags": "[parameters('resourceTags')]",
+	        "identity": {
+                    "type": "SystemAssigned"
+                 },      
                 "properties": {
                     "repositoryUrl": "[parameters('repositoryUrl')]",
                     "branch": "[parameters('branch')]",
