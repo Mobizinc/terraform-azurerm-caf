@@ -103,7 +103,11 @@ resource "azurerm_logic_app_standard" "logic_app" {
       }
     }
   }
-
+  lifecycle {
+    ignore_changes = [
+      storage_account_name
+    ]
+  }
 }
 
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
