@@ -12,7 +12,7 @@
 resource "azurerm_logic_app_standard" "logic_app" {
   #To avoid redeploy with existing customer
   lifecycle {
-    ignore_changes = [name]
+    ignore_changes = [name, storage_account_name]
   }
   name                       = try(var.name, "logicappRanDomString")#azurecaf_name.plan.result
   location                   = var.location
@@ -103,11 +103,7 @@ resource "azurerm_logic_app_standard" "logic_app" {
       }
     }
   }
-  lifecycle {
-    ignore_changes = [
-      storage_account_name
-    ]
-  }
+
 }
 
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
