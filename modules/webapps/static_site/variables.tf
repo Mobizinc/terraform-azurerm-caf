@@ -71,3 +71,11 @@ variable "remote_objects" {
 variable "app_settings" {
   default = null
 }
+
+variable "dynamic_app_settings" {
+  default = null
+}
+
+variable "combined_objects" {
+  default = null
+}
