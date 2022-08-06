@@ -17,6 +17,15 @@ module "static_sites" {
   diagnostic_profiles = try(each.value.diagnostic_profiles, null)
   diagnostics         = local.combined_diagnostics
   tags                = try(each.value.tags, null)
+  application_insight = try(each.value.application_insight_key, null) == null ? null : module.azurerm_application_insights[each.value.application_insight_key]
+
+  remote_objects = {
+    subnets = try(local.combined_objects_networking[try(each.value.settings.lz_key, local.client_config.landingzone_key)][each.value.settings.vnet_key].subnets, null)
+    resource_groups    = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
+    private_dns        = local.combined_objects_private_dns
+    vnets              = local.combined_objects_networking
+    private_endpoints  = try(each.value.private_endpoints, {})
+    }
 }
 
 output "static_sites" {

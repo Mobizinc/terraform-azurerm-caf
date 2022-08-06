@@ -59,3 +59,7 @@ variable "diagnostic_profiles" {
 variable "diagnostics" {
   default = null
 }
+
+variable "application_insight" {
+  default = null
+}
