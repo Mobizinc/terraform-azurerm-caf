@@ -348,6 +348,7 @@ locals {
     azurerm_application_insights = try(var.webapp.azurerm_application_insights, {})
     function_apps                = try(var.webapp.function_apps, {})
     static_webapps               = try(var.webapp.static_webapps, {})
+    static_sites                 = try(var.webapp.static_sites, {})
   }
 
   enable = {

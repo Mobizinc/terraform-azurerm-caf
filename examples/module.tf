@@ -270,6 +270,7 @@ module "example" {
     app_services                 = var.app_services
     function_apps                = var.function_apps
     static_webapps               = var.static_webapps
+    static_sites                 = var.static_sites
   }
   data_factory = {
     data_factory                                 = var.data_factory

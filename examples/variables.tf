@@ -897,3 +897,6 @@ variable "runbooks" {
 variable "static_webapps" {
   default = {}
 }
+variable "static_sites" {
+  default = {}
+}
