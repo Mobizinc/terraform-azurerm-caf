@@ -63,3 +63,7 @@ variable "diagnostics" {
 variable "application_insight" {
   default = null
 }
+
+variable "remote_objects" {
+  default = null
+}
