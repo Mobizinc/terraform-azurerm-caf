@@ -67,3 +67,7 @@ variable "application_insight" {
 variable "remote_objects" {
   default = null
 }
+
+variable "app_settings" {
+  default = null
+}
