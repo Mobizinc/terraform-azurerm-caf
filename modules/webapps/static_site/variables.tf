@@ -73,9 +73,9 @@ variable "app_settings" {
 }
 
 variable "dynamic_app_settings" {
-  default = null
+  default = {}
 }
 
 variable "combined_objects" {
-  default = null
+  default = {}
 }
