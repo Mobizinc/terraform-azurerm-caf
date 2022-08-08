@@ -79,3 +79,5 @@ variable "dynamic_app_settings" {
 variable "combined_objects" {
   default = {}
 }
+
+variable "private_dns" {}
