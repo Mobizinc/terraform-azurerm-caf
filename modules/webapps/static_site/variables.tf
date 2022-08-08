@@ -28,7 +28,10 @@ variable "sku_tier" {
     error_message = "Allowed values are Free or Standard."
   }
 }
-
+variable "resource_groups" {
+  description = "combined objetcs of the resource groups. Either resource_group_name or resource_groups is required."
+  default     = {}
+}
 variable "sku_size" {
   description = "Specifies the SKU size of the Static Web App. Possible values are Free or Standard. Defaults to Free."
   type        = string
