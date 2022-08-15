@@ -33,6 +33,7 @@ variable "base_tags" {
 variable "diagnostic_profiles" {
   default = {}
 }
+
 variable "diagnostics" {
   default = null
 }

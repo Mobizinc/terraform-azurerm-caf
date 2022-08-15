@@ -966,6 +966,12 @@ variable "public_ip_prefixes" {
 variable "runbooks" {
   default = {}
 }
+variable "static_webapps" {
+  default = {}
+}
+variable "static_sites" {
+  default = {}
+}
 variable "backup_vaults" {
   default = {}
 }
@@ -987,4 +993,3 @@ variable "traffic_manager_nested_endpoint" {
 variable "traffic_manager_profile" {
   default = {}
 }
-

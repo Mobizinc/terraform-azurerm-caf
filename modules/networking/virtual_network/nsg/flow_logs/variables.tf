@@ -1,4 +1,3 @@
-
 variable "resource_id" {
   description = "(Required) Fully qualified Azure resource identifier for which you enable diagnostics."
 }

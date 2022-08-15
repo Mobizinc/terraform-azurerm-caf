@@ -1,4 +1,3 @@
-
 resource "azurecaf_name" "mysql_flexible_server" {
   name          = var.settings.name
   resource_type = "azurerm_mysql_flexible_server"
@@ -16,14 +15,11 @@ resource "azurerm_mysql_flexible_server" "mysql" {
   version             = try(var.settings.version, null)
   sku_name            = try(var.settings.sku_name, null)
   zone                = try(var.settings.zone, null)
-
   delegated_subnet_id = var.remote_objects.subnet_id
   private_dns_zone_id = var.remote_objects.private_dns_zone_id
-
   create_mode                       = try(var.settings.create_mode, "Default")
   point_in_time_restore_time_in_utc = try(var.settings.create_mode, "PointInTimeRestore") == "PointInTimeRestore" ? try(var.settings.point_in_time_restore_time_in_utc, null) : null
   source_server_id                  = try(var.settings.create_mode, "PointInTimeRestore") == "PointInTimeRestore" ? try(var.settings.source_server_id, null) : null
-
   administrator_login          = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_username, "psqladmin") : null
   administrator_password       = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_password, azurerm_key_vault_secret.mysql_administrator_password.0.value) : null
   geo_redundant_backup_enabled = try(var.settings.geo_redundant_backup_enabled, false)
