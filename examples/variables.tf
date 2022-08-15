@@ -894,6 +894,9 @@ variable "public_ip_prefixes" {
 variable "runbooks" {
   default = {}
 }
+variable "static_webapps" {
+  default = {}
+}
 variable "static_sites" {
   default = {}
 }

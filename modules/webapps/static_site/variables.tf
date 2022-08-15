@@ -29,6 +29,11 @@ variable "sku_tier" {
   }
 }
 
+variable "resource_groups" {
+  description = "combined objetcs of the resource groups. Either resource_group_name or resource_groups is required."
+  default     = {}
+}
+
 variable "sku_size" {
   description = "Specifies the SKU size of the Static Web App. Possible values are Free or Standard. Defaults to Free."
   type        = string
@@ -73,9 +78,9 @@ variable "app_settings" {
 }
 
 variable "dynamic_app_settings" {
-  default = null
+  default = {}
 }
 
 variable "combined_objects" {
-  default = null
+  default = {}
 }
