@@ -1,6 +1,6 @@
 module "private_endpoint" {
   source   = "../../networking/private_endpoint"
-  for_each = var.remote_objects.private_endpoints
+  for_each = var.private_endpoints
 
   resource_id         = azurerm_app_service.app_service.id
   location            = var.location
