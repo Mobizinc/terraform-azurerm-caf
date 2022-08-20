@@ -110,7 +110,7 @@ resource "azurerm_function_app" "function_app" {
 
     content {
       type         = var.identity.type
-      identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
+      identity_ids = lower(var.identity.type) == "userassigned" ? try(var.identity.id, local.managed_identities) : null
     }
   }
   
