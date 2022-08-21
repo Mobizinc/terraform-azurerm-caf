@@ -54,7 +54,7 @@ resource "null_resource" "list_sub" {
   count = try(var.settings.subscription_id, null) == null && var.subscription_key != "logged_in_subscription" ? 1 : 0
 
   provisioner "local-exec" {
-    command     = format("%s/scripts/list_created_sub.sh %s %$", path.module, var.settings.name, azurerm_subscription.sub.id)
+    command     = format("%s/scripts/list_created_sub.sh %s %$", path.module, var.settings.name, azurerm_subscription.sub.0.id)
     interpreter = ["/bin/bash"]
     on_failure  = fail
   }
