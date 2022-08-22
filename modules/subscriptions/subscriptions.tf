@@ -49,9 +49,7 @@ resource "null_resource" "refresh_access_token" {
 }
 
 resource "null_resource" "list_sub" {
-  depends_on = [null_resource.refresh_access_token]
-
-  count = try(var.settings.subscription_id, null) == null && var.subscription_key != "logged_in_subscription" ? 1 : 0
+  depends_on = [azurerm_subscription.sub]
   
   triggers = {
     subscription_id = azurerm_subscription.sub.0.subscription_id
