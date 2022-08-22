@@ -56,12 +56,13 @@ resource "null_resource" "list_sub" {
   }
 
   provisioner "local-exec" {
+    when    = create
     command     = format("%s/scripts/list_created_sub.sh", path.module)
     interpreter = ["/bin/bash"]
     on_failure  = fail
     environment = {
      sub_name = var.settings.name
-     sub_id = azurerm_subscription.sub.0.id
+     sub_id = azurerm_subscription.sub.0.subscription_id
   }
   }
 
