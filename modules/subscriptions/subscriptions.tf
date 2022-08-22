@@ -52,15 +52,19 @@ resource "null_resource" "list_sub" {
   depends_on = [null_resource.refresh_access_token]
 
   count = try(var.settings.subscription_id, null) == null && var.subscription_key != "logged_in_subscription" ? 1 : 0
-
+  
   triggers = {
     subscription_id = azurerm_subscription.sub.0.subscription_id
   }
 
   provisioner "local-exec" {
-    command     = format("%s/scripts/list_created_sub.sh %s %s", path.module, var.settings.name, azurerm_subscription.sub.0.subscription_id)
+    command     = format("%s/scripts/list_created_sub.sh", path.module)
     interpreter = ["/bin/bash"]
     on_failure  = fail
+    environment = {
+     sub_name = var.settings.name
+     sub_id = azurerm_subscription.sub.0.id
+  }
   }
 
 }
