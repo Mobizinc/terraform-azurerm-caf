@@ -5,3 +5,4 @@ then
    sed -i '$s/}/,\n'\"$sub_name\"':'\"$sub_id\"'}/' /tmp/sublist.json
 else
    sed -i '$s/}/,\n'\"$sub_name\"':'\"$sub_id\"'}/' /tmp/sublist.json
+fi
