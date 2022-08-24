@@ -35,7 +35,7 @@ resource "azurerm_managed_disk" "disk" {
   lifecycle {
     ignore_changes = [
       name, #for ASR disk restores
-      name, resource_group_name, location
+      resource_group_name, location
     ]
   }
 
@@ -52,5 +52,11 @@ resource "azurerm_virtual_machine_data_disk_attachment" "disk" {
   lun                       = each.value.lun
   caching                   = lookup(each.value, "caching", "None")
   write_accelerator_enabled = lookup(each.value, "write_accelerator_enabled", false)
+  lifecycle {
+    ignore_changes = [
+      name, #for ASR disk restores
+      managed_disk_id
+    ]
+  }
 
 }
