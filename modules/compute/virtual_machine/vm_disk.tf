@@ -54,7 +54,6 @@ resource "azurerm_virtual_machine_data_disk_attachment" "disk" {
   write_accelerator_enabled = lookup(each.value, "write_accelerator_enabled", false)
   lifecycle {
     ignore_changes = [
-      name, #for ASR disk restores
       managed_disk_id
     ]
   }
