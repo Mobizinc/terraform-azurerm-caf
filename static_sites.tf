@@ -27,6 +27,7 @@ module "static_sites" {
     private_dns        = local.combined_objects_private_dns
     vnets              = local.combined_objects_networking
     private_endpoints  = try(each.value.private_endpoints, {})
+    keyvault_id        = can(each.value.keyvault.key) ? local.combined_objects_keyvaults[try(each.value.keyvault.lz_key, local.client_config.landingzone_key)][each.value.keyvault.key].id : null
     }
 }
 
