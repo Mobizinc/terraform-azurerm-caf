@@ -29,7 +29,8 @@ resource "azurerm_static_site" "static_site" {
 
 resource "azurerm_key_vault_secret" "api_token_secret" {
   depends_on = [azurerm_static_site.static_site ]
-  count      = var.store_secret == "yes" ? 1 : 0
+  #count      = var.store_secret == "yes" ? 1 : 0
+  count  = lookup(var.settings, "keyvault", null) == null ? 0 : 1
   
   name  = coalesce(
     try(var.api_token_name, null),
