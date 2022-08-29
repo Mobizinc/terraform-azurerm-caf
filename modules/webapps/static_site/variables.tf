@@ -96,3 +96,7 @@ variable "keyvault_id" {
 variable "store_secret" {
   default = {}
 }
+
+variable "settings" {
+  default = {}
+}
