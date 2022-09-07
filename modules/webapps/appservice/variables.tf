@@ -73,3 +73,9 @@ variable "diagnostics" {
 variable "remote_objects" {
   default = null
 }
+variable "keyvault_name" {
+  default = {}
+}
+variable "publish_profile" {
+  default = {}
+}
