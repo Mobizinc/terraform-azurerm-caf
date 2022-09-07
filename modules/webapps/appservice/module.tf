@@ -293,3 +293,24 @@ resource "azurerm_template_deployment" "site_config" {
 
   deployment_mode = "Incremental"
 }
+
+resource "null_resource" "webapps_publish_profile" {
+    count  = var.publish_profile == "true" ? 1 : 0
+    depends_on = [azurerm_app_service.app_service]
+    provisioner "local-exec" {
+         
+         command = <<-EOT
+           az webapp deployment list-publishing-profiles -g $resource_group -n $app_name --xml > $file_name
+           az keyvault secret set --name $secret_name --file $file_name  --vault-name $key_vault  -o none 
+           rm -f $file_name
+         EOT
+
+         environment = {
+          resource_group =  var.resource_group_name
+          app_name       =  var.name
+          key_vault      =  var.keyvault_name
+          secret_name    =  format("%s-publish-profile", var.name)
+          file_name      =  format("%s-profile.xml", var.name)
+    }
+    }
+}
