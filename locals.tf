@@ -230,6 +230,7 @@ locals {
     network_watchers                                        = try(var.networking.network_watchers, {})
     private_dns                                             = try(var.networking.private_dns, {})
     private_dns_vnet_links                                  = try(var.networking.private_dns_vnet_links, {})
+    private_link_service                                    = try(var.networking.private_link_service, {})
     public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
     route_tables                                            = try(var.networking.route_tables, {})
     vhub_peerings                                           = try(var.networking.vhub_peerings, {})
