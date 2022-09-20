@@ -67,8 +67,8 @@ resource "azurerm_key_vault_secret" "mssql_managed_instance_administrator_passwo
 }
 
 resource "azurerm_mssql_managed_database" "example" {
-  depends_on = [azurerm_mssql_managed_instance.example]
+  depends_on = [azurerm_mssql_managed_instance.mssqlmi]
   for_each   = try(var.settings.databases, {})
   name                = each.value.name
-  managed_instance_id = azurerm_mssql_managed_instance.example.id
+  managed_instance_id = azurerm_mssql_managed_instance.mssqlmi.id
 }
