@@ -897,3 +897,6 @@ variable "runbooks" {
 variable "static_sites" {
   default = {}
 }
+variable "mssql_mi" {
+  default = {}
+}
