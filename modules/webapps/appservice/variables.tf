@@ -79,3 +79,6 @@ variable "keyvault_name" {
 variable "publish_profile" {
   default = {}
 }
+variable "slots_vnet" {
+  default = {}
+}
