@@ -2,7 +2,7 @@
 
 resource "azurerm_app_service_slot_virtual_network_swift_connection" "vnet_config" {
  depends_on = [azurerm_app_service_slot.slots] 
- for_each   = try(var.slots_vnet, {})
+ for_each   = var.slots_vnet
 
   slot_name      = each.value.name
   app_service_id = azurerm_app_service.app_service.id
