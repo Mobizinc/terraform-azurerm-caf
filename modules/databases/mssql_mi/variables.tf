@@ -20,3 +20,4 @@ variable "identity" {
   default = null
 }
 variable "keyvault_id" {}
+variable "remote_objects" {}
