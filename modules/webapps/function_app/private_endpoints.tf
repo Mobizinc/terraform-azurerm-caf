@@ -1,5 +1,6 @@
 module "private_endpoint" {
   source   = "../../networking/private_endpoint"
+  depends_on = [azurerm_function_app.function_app,azurerm_function_app_slot.slots]
   for_each = var.remote_objects.private_endpoints
 
   resource_id         = azurerm_function_app.function_app.id
