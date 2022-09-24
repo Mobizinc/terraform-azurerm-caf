@@ -1,5 +1,4 @@
 resource "azurecaf_name" "mssqlmi" {
-
   name          = var.settings.name
   resource_type = "azurerm_mssql_mi" 
   prefixes      = var.global_settings.prefixes
@@ -36,7 +35,6 @@ resource "azurerm_mssql_managed_instance" "mssqlmi" {
       
     }
   }
-
 }
 
 
@@ -66,9 +64,36 @@ resource "azurerm_key_vault_secret" "mssql_managed_instance_administrator_passwo
   }
 }
 
-resource "azurerm_mssql_managed_database" "mssqlmi_database" {
+resource "azurerm_mssql_managed_database" "mssqlmi" {
   depends_on = [azurerm_mssql_managed_instance.mssqlmi]
   for_each   = try(var.settings.databases, {})
   name                = each.value.name
   managed_instance_id = azurerm_mssql_managed_instance.mssqlmi.id
+}
+
+module "private_endpoint" {
+  source   = "../../networking/private_endpoint"
+  for_each = var.remote_objects.private_endpoints
+
+  resource_id         = azurerm_mssql_managed_instance.mssqlmi.id
+  location            = var.location
+  name                = each.value.name
+  resource_group_name = var.resource_group_name
+  subnet_id           = var.subnet_id
+  settings            = each.value
+  global_settings     = var.global_settings
+  base_tags           = var.base_tags
+  private_dns         = var.remote_objects.private_dns
+  client_config       = var.client_config
+}
+
+resource "azurerm_mssql_managed_instance_active_directory_administrator" "example" {
+  depends_on = [azurerm_mssql_managed_instance.mssqlmi]
+  for_each =  try(var.settings.active_directory_administrator, {})
+
+  managed_instance_id = azurerm_mssql_managed_instance.mssqlmi.id
+  #login          = each.value.login
+  login_username = try(var.settings.active_directory_administrator.login_username, try(var.azuread_groups[var.client_config.landingzone_key][var.settings.active_directory_administrator.azuread_group_key].name, var.azuread_groups[var.settings.active_directory_administrator.lz_key][var.settings.active_directory_administrator.azuread_group_key].name))
+  object_id      = try(var.settings.active_directory_administrator.object_id, try(var.azuread_groups[var.client_config.landingzone_key][var.settings.active_directory_administrator.azuread_group_key].id, var.azuread_groups[var.settings.active_directory_administrator.lz_key][var.settings.active_directory_administrator.azuread_group_key].id))
+  tenant_id      = try(var.settings.active_directory_administrator.tenant_id, try(var.azuread_groups[var.client_config.landingzone_key][var.settings.active_directory_administrator.azuread_group_key].tenant_id, var.azuread_groups[var.settings.active_directory_administrator.lz_key][var.settings.active_directory_administrator.azuread_group_key].tenant_id))
 }

@@ -900,3 +900,6 @@ variable "static_sites" {
 variable "mssql_mi" {
   default = {}
 }
+variable "mssql_mi_failover" {
+  default = {}
+}

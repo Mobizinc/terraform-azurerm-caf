@@ -73,6 +73,7 @@ locals {
     mssql_managed_databases                        = try(local.combined_objects_mssql_managed_databases, null)
     mssql_managed_instances                        = try(local.combined_objects_mssql_managed_instances, null)
     mssql_mi                                       = try(local.combined_objects_mssql_mi, null)
+    mssql_mi_failover                              = try(local.combined_objects_mssql_mi_failover, null)
     mssql_managed_instances_secondary              = try(local.combined_objects_mssql_managed_instances_secondary, null)
     mssql_servers                                  = try(local.combined_objects_mssql_servers, null)
     mysql_servers                                  = try(local.combined_objects_mysql_servers, null)

@@ -7,7 +7,6 @@ variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = map(any)
 }
-variable "subnet_id" {}
 variable "resource_group_name" {
   description = "(Required) The name of the resource group where to create the resource."
   type        = string
@@ -16,11 +15,5 @@ variable "location" {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   type        = string
 }
-
-variable "identity" {
-  default = null
-}
-
-variable "keyvault_id" {}
-variable "remote_objects" {}
-variable "azuread_groups" {}
+variable "primary_server_id" {}
+variable "secondary_server_id" {}

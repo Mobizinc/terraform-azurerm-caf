@@ -119,6 +119,7 @@ locals {
     mssql_mi_secondary_tdes            = try(var.database.mssql_mi_secondary_tdes, {})
     mssql_mi_tdes                      = try(var.database.mssql_mi_tdes, {})
     mssql_mi                           = try(var.database.mssql_mi, {})
+    mssql_mi_failover                  = try(var.database.mssql_mi_failover, {})
     mssql_servers                      = try(var.database.mssql_servers, {})
     mysql_databases                    = try(var.database.mysql_databases, {})
     mysql_servers                      = try(var.database.mysql_servers, {})

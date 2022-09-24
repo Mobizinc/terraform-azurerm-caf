@@ -132,6 +132,7 @@ module "example" {
     mssql_mi_secondary_tdes            = var.mssql_mi_secondary_tdes
     mssql_mi_tdes                      = var.mssql_mi_tdes
     mssql_mi                           = var.mssql_mi
+    mssql_mi_failover                  = var.mssql_mi_failover
     mssql_servers                      = var.mssql_servers
     mysql_servers                      = var.mysql_servers
     postgresql_flexible_servers        = var.postgresql_flexible_servers
