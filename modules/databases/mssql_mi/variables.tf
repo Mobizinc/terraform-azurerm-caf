@@ -24,3 +24,4 @@ variable "identity" {
 variable "keyvault_id" {}
 variable "remote_objects" {}
 variable "azuread_groups" {}
+variable "active_directory_administrator" {}
