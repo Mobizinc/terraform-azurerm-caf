@@ -12,6 +12,7 @@ module "mssql_mi" {
   base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
   identity            = try(each.value.identity, null)
   azuread_groups      = local.combined_objects_azuread_groups
+  active_directory_administrator = try(each.value.active_directory_administrator, {} )  
   keyvault_id         = coalesce(
     try(each.value.administrator_password, null),
     try(module.keyvaults[each.value.keyvault_key].id, null),
