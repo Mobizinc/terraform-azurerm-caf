@@ -6,7 +6,7 @@ module "private_endpoint" {
   location            = var.location
   name                = each.value.name
   resource_group_name = var.resource_group_name
-  subnet_id           = var.subnet_id
+  subnet_id           = try(var.remote_objects.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, var.remote_objects.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
   settings            = each.value
   global_settings     = var.global_settings
   base_tags           = var.base_tags
