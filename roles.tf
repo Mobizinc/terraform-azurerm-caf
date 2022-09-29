@@ -103,6 +103,7 @@ locals {
     mssql_elastic_pools                        = local.combined_objects_mssql_elastic_pools
     mssql_managed_databases                    = local.combined_objects_mssql_managed_databases
     mssql_managed_instances                    = local.combined_objects_mssql_managed_instances
+    mssql_mi                                   = local.combined_objects_mssql_mi  
     mssql_servers                              = local.combined_objects_mssql_servers
     mysql_servers                              = local.combined_objects_mysql_servers
     network_watchers                           = local.combined_objects_network_watchers
