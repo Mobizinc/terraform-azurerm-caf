@@ -1,7 +1,7 @@
 module "mssql_mi" {
   source     = "./modules/databases/mssql_mi"
   for_each   = local.database.mssql_mi
-  depends_on = [module.keyvaults, module.networking]
+  depends_on = [module.keyvaults, module.networking,module.azuread_roles_mssql_mi]
 
   global_settings     = local.global_settings
   client_config       = local.client_config
