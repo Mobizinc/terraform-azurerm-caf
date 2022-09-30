@@ -1,10 +1,13 @@
-
 module "subscriptions" {
   source = "./modules/subscriptions"
 
   for_each = var.subscriptions
 
   global_settings  = local.global_settings
+  local_combined_resources = {
+    # Add combined objects that need to be included in the filter
+    subscriptions         = local.combined_objects_subscriptions,
+  }
   subscription_key = each.key
   settings         = each.value
   client_config    = local.client_config
