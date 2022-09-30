@@ -1,6 +1,16 @@
 # Per options https://www.terraform.io/docs/providers/azurerm/r/app_service.html
 
+resource "azurerm_app_service_slot_virtual_network_swift_connection" "vnet_config" {
+ depends_on = [azurerm_app_service_slot.slots] 
+ for_each   = var.slots_vnet
+
+ slot_name      = each.value.name
+ app_service_id = azurerm_app_service.app_service.id
+ subnet_id      = try(var.remote_objects.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, var.remote_objects.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
+}
+
 resource "azurerm_app_service_slot" "slots" {
+  depends_on = [azurecaf_name.app_service]
   for_each = var.slots
 
   name                = each.value.name
@@ -51,7 +61,8 @@ resource "azurerm_app_service_slot" "slots" {
       use_32_bit_worker_process = lookup(var.settings.site_config, "use_32_bit_worker_process", false)
       websockets_enabled        = lookup(var.settings.site_config, "websockets_enabled", false)
       scm_type                  = lookup(var.settings.site_config, "scm_type", null)
-
+      vnet_route_all_enabled    = lookup(var.settings.site_config, "vnet_route_all_enabled", false)
+      
       dynamic "cors" {
         for_each = lookup(var.settings.site_config, "cors", {}) != {} ? [1] : []
 

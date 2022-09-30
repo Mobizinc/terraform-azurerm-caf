@@ -25,6 +25,7 @@ module "app_services" {
   diagnostics          = local.combined_diagnostics
   storage_accounts     = local.combined_objects_storage_accounts
   tags                 = try(each.value.tags, null)
+  slots_vnet           = try(each.value.slots_vnet, {})  
   publish_profile      = try(each.value.publish_profile, null)
   keyvault_name        = can(each.value.keyvault.key) ? local.combined_objects_keyvaults[try(each.value.keyvault.lz_key, local.client_config.landingzone_key)][each.value.keyvault.key].name : null
   remote_objects = {
