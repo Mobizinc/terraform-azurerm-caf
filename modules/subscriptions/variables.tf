@@ -7,7 +7,7 @@ variable "settings" {
 }
 variable "subscription_key" {}
 variable "client_config" {}
-# variable "local_combined_subscriptions" {}
+variable "local_combined_resources" {}
 variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
