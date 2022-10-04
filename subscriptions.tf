@@ -44,7 +44,7 @@ module "subscription_diagnostics" {
   
 #   resource_id       = each.value.resource_id
   resource_id       = coalesce(
-    try(format("/subscriptions/%s", try(local.combined_objects_subscriptions[try(each.value.subscription.lz_key, local.client_config.landingzone_key)][each.value.subscription.key].subscription_id, null), null),
+    try(format("/subscriptions/%s", try(local.combined_objects_subscriptions[try(each.value.subscription.lz_key, local.client_config.landingzone_key)][each.value.subscription.key].subscription_id, null)), null),
     try(format("/subscriptions/%s", each.value.subscription_id), null),
     local.client_config.subscription_id)
   resource_location = local.global_settings.regions[local.global_settings.default_region]
