@@ -1,12 +1,12 @@
 data "azurerm_billing_enrollment_account_scope" "sub" {
-  count = try(var.settings.subscription_id, null) == null && var.subscription_key != "logged_in_subscription" && var.subscription_key != "other_subscription" && try(var.settings.enrollment_account_name, null) != null ? 1 : 0
+  count = try(var.settings.subscription_id, null) == null && var.subscription_key != "logged_in_subscription" && try(var.settings.enrollment_account_name, null) != null ? 1 : 0
 
   billing_account_name    = var.settings.billing_account_name
   enrollment_account_name = var.settings.enrollment_account_name
 }
 
 data "azurerm_billing_mca_account_scope" "sub" {
-  count = try(var.settings.subscription_id, null) == null && var.subscription_key != "logged_in_subscription" && var.subscription_key != "other_subscription" && try(var.settings.billing_profile_name, null) != null ? 1 : 0
+  count = try(var.settings.subscription_id, null) == null && var.subscription_key != "logged_in_subscription" && try(var.settings.billing_profile_name, null) != null ? 1 : 0
 
   billing_account_name = var.settings.billing_account_name
   billing_profile_name = var.settings.billing_profile_name
@@ -14,7 +14,7 @@ data "azurerm_billing_mca_account_scope" "sub" {
 }
 
 resource "azurerm_subscription" "sub" {
-  count = var.subscription_key != "logged_in_subscription" && var.subscription_key != "other_subscription" && lookup(var.settings, "create_alias", true) ? 1 : 0
+  count = var.subscription_key != "logged_in_subscription" && lookup(var.settings, "create_alias", true) ? 1 : 0
 
   alias             = try(var.settings.alias, null) == null ? var.subscription_key : var.settings.alias
   subscription_name = var.settings.name
@@ -34,7 +34,7 @@ resource "azurerm_subscription" "sub" {
 resource "null_resource" "refresh_access_token" {
   depends_on = [azurerm_subscription.sub]
 
-  count = try(var.settings.subscription_id, null) == null && var.subscription_key != "logged_in_subscription" && var.subscription_key != "other_subscription" ? 1 : 0
+  count = try(var.settings.subscription_id, null) == null && var.subscription_key != "logged_in_subscription" ? 1 : 0
 
   triggers = {
     subscription_id = azurerm_subscription.sub.0.subscription_id
