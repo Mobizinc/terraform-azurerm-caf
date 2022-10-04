@@ -114,6 +114,7 @@ module "example" {
     diagnostic_storage_accounts     = var.diagnostic_storage_accounts
     diagnostics_definition          = var.diagnostics_definition
     diagnostics_destinations        = var.diagnostics_destinations
+    subscription_diagnostics        = var.subscription_diagnostics
   }
   database = {
     app_config                         = var.app_config
