@@ -107,6 +107,7 @@ module "example" {
     wvd_application_groups              = var.wvd_application_groups
     wvd_host_pools                      = var.wvd_host_pools
     wvd_workspaces                      = var.wvd_workspaces
+    subscription_diagnostics            = var.subscription_diagnostics
   }
   diagnostics = {
     diagnostic_event_hub_namespaces = var.diagnostic_event_hub_namespaces
@@ -114,7 +115,6 @@ module "example" {
     diagnostic_storage_accounts     = var.diagnostic_storage_accounts
     diagnostics_definition          = var.diagnostics_definition
     diagnostics_destinations        = var.diagnostics_destinations
-    subscription_diagnostics        = var.subscription_diagnostics
   }
   database = {
     app_config                         = var.app_config
