@@ -65,7 +65,6 @@ locals {
     sqlManagement                               = try(var.cloud.sqlManagement, {})
     synapseAnalyticsResourceId                  = try(var.cloud.synapseAnalyticsResourceId, {})
     vmImageAliasDoc                             = try(var.cloud.vmImageAliasDoc, {})
-    subscription_diagnostics                    = try(var.cloud.subscription_diagnostics, {})
   }, var.cloud)
 
   compute = {
@@ -93,6 +92,7 @@ locals {
     virtual_machines                    = try(var.compute.virtual_machines, {})
     virtual_machine_scale_sets          = try(var.compute.virtual_machine_scale_sets, {})
     runbooks                            = try(var.compute.runbooks, {})
+    subscription_diagnostics            = try(var.compute.subscription_diagnostics, {})
   }
 
   communication = {
