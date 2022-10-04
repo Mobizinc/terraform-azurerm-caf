@@ -36,7 +36,7 @@ output "subscriptions" {
 
 module "sub_diagnostics" {
   source = "./modules/diagnostics"
-  for_each = var.subscriptions
+  for_each = local.compute.subscription_diagnostics
 #   for_each = {
 #     for key, value in local.combined_objects_subscriptions : key => value
 #     if try(value.diagnostic_profiles, null) != null
