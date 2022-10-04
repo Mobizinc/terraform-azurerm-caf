@@ -65,6 +65,7 @@ locals {
     sqlManagement                               = try(var.cloud.sqlManagement, {})
     synapseAnalyticsResourceId                  = try(var.cloud.synapseAnalyticsResourceId, {})
     vmImageAliasDoc                             = try(var.cloud.vmImageAliasDoc, {})
+    subscription_diagnostics                    = try(var.cloud.subscription_diagnostics, {})
   }, var.cloud)
 
   compute = {
