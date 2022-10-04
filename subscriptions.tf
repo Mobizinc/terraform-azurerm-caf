@@ -34,7 +34,7 @@ output "subscriptions" {
   value = module.subscriptions
 }
 
-module "sub_diagnostics" {
+module "subscription_diagnostics" {
   source = "./modules/diagnostics"
   for_each = local.compute.subscription_diagnostics
 #   for_each = {
@@ -43,7 +43,10 @@ module "sub_diagnostics" {
 #   }
   
 #   resource_id       = each.value.resource_id
-  resource_id       = each.key == "logged_in_subscription" ? format("/subscriptions/%s", local.client_config.subscription_id) : (each.key == "other_subscription" ? format("/subscriptions/%s", try(local.combined_objects_subscriptions[try(each.value.subscription.lz_key, local.client_config.landingzone_key)][each.value.subscription.key].subscription_id, null)) : format("/subscriptions/%s", each.value.subscription_id))
+  resource_id       = coalesce(
+    try(format("/subscriptions/%s", try(local.combined_objects_subscriptions[try(each.value.subscription.lz_key, local.client_config.landingzone_key)][each.value.subscription.key].subscription_id, null), null),
+    try(format("/subscriptions/%s", each.value.subscription_id), null),
+    local.client_config.subscription_id)
   resource_location = local.global_settings.regions[local.global_settings.default_region]
   diagnostics       = local.combined_diagnostics
   profiles          = try(each.value.diagnostic_profiles, null)
