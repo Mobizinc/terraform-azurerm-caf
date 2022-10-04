@@ -32,3 +32,19 @@ module "subscription_billing_role_assignments" {
 output "subscriptions" {
   value = module.subscriptions
 }
+
+module "sub_diagnostics" {
+  source = "./modules/diagnostics"
+  for_each = var.subscriptions
+#   for_each = {
+#     for key, value in local.combined_objects_subscriptions : key => value
+#     if try(value.diagnostic_profiles, null) != null
+#   }
+  
+  # resource_id       = var.resource_id
+  resource_id       = each.key == "logged_in_subscription" ? format("/subscriptions/%s", local.client_config.subscription_id) : (each.key == "other_subscription" ? format("/subscriptions/%s", try(local.combined_objects_subscriptions[try(each.value.subscription.lz_key, local.client_config.landingzone_key)][each.value.subscription.key].subscription_id, null)) : format("/subscriptions/%s", each.value.subscription_id))
+  resource_location = local.global_settings.regions[local.global_settings.default_region]
+  diagnostics       = local.combined_diagnostics
+  profiles          = try(each.value.diagnostic_profiles, null)
+  global_settings   = local.global_settings
+}
