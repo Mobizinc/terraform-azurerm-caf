@@ -92,6 +92,7 @@ locals {
     virtual_machines                    = try(var.compute.virtual_machines, {})
     virtual_machine_scale_sets          = try(var.compute.virtual_machine_scale_sets, {})
     runbooks                            = try(var.compute.runbooks, {})
+    subscription_diagnostics            = try(var.compute.subscription_diagnostics, {})
   }
 
   communication = {
