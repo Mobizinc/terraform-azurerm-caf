@@ -23,7 +23,7 @@ resource "azurerm_mssql_managed_instance" "mssqlmi" {
   public_data_endpoint_enabled = try(var.settings.public_data_endpoint_enabled, false)
   timezone_id          = try(var.settings.timezone_id, null)
   storage_account_type = try(var.settings.storage_account_type, null)
-  dns_zone_partner_id  = try(var.dns_zone_partner_id, null)
+  dns_zone_partner_id  = try(var.settings.dns_zone_partner_id, null)
   administrator_login  = var.settings.administrator_login
   administrator_login_password = try(var.settings.administrator_password, azurerm_key_vault_secret.mssql_managed_instance_administrator_password.0.value)
 
