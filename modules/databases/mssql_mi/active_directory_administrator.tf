@@ -4,7 +4,9 @@ data "azurerm_client_config" "current" {
 resource "azurerm_mssql_managed_instance_active_directory_administrator" "sql_mi_active_directory_administrator" {
   depends_on = [azurerm_mssql_managed_instance.mssqlmi]
   for_each =  var.active_directory_administrator
-  
+  lifecycle {
+    ignore_changes = [managed_instance_id]
+  }
 
   managed_instance_id         = azurerm_mssql_managed_instance.mssqlmi.id  
   azuread_authentication_only = try(each.value.azuread_authentication_only , false)
