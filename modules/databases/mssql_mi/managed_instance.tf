@@ -8,6 +8,9 @@ resource "azurecaf_name" "mssqlmi" {
 }
 
 resource "azurerm_mssql_managed_instance" "mssqlmi" {
+  lifecycle {
+    ignore_changes = [sku_name]
+  }
   name                = azurecaf_name.mssqlmi.result
   location            = var.location
   resource_group_name = var.resource_group_name
