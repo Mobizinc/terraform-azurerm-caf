@@ -78,6 +78,8 @@ locals {
   combined_objects_mssql_databases                                = merge(tomap({ (local.client_config.landingzone_key) = module.mssql_databases }), try(var.remote_objects.mssql_databases, {}))
   combined_objects_mssql_elastic_pools                            = merge(tomap({ (local.client_config.landingzone_key) = module.mssql_elastic_pools }), try(var.remote_objects.mssql_elastic_pools, {}))
   combined_objects_mssql_managed_databases                        = merge(tomap({ (local.client_config.landingzone_key) = module.mssql_managed_databases }), try(var.remote_objects.mssql_managed_databases, {}))
+  combined_objects_mssql_mi                                       = merge(tomap({ (local.client_config.landingzone_key) = module.mssql_mi }), try(var.remote_objects.mssql_mi, {}))
+  combined_objects_mssql_mi_failover                              = merge(tomap({ (local.client_config.landingzone_key) = module.mssql_mi_failover }), try(var.remote_objects.mssql_mi_failover, {}))
   combined_objects_mssql_managed_instances                        = merge(tomap({ (local.client_config.landingzone_key) = module.mssql_managed_instances }), try(var.remote_objects.mssql_managed_instances, {}))
   combined_objects_mssql_managed_instances_secondary              = merge(tomap({ (local.client_config.landingzone_key) = module.mssql_managed_instances_secondary }), try(var.remote_objects.mssql_managed_instances_secondary, {}))
   combined_objects_mssql_servers                                  = merge(tomap({ (local.client_config.landingzone_key) = module.mssql_servers }), try(var.remote_objects.mssql_servers, {}))
