@@ -19,7 +19,7 @@ resource "null_resource" "retentiondays" {
           resource_group =  var.resource_group_name
           dbname         =  each.value.dbname
           retentiondays  =  each.value.retentiondays
-          servername     =  each.value.azurerm_mssql_managed_instance.mssqlmi.name
+          servername     =  azurerm_mssql_managed_instance.mssqlmi.name
          
     }
     }
