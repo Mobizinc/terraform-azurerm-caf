@@ -7,7 +7,7 @@ resource "azurerm_mssql_managed_database" "mssqlmi" {
 
 resource "null_resource" "retentiondays" {
     depends_on          = [azurerm_mssql_managed_database.mssqlmi]
-    for_each            = try(var.settings.retentiondays, {})
+    for_each            var.retentiondays
     triggers = {
     retentiondays  =  each.value.retentiondays  
   }
