@@ -8,7 +8,9 @@ resource "azurerm_mssql_managed_database" "mssqlmi" {
 resource "null_resource" "retentiondays" {
     depends_on          = [azurerm_mssql_managed_database.mssqlmi]
     for_each            = try(var.settings.retentiondays, {})
-   
+    triggers = {
+    retentiondays  =  each.value.retentiondays  
+  }
     provisioner "local-exec" {
          
          command = <<-EOT
@@ -18,7 +20,7 @@ resource "null_resource" "retentiondays" {
          environment = {
           resource_group =  var.resource_group_name
           dbname         =  each.value.dbname
-          retentiondays  =  each.value.retentiondays
+          retentiondays  =  self.triggers.retentiondays
           servername     =  azurerm_mssql_managed_instance.mssqlmi.name
          
     }
