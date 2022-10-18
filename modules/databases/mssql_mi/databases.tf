@@ -5,17 +5,22 @@ resource "azurerm_mssql_managed_database" "mssqlmi" {
   managed_instance_id = azurerm_mssql_managed_instance.mssqlmi.id
 }
 
-resource "azurerm_resource_group_template_deployment" "backupltr" {
-  for_each            = try(var.settings.databases, {})
-  
-  name                = each.value.name
-  resource_group_name = var.resource_group_name
-  deployment_mode     = "Incremental"
-  parameters_content  = jsonencode({
-  
-    "serverName"       = { value = azurerm_mssql_managed_instance.mssqlmi.name }
-    "dbName"           = { value = each.value.name }
-    "retentionDays"    = { value = each.value.retentionDays }
-  })
-  template_content     = file(local.arm_filename)
+resource "null_resource" "retentiondays" {
+    depends_on          = [azurerm_mssql_managed_database.mssqlmi]
+    for_each            = try(var.settings.retentiondays, {})
+   
+    provisioner "local-exec" {
+         
+         command = <<-EOT
+           az sql midb short-term-retention-policy set -g $resource_group --mi $servername -n $dbname --retention-days $retentiondays
+         EOT
+
+         environment = {
+          resource_group =  var.resource_group_name
+          dbname         =  each.value.dbname
+          retentiondays  =  each.value.retentiondays
+          servername     =  each.value.azurerm_mssql_managed_instance.mssqlmi.name
+         
+    }
+    }
 }
