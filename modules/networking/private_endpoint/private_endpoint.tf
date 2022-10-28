@@ -32,8 +32,7 @@ resource "azurerm_private_endpoint" "pep" {
       private_dns_zone_ids = concat(
         flatten([
           for key in private_dns_zone_group.value.keys : [
-            try(var.private_dns[try(private_dns_zone_group.value.lz_key, var.client_config.landingzone_key)][key].id, [])
-          ]
+            can(private_dns_zone_group.value.ids) ? var.private_dns[try(private_dns_zone_group.value.lz_key, var.client_config.landingzone_key)][key].id : []          ]
           ]
         ),
         lookup(private_dns_zone_group.value, "ids", [])
