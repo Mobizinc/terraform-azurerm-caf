@@ -71,7 +71,7 @@ variable "diagnostics" {
 }
 
 variable "remote_objects" {
-  default = null
+  default = {}
 }
 
 variable "keyvault_name" {
