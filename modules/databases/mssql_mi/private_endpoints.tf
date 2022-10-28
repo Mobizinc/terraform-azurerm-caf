@@ -1,9 +1,8 @@
 module "private_endpoint" {
   source   = "../../networking/private_endpoint"
   for_each = var.remote_objects.private_endpoints
-  #depends_on = [azurerm_app_service.app_service,azurerm_app_service_slot.slots]
-  
-  resource_id         = azurerm_app_service.app_service.id
+
+  resource_id         = azurerm_mssql_managed_instance.mssqlmi.id
   location            = var.location
   name                = each.value.name
   resource_group_name = var.resource_group_name
