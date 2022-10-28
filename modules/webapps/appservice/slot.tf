@@ -10,7 +10,7 @@ resource "azurerm_app_service_slot_virtual_network_swift_connection" "vnet_confi
 }
 
 resource "azurerm_app_service_slot" "slots" {
-  depends_on = [azurecaf_name.app_service]
+  depends_on = [azurerm_app_service.app_service]
   for_each = var.slots
 
   name                = each.value.name
