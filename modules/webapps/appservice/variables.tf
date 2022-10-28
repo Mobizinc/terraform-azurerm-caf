@@ -85,3 +85,6 @@ variable "publish_profile" {
 variable "slots_vnet" {
   default = {}
 }
+variable "private_dns" {
+  default = {}
+}
