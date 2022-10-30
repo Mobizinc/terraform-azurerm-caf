@@ -51,7 +51,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
   name                = azurecaf_name.aks.result
   location            = var.location
   resource_group_name = var.resource_group_name
-
+  oidc_issuer_enabled = try(var.settings.oidc_issuer_enabled , false)
+    
   default_node_pool {
     availability_zones           = try(var.settings.default_node_pool.availability_zones, null)
     enable_auto_scaling          = try(var.settings.default_node_pool.enable_auto_scaling, false)
