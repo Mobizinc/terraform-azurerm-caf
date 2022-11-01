@@ -33,7 +33,7 @@ resource "azurerm_private_endpoint" "pep" {
         flatten([
           for key in private_dns_zone_group.value.keys : [
             coalesce(
-              try(private_dns_zone_group.value.ids,[]),
+              try(private_dns_zone_group.value.ids, []),
               try(var.private_dns[try(private_dns_zone_group.value.lz_key, var.client_config.landingzone_key)][key].id, [])
               )
           ]
