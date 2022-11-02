@@ -71,7 +71,7 @@ variable "diagnostics" {
 }
 
 variable "remote_objects" {
-  default = null
+  default = {}
 }
 
 variable "keyvault_name" {
@@ -83,5 +83,8 @@ variable "publish_profile" {
 }
 
 variable "slots_vnet" {
+  default = {}
+}
+variable "private_dns" {
   default = {}
 }

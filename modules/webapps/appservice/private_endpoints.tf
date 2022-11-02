@@ -1,8 +1,8 @@
 module "private_endpoint" {
   source   = "../../networking/private_endpoint"
   for_each = var.remote_objects.private_endpoints
-  #depends_on = [azurerm_app_service.app_service,azurerm_app_service_slot.slots]
-  
+  depends_on = [azurerm_app_service.app_service,azurerm_app_service_slot.slots]
+
   resource_id         = azurerm_app_service.app_service.id
   location            = var.location
   name                = each.value.name
@@ -11,6 +11,6 @@ module "private_endpoint" {
   settings            = each.value
   global_settings     = var.global_settings
   base_tags           = var.base_tags
-  private_dns         = var.remote_objects.private_dns
+  private_dns         = var.private_dns
   client_config       = var.client_config
 }
