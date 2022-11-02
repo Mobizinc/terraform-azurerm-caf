@@ -9,7 +9,11 @@ resource "azurerm_express_route_circuit_peering" "peering" {
   # Optional
   peer_asn   = try(var.settings.peer_asn, null)
   shared_key = try(var.settings.shared_key, null)
-
+  lifecycle {
+     ignore_changes = [
+       resource_group_name, express_route_circuit_name
+     ]
+  }
   #
   # For Microsoft peering
   #

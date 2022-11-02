@@ -4,7 +4,7 @@ resource "azurerm_express_route_circuit_authorization" "circuitauth" {
   resource_group_name        = var.resource_group_name
   lifecycle {
     ignore_changes = [
-      resource_group_name
+      resource_group_name, express_route_circuit_name
     ]
   }
 }
