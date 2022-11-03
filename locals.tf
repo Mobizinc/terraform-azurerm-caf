@@ -288,6 +288,7 @@ locals {
     virtual_network_gateways                                = try(var.networking.virtual_network_gateways, {})
     virtual_wans                                            = try(var.networking.virtual_wans, {})
     vnet_peerings                                           = try(var.networking.vnet_peerings, {})
+    vnet_peerings_v1                                        = try(var.networking.vnet_peerings_v1, {})    
     vnets                                                   = try(var.networking.vnets, {})
     virtual_subnets                                         = try(var.networking.virtual_subnets, {})
     vpn_gateway_connections                                 = try(var.networking.vpn_gateway_connections, {})
