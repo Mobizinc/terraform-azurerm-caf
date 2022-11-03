@@ -34,7 +34,7 @@ resource "azurerm_app_service" "app_service" {
   }
 
   key_vault_reference_identity_id = can(var.settings.key_vault_reference_identity.key) ? var.combined_objects.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.key_vault_reference_identity.key].id : try(var.settings.key_vault_reference_identity.id, null)
-  
+
   dynamic "site_config" {
     for_each = lookup(var.settings, "site_config", {}) != {} ? [1] : []
 
@@ -45,6 +45,7 @@ resource "azurerm_app_service" "app_service" {
       default_documents         = lookup(var.settings.site_config, "default_documents", null)
       dotnet_framework_version  = lookup(var.settings.site_config, "dotnet_framework_version", null)
       ftps_state                = lookup(var.settings.site_config, "ftps_state", "FtpsOnly")
+      health_check_path         = lookup(var.settings.site_config, "health_check_path", null)
       http2_enabled             = lookup(var.settings.site_config, "http2_enabled", false)
       java_version              = lookup(var.settings.site_config, "java_version", null)
       java_container            = lookup(var.settings.site_config, "java_container", null)
@@ -314,4 +315,12 @@ resource "null_resource" "webapps_publish_profile" {
           file_name      =  format("%s-profile.xml", var.name)
     }
     }
+}
+resource "azurerm_app_service_custom_hostname_binding" "app_service" {
+  for_each            = try(var.settings.custom_hostname_binding, {})
+  app_service_name    = azurerm_app_service.app_service.name
+  resource_group_name = var.resource_group_name
+  hostname            = each.value.hostname
+  ssl_state           = try(each.value.ssl_state, null)
+  thumbprint          = try(each.value.thumbprint, null)
 }

@@ -24,6 +24,7 @@ module "example" {
   role_mapping                          = var.role_mapping
   storage_accounts                      = var.storage_accounts
   subscription_billing_role_assignments = var.subscription_billing_role_assignments
+  resource_provider_registration        = var.resource_provider_registration
   tags                                  = local.tags
 
   azuread = {
@@ -86,6 +87,11 @@ module "example" {
     aks_clusters                        = var.aks_clusters
     availability_sets                   = var.availability_sets
     azure_container_registries          = var.azure_container_registries
+    batch_accounts                      = var.batch_accounts
+    batch_applications                  = var.batch_applications
+    batch_certificates                  = var.batch_certificates
+    batch_jobs                          = var.batch_jobs
+    batch_pools                         = var.batch_pools
     bastion_hosts                       = var.bastion_hosts
     container_groups                    = var.container_groups
     dedicated_host_groups               = var.dedicated_host_groups
@@ -138,6 +144,7 @@ module "example" {
     postgresql_flexible_servers        = var.postgresql_flexible_servers
     postgresql_servers                 = var.postgresql_servers
     synapse_workspaces                 = var.synapse_workspaces
+    mysql_flexible_server              = var.mysql_flexible_server
     data_explorer = {
       kusto_clusters                         = var.kusto_clusters
       kusto_databases                        = var.kusto_databases
@@ -150,11 +157,20 @@ module "example" {
       kusto_iothub_data_connections          = var.kusto_iothub_data_connections
     }
   }
+  data_protection = {
+    backup_vaults          = var.backup_vaults
+    backup_vault_policies  = var.backup_vault_policies
+    backup_vault_instances = var.backup_vault_instances
+  }
   messaging = {
-    signalr_services      = var.signalr_services
-    servicebus_namespaces = var.servicebus_namespaces
-    servicebus_topics     = var.servicebus_topics
-    servicebus_queues     = var.servicebus_queues
+    signalr_services             = var.signalr_services
+    servicebus_namespaces        = var.servicebus_namespaces
+    servicebus_topics            = var.servicebus_topics
+    servicebus_queues            = var.servicebus_queues
+    eventgrid_domain             = var.eventgrid_domain
+    eventgrid_topic              = var.eventgrid_topic
+    eventgrid_event_subscription = var.eventgrid_event_subscription
+    eventgrid_domain_topic       = var.eventgrid_domain_topic
   }
   networking = {
     application_gateway_applications                        = var.application_gateway_applications
@@ -200,17 +216,25 @@ module "example" {
     private_dns_vnet_links                                  = var.private_dns_vnet_links
     private_endpoints                                       = var.private_endpoints
     public_ip_addresses                                     = var.public_ip_addresses
+    relay_namespace                                         = var.relay_namespace
+    relay_hybrid_connection                                 = var.relay_hybrid_connection
     public_ip_prefixes                                      = var.public_ip_prefixes
     route_tables                                            = var.route_tables
+    traffic_manager_profile                                 = var.traffic_manager_profile
+    traffic_manager_nested_endpoint                         = var.traffic_manager_nested_endpoint
+    traffic_manager_external_endpoint                       = var.traffic_manager_external_endpoint
+    traffic_manager_azure_endpoint                          = var.traffic_manager_azure_endpoint
     vhub_peerings                                           = var.vhub_peerings
     virtual_hub_connections                                 = var.virtual_hub_connections
     virtual_hub_er_gateway_connections                      = var.virtual_hub_er_gateway_connections
+    virtual_hub_route_table_routes                          = var.virtual_hub_route_table_routes
     virtual_hub_route_tables                                = var.virtual_hub_route_tables
     virtual_hubs                                            = var.virtual_hubs
     virtual_network_gateway_connections                     = var.virtual_network_gateway_connections
     virtual_network_gateways                                = var.virtual_network_gateways
     virtual_wans                                            = var.virtual_wans
     vnet_peerings                                           = var.vnet_peerings
+    vnet_peerings_v1                                        = var.vnet_peerings_v1
     vnets                                                   = var.vnets
     virtual_subnets                                         = var.virtual_subnets
     vpn_gateway_connections                                 = var.vpn_gateway_connections
@@ -245,6 +269,8 @@ module "example" {
   }
 
   shared_services = {
+    automations                    = var.automations
+    automation_log_analytics_links = var.automation_log_analytics_links
     consumption_budgets            = var.consumption_budgets
     image_definitions              = var.image_definitions
     log_analytics_storage_insights = var.log_analytics_storage_insights
@@ -268,6 +294,7 @@ module "example" {
   webapp = {
     azurerm_application_insights = var.azurerm_application_insights
     app_service_environments     = var.app_service_environments
+    app_service_environments_v3  = var.app_service_environments_v3
     app_service_plans            = var.app_service_plans
     app_services                 = var.app_services
     function_apps                = var.function_apps
@@ -333,8 +360,17 @@ module "example" {
     api_management_gateway              = var.api_management_gateway
     api_management_gateway_api          = var.api_management_gateway_api
     api_management_group                = var.api_management_group
+    api_management_subscription         = var.api_management_subscription
   }
   purview = {
     purview_accounts = var.purview_accounts
+  }
+
+  iot = {
+    digital_twins_instances             = var.digital_twins_instances
+    digital_twins_endpoint_eventhubs    = var.digital_twins_endpoint_eventhubs
+    digital_twins_endpoint_eventgrids   = var.digital_twins_endpoint_eventgrids
+    digital_twins_endpoint_servicebuses = var.digital_twins_endpoint_servicebuses
+
   }
 }

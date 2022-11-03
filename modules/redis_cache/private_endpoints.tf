@@ -13,4 +13,3 @@ module "private_endpoint" {
   private_dns         = var.remote_objects.private_dns
   client_config       = var.client_config
 }
-

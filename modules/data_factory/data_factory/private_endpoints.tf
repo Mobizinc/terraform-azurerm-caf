@@ -1,7 +1,6 @@
 module "private_endpoint" {
   source   = "../../networking/private_endpoint"
   for_each = var.remote_objects.private_endpoints
-
   resource_id     = azurerm_data_factory.df.id
   name            = each.value.name
   location        = var.location
