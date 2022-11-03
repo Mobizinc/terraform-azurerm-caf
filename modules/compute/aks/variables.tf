@@ -6,7 +6,7 @@ variable "client_config" {}
 variable "diagnostics" {}
 variable "settings" {}
 variable "location" {}
-variable "vnets" {}
+variable "subnets" {}
 variable "resource_group_name" {}
 variable "admin_group_object_ids" {}
 variable "base_tags" {
@@ -14,7 +14,7 @@ variable "base_tags" {
   type        = map(any)
 }
 variable "diagnostic_profiles" {
-  default = {}
+  default = null
 }
 variable "private_dns_zone_id" {
   default = null

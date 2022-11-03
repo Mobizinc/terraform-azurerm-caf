@@ -20,11 +20,11 @@ variable "client_config" {
 }
 variable "public_ip_addresses" {}
 
-variable "combined_objects" {
+variable "existing_resources" {
   default = {}
 }
 variable "diagnostic_profiles" {
-  default = {}
+  default = null
 }
 variable "diagnostics" {
   default = null

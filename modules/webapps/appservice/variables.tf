@@ -64,7 +64,7 @@ variable "storage_accounts" {
 }
 
 variable "diagnostic_profiles" {
-  default = {}
+  default = null
 }
 variable "diagnostics" {
   default = null

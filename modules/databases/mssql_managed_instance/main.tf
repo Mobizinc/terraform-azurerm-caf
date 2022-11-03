@@ -3,9 +3,6 @@ terraform {
     azurecaf = {
       source = "aztfmod/azurecaf"
     }
-    azapi = {
-      source = "azure/azapi"
-    }
   }
 
 }
@@ -35,7 +32,7 @@ locals {
       value = var.settings.administratorLogin
     }
     administratorLoginPassword = {
-      value = try(var.settings.administratorLoginPassword, data.external.sqlmi_admin_password.0.result.value)
+      value = try(var.settings.administratorLoginPassword, azurerm_key_vault_secret.sqlmi_admin_password.0.value)
     }
     subnetId = {
       value = var.subnet_id
@@ -70,9 +67,6 @@ locals {
     timezoneId = {
       value = try(var.settings.timezoneId, "UTC")
     }
-    requestedBackupStorageRedundancy = {
-      value = try(var.settings.requestedBackupStorageRedundancy, "Geo")
-    }
     storageAccountType = {
       value = try(var.settings.storageAccountType, "GRS")
     }
@@ -81,9 +75,6 @@ locals {
     }
     resourceGroupName = {
       value = var.resource_group_name
-    }
-    zoneRedundant = {
-      value = try(var.settings.zoneRedundant, false)
     }
   }
 }

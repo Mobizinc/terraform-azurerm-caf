@@ -16,7 +16,7 @@ variable "base_tags" {
   type        = map(any)
   default     = {}
 }
-variable "data_factory_id" {
+variable "data_factory_name" {
   description = " Changing this forces a new Data Factory Self-hosted Integration Runtime to be created."
 }
 variable "resource_group_name" {

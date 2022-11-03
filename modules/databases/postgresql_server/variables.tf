@@ -30,6 +30,3 @@ variable "private_dns" {
 variable "diagnostics" {
   default = {}
 }
-variable "diagnostic_profiles" {
-  default = {}
-}

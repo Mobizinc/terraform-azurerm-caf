@@ -29,7 +29,7 @@ vnets = {
   sqlmi_region1 = {
     resource_group_key = "networking_region1"
     vnet = {
-      name          = "sqlmi-rg1"
+      name          = "sqlmi-re1"
       address_space = ["172.25.88.0/21"]
     }
     subnets = {
@@ -87,7 +87,7 @@ route_tables = {
   }
 }
 
-vnet_peerings_v1 = {
+vnet_peerings = {
 
   # Establish a peering with the devops vnet
   mi_region1-TO-mi_region2 = {
@@ -128,20 +128,18 @@ mssql_managed_instances = {
     sku = {
       name = "GP_Gen5"
     }
-    administratorLogin = "adminuser"
-    # administratorLoginPassword = "@dm1nu53r@30102020"
-    # if password not set, a random complex passwor will be created and stored in the keyvault
-    # the secret value can be changed after the deployment if needed
+    administratorLogin         = "adminuser"
+    administratorLoginPassword = "@dm1nu53r@30102020"
 
     //networking
     networking = {
       vnet_key   = "sqlmi_region1"
       subnet_key = "sqlmi1"
     }
-    keyvault_key = "sqlmi_rg1"
 
     storageSizeInGB = 32
-    vCores          = 4
+    vCores          = 8
+
   }
 }
 
@@ -152,8 +150,8 @@ mssql_managed_instances_secondary = {
     sku = {
       name = "GP_Gen5"
     }
-    administratorLogin = "adminuser"
-    # administratorLoginPassword = "@dm1nu53r@11112020"
+    administratorLogin         = "adminuser"
+    administratorLoginPassword = "@dm1nu53r@11112020"
 
     primary_server = {
       mi_server_key = "sqlmi1"
@@ -167,7 +165,7 @@ mssql_managed_instances_secondary = {
     keyvault_key = "sqlmi_rg1"
 
     storageSizeInGB = 32
-    vCores          = 4
+    vCores          = 8
   }
 }
 

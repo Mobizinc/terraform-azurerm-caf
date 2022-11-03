@@ -26,7 +26,7 @@ resource "random_password" "mariadb_admin" {
   length           = 32
   special          = true
   upper            = true
-  numeric          = true
+  number           = true
   override_special = "_%@"
 
 }

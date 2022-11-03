@@ -128,22 +128,17 @@ vnets = {
     resource_group_key = "rg1"
     vnet = {
       name          = "vnet1"
-      address_space = ["10.100.0.0/16"]
+      address_space = ["10.100.100.0/24"]
     }
     specialsubnets = {}
     subnets = {
       subnet1 = {
         name    = "subnet1"
-        cidr    = ["10.100.100.0/24"]
+        cidr    = ["10.100.100.0/29"]
         nsg_key = "nsg1"
         delegation = {
           name               = "kusto_clusters"
           service_delegation = "Microsoft.Kusto/clusters"
-          actions = [
-            "Microsoft.Network/virtualNetworks/subnets/join/action",
-            "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action",
-            "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action"
-          ]
         }
         route_table_key = "rt1"
       }

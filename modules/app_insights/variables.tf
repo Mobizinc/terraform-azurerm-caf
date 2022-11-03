@@ -81,7 +81,7 @@ variable "workspace_id" {
   default     = null
 }
 variable "diagnostic_profiles" {
-  default = {}
+  default = null
 }
 variable "diagnostics" {
   default = null

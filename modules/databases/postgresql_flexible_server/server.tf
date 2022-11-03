@@ -79,7 +79,7 @@ resource "random_password" "postgresql_administrator_password" {
 
   length           = try(var.settings.administrator_password_length, 128)
   upper            = true
-  numeric          = true
+  number           = true
   special          = true
   override_special = "$#%"
 }

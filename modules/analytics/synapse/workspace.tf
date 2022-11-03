@@ -74,7 +74,7 @@ resource "random_password" "sql_admin" {
   length           = 128
   special          = true
   upper            = true
-  numeric          = true
+  number           = true
   override_special = "$#%"
 }
 

@@ -138,25 +138,20 @@ signalr_services = {
       allowed_origins = ["http://example.com"]
     }
 
-    ## Refactored in 5.5.2 see below
-    # features = {
-    #   feature1 = {
-    #     flag  = "ServiceMode"
-    #     value = "Serverless" # Default Serverless Classic
-    #   }
-    #   feature2 = {
-    #     flag  = "EnableMessagingLogs"
-    #     value = "True" # True / False
-    #   }
-    #   feature3 = {
-    #     flag  = "EnableConnectivityLogs"
-    #     value = "True" # True / False
-    #   }
-    # }
-
-    service_mode              = "Serverless"
-    messaging_logs_enabled    = true
-    connectivity_logs_enabled = true
+    features = {
+      feature1 = {
+        flag  = "ServiceMode"
+        value = "Serverless" # Default Serverless Classic
+      }
+      feature2 = {
+        flag  = "EnableMessagingLogs"
+        value = "True" # True / False
+      }
+      feature3 = {
+        flag  = "EnableConnectivityLogs"
+        value = "True" # True / False
+      }
+    }
 
     upstream_endpoints = { # service mode has to be serverless
       endpoint1 = {

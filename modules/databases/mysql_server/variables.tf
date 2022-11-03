@@ -21,7 +21,7 @@ variable "subnet_id" {}
 variable "private_endpoints" {}
 variable "resource_groups" {}
 variable "diagnostic_profiles" {
-  default = {}
+  default = null
 }
 variable "network_security_group_definition" {
   default = null

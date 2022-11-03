@@ -35,7 +35,7 @@ variable "diagnostics" {
 }
 
 variable "diagnostic_profiles" {
-  default = {}
+  default = null
 }
 
 variable "front_end_size" {
