@@ -115,3 +115,18 @@ resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
     try(var.settings.subnet_id, null)
   )
 }
+
+resource "time_sleep" "wait_for_logic_app" {
+  depends_on = [azurerm_logic_app_standard.logic_app]
+
+  create_duration = "60s"
+}
+
+resource "null_resource" "logicapp_api_permission" {
+  depends_on = [time_sleep.wait_for_logic_app]
+
+  provisioner "local-exec" {
+    command     = format("%s/scripts/api_permission.ps1", path.module)
+    interpreter = ["PowerShell", "-File"]
+  }
+}
