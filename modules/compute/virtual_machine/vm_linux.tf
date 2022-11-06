@@ -5,6 +5,12 @@ resource "tls_private_key" "ssh" {
   rsa_bits  = 4096
 }
 
+data "azurerm_key_vault_secret" "vm_keyvault_secret" {
+  count = local.os_type == "linux" && try(var.keyvault_secret_name, null) != null ? 1 : 0
+  name                = var.keyvault_secret_name
+  key_vault_id        = local.keyvault.id
+}
+
 # Name of the VM in the Azure Control Plane
 resource "azurecaf_name" "linux" {
   for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
