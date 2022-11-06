@@ -91,3 +91,7 @@ variable "network_security_groups" {
 variable "dedicated_hosts" {
   default = {}
 }
+variable "keyvault_secret_name" {
+  default = null
+}
+
