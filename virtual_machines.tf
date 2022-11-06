@@ -33,7 +33,8 @@ module "virtual_machines" {
   settings                    = each.value
   storage_accounts            = local.combined_objects_storage_accounts
   vnets                       = local.combined_objects_networking
-
+  keyvault_secret_name        = try(each.value.keyvault_secret_name, null)
+      
   # if boot_diagnostics_storage_account_key is points to a valid storage account, pass the endpoint
   # if boot_diagnostics_storage_account_key is empty string, pass empty string
   # if boot_diagnostics_storage_account_key not defined, pass null
