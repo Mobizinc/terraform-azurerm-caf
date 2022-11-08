@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -x
+
 appName="iam-automation-logicapp"
 graphId=$(az ad sp list --query "[?appDisplayName=='Microsoft Graph'].appId | [0]" --all --out tsv)
 echo "graphId is $graphId"
@@ -18,4 +20,5 @@ do
             --arg appRoleId "$appRoleId" \
             '{principalId: $principalId, resourceId: $graphResourceId, appRoleId: $appRoleId}' )
 	az rest --method post --uri https://graph.microsoft.com/v1.0/servicePrincipals/$principalId/appRoleAssignments --body $body --headers Content-Type=application/json 
+  echo "appRoleId: $appRoleId is assigned"
 done
