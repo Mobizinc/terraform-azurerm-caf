@@ -122,11 +122,11 @@ resource "time_sleep" "wait_for_logic_app" {
   create_duration = "60s"
 }
 
-# resource "null_resource" "logicapp_api_permission" {
-#   depends_on = [time_sleep.wait_for_logic_app]
+resource "null_resource" "logicapp_api_permission" {
+  depends_on = [time_sleep.wait_for_logic_app]
 
-#   provisioner "local-exec" {
-#     command     = format("%s/scripts/api_permission.sh", path.module)
-#     interpreter = ["/bin/bash"]
-#   }
-# }
+  provisioner "local-exec" {
+    command     = format("%s/scripts/api_permission.sh", path.module)
+    interpreter = ["/bin/bash"]
+  }
+}
