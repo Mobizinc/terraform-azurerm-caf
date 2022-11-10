@@ -18,6 +18,7 @@ resource "azurecaf_name" "stg" {
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account
 
 resource "azurerm_storage_account" "stg" {
+
   access_tier                       = try(var.storage_account.access_tier, "Hot")
   account_kind                      = try(var.storage_account.account_kind, "StorageV2")
   account_replication_type          = try(var.storage_account.account_replication_type, "LRS")

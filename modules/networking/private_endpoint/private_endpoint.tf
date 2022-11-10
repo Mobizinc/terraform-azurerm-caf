@@ -11,8 +11,8 @@ resource "azurecaf_name" "pep" {
 
 resource "azurerm_private_endpoint" "pep" {
   name                = azurecaf_name.pep.result
-  location            = local.location
-  resource_group_name = local.resource_group_name
+  location            = try(local.location, var.location)
+  resource_group_name = try(local.resource_group.name, var.resource_group_name)
   subnet_id           = var.subnet_id
   tags                = local.tags
 
@@ -31,8 +31,8 @@ resource "azurerm_private_endpoint" "pep" {
       name = lookup(private_dns_zone_group.value, "zone_group_name", "default")
       private_dns_zone_ids = concat(
         flatten([
-          for key in try(private_dns_zone_group.value.keys, []) : [
-            try(var.private_dns[try(private_dns_zone_group.value.lz_key, var.client_config.landingzone_key)][key].id, [])
+          for key in private_dns_zone_group.value.keys : [
+              try(try(private_dns_zone_group.value.ids, var.private_dns[try(private_dns_zone_group.value.lz_key, var.client_config.landingzone_key)][key].id), [])
           ]
           ]
         ),

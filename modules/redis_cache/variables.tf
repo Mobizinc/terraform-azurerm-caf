@@ -33,18 +33,18 @@ variable "base_tags" {
 variable "diagnostic_profiles" {
   default = {}
 }
+
 variable "diagnostics" {
   default = null
 }
-variable "vnets" {
-  default = {}
+
+variable "remote_objects" {
+  default = null
 }
-variable "private_endpoints" {
-  default = {}
-}
-variable "private_dns" {
-  default = {}
-}
-variable "client_config" {
-  description = "Client configuration object (see module README.md)."
+
+variable "client_config" {}
+
+variable "resource_groups" {
+  description = "combined objetcs of the resource groups. Either resource_group_name or resource_groups is required."
+  default     = {}
 }

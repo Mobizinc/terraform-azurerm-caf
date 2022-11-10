@@ -52,5 +52,10 @@ resource "azurerm_virtual_machine_data_disk_attachment" "disk" {
   lun                       = each.value.lun
   caching                   = lookup(each.value, "caching", "None")
   write_accelerator_enabled = lookup(each.value, "write_accelerator_enabled", false)
+  lifecycle {
+    ignore_changes = [
+      managed_disk_id
+    ]
+  }
 
 }

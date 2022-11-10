@@ -59,3 +59,23 @@ variable "diagnostic_profiles" {
 variable "diagnostics" {
   default = null
 }
+
+variable "application_insight" {
+  default = null
+}
+
+variable "remote_objects" {
+  default = null
+}
+
+variable "app_settings" {
+  default = null
+}
+
+variable "dynamic_app_settings" {
+  default = null
+}
+
+variable "combined_objects" {
+  default = null
+}

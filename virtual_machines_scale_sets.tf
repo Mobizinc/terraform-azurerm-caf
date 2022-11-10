@@ -13,10 +13,10 @@ module "virtual_machine_scale_sets" {
     module.application_security_groups,
     module.packer_service_principal,
     module.packer_build,
-    module.proximity_placement_groups
+    module.proximity_placement_groups,
+    module.storage_accounts
   ]
   for_each = local.compute.virtual_machine_scale_sets
-
   availability_sets           = local.combined_objects_availability_sets
   application_gateways        = local.combined_objects_application_gateways
   application_security_groups = local.combined_objects_application_security_groups

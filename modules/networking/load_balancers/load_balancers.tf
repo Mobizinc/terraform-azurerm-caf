@@ -74,7 +74,7 @@ resource "azurerm_lb_rule" "lb_rule" {
   frontend_port                  = each.value.frontend_port
   backend_port                   = each.value.backend_port
   frontend_ip_configuration_name = each.value.frontend_ip_configuration_name
-  backend_address_pool_ids = try(flatten([
+  backend_address_pool_ids = can(var.settings.backend_address_pool_id) ? [var.settings.backend_address_pool_id] : try(flatten([
     for backend_address_pool in try(azurerm_lb_backend_address_pool.backend_address_pool, []) : [
       backend_address_pool.id
     ]
@@ -168,5 +168,11 @@ resource "azurerm_network_interface_backend_address_pool_association" "vm_nic_ba
   network_interface_id    = var.combined_objects[try(each.value.resource_type, "virtual_machines")][try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].nics[each.value.nic_key].id
   ip_configuration_name   = var.combined_objects[try(each.value.resource_type, "virtual_machines")][try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].nics[each.value.nic_key].name # The Name of the IP Configuration within the Network Interface
   backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool.0.id
+  lifecycle {
+    ignore_changes = [
+      network_interface_id,
+      ip_configuration_name
+    ]
+  }  
 }
 

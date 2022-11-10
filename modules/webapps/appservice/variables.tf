@@ -70,7 +70,21 @@ variable "diagnostics" {
   default = null
 }
 
-variable "vnets" {}
-variable "subnet_id" {}
-variable "private_endpoints" {}
-variable "private_dns" {}
+variable "remote_objects" {
+  default = {}
+}
+
+variable "keyvault_name" {
+  default = {}
+}
+
+variable "publish_profile" {
+  default = {}
+}
+
+variable "slots_vnet" {
+  default = {}
+}
+variable "private_dns" {
+  default = {}
+}

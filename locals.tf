@@ -123,9 +123,12 @@ locals {
     mssql_mi_failover_groups           = try(var.database.mssql_mi_failover_groups, {})
     mssql_mi_secondary_tdes            = try(var.database.mssql_mi_secondary_tdes, {})
     mssql_mi_tdes                      = try(var.database.mssql_mi_tdes, {})
+    mssql_mi                           = try(var.database.mssql_mi, {})
+    mssql_mi_failover                  = try(var.database.mssql_mi_failover, {})
     mssql_servers                      = try(var.database.mssql_servers, {})
     mysql_databases                    = try(var.database.mysql_databases, {})
     mysql_servers                      = try(var.database.mysql_servers, {})
+    mysql_flexible_servers             = try(var.database.mysql_flexible_servers, {})
     postgresql_flexible_servers        = try(var.database.postgresql_flexible_servers, {})
     postgresql_servers                 = try(var.database.postgresql_servers, {})
     synapse_workspaces                 = try(var.database.synapse_workspaces, {})
@@ -226,6 +229,7 @@ locals {
     logic_app_trigger_http_request  = try(var.logic_app.logic_app_trigger_http_request, {})
     logic_app_trigger_recurrence    = try(var.logic_app.logic_app_trigger_recurrence, {})
     logic_app_workflow              = try(var.logic_app.logic_app_workflow, {})
+    logic_app_standard              = try(var.logic_app.logic_app_standard , {})
   }
 
   cognitive_services = {
@@ -288,6 +292,7 @@ locals {
     network_watchers                                        = try(var.networking.network_watchers, {})
     private_dns                                             = try(var.networking.private_dns, {})
     private_dns_vnet_links                                  = try(var.networking.private_dns_vnet_links, {})
+    private_link_service                                    = try(var.networking.private_link_service, {})
     public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
     relay_hybrid_connection                                 = try(var.networking.relay_hybrid_connection, {})
     relay_namespace                                         = try(var.networking.relay_namespace, {})

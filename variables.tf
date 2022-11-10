@@ -403,6 +403,9 @@ variable "purview" {
 variable "sentinel_watchlists" {
   default = {}
 }
+variable "marketplace_agreements" {
+  description = "Marketplace Agreement"
+}
 variable "iot" {
   description = "Configuration object - IoT"
   default = {

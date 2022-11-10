@@ -1,4 +1,3 @@
-
 module "subscriptions" {
   source = "./modules/subscriptions"
 

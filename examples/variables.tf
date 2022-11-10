@@ -969,6 +969,12 @@ variable "public_ip_prefixes" {
 variable "runbooks" {
   default = {}
 }
+variable "mssql_mi" {
+  default = {}
+}
+variable "mssql_mi_failover" {
+  default = {}
+}
 variable "backup_vaults" {
   default = {}
 }
