@@ -115,12 +115,33 @@ resource "azurecaf_name" "bgp_con" {
   passthrough   = var.global_settings.passthrough
   use_slug      = var.global_settings.use_slug
 }
-resource "azurerm_virtual_hub_bgp_connection" "bgp_con" {
+# resource "azurerm_virtual_hub_bgp_connection" "bgp_con" {
+#   depends_on = [azurerm_virtual_hub_ip.hub_ip]
+#   for_each   = try(var.virtual_hub_config.bgp_connection, {})
+
+#   name           = azurecaf_name.bgp_con[each.key].result
+#   virtual_hub_id = azurerm_virtual_hub.vwan_hub.id
+#   peer_asn       = each.value.peer_asn
+#   peer_ip        = each.value.peer_ip
+# }
+
+resource "azapi_resource" "virtual_hub_bgp" {
   depends_on = [azurerm_virtual_hub_ip.hub_ip]
   for_each   = try(var.virtual_hub_config.bgp_connection, {})
 
-  name           = azurecaf_name.bgp_con[each.key].result
-  virtual_hub_id = azurerm_virtual_hub.vwan_hub.id
-  peer_asn       = each.value.peer_asn
-  peer_ip        = each.value.peer_ip
+  type      = "Microsoft.Network/virtualHubs/bgpConnections@2021-08-01"
+  name      = azurecaf_name.bgp_con[each.key].result
+  parent_id = azurerm_virtual_hub.vwan_hub.id
+  # location = azurerm_resource_group.rxow4_rg.location
+
+  body = jsonencode({
+    properties= {
+        peerIp = each.value.peer_ip
+        peerAsn = each.value.peer_asn
+        hubVirtualNetworkConnection = {
+            id = "${each.value.remote_virtual_network.id}"
+        }
+    }
+  })
+
 }
