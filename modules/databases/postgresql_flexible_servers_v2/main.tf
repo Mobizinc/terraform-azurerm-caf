@@ -6,9 +6,7 @@ terraform {
     azapi = {
       source  = "Azure/azapi"
     }
-    azurerm = {
-      source = "hashicorp/azurerm"
-    }
+
   }
 }
 
