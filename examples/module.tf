@@ -136,6 +136,7 @@ module "example" {
     mssql_servers                      = var.mssql_servers
     mysql_servers                      = var.mysql_servers
     postgresql_flexible_servers        = var.postgresql_flexible_servers
+    postgresql_flexible_servers_v2     = var.postgresql_flexible_servers_v2
     postgresql_servers                 = var.postgresql_servers
     synapse_workspaces                 = var.synapse_workspaces
     data_explorer = {

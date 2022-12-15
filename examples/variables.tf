@@ -360,6 +360,9 @@ variable "mysql_servers" {
 variable "postgresql_flexible_servers" {
   default = {}
 }
+variable "postgresql_flexible_servers_v2" {
+  default = {}
+}
 variable "postgresql_servers" {
   default = {}
 }
