@@ -21,7 +21,7 @@ resource "azapi_resource" "postgres_flexible_server" {
       administratorLoginPassword = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_password, azurerm_key_vault_secret.postgresql_administrator_password.0.value) : null
       availabilityZone = try(var.settings.availabilityzone, null)
       backup = {
-        backupRetentionDays = try(var.settings.backup_retention_days, null)
+        backupRetentionDays = tonumber(try(var.settings.backup_retention_days, 0))
         geoRedundantBackup = try(var.settings.georedundantbackup, null)
       }
       createMode = try(var.settings.create_mode, "Default")
