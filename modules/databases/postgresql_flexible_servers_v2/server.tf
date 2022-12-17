@@ -42,7 +42,7 @@ resource "azapi_resource" "postgres_flexible_server" {
       pointInTimeUTC = try(var.settings.create_mode, "PointInTimeRestore") == "PointInTimeRestore" ? try(var.settings.point_in_time_restore_time_in_utc, null) : null
       sourceServerResourceId = try(var.settings.create_mode, "PointInTimeRestore") == "PointInTimeRestore" ? try(var.settings.source_server_id, null) : null
       storage = {
-        storageSizeGB = tonumber(var.settings.storage_mb)
+        storageSizeGB = tonumber(var.settings.storage_gb)
       }
       version = try(var.settings.version, null)
     }
