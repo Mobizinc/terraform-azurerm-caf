@@ -1,6 +1,6 @@
 resource "azurecaf_name" "static_site" {
   name          = var.name
-  resource_type = "azurerm_app_service" # FIXME: missing naming convention provider for 'azurerm_static_site' (https://github.com/aztfmod/terraform-provider-azurecaf/issues/178)
+  resource_type = "azurerm_static_site"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
@@ -24,5 +24,23 @@ resource "azurerm_static_site" "static_site" {
       type         = var.identity.type
       identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
     }
+  }
+}
+
+resource "azurerm_key_vault_secret" "api_token_secret" {
+  depends_on = [azurerm_static_site.static_site ]
+  count  = lookup(var.settings, "keyvault", null) == null ? 0 : 1
+  
+  name  = coalesce(
+    try(var.api_token_name, null),
+    format("%s-api-token", var.name) 
+  )
+  value        = azurerm_static_site.static_site.api_key
+  key_vault_id = var.remote_objects.keyvault_id
+
+  lifecycle {
+    ignore_changes = [
+      key_vault_id
+    ]
   }
 }
