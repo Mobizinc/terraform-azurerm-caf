@@ -125,6 +125,7 @@ locals {
     mysql_servers                      = try(var.database.mysql_servers, {})
     mysql_flexible_servers             = try(var.database.mysql_flexible_servers, {})
     postgresql_flexible_servers        = try(var.database.postgresql_flexible_servers, {})
+    postgresql_flexible_servers_v2     = try(var.database.postgresql_flexible_servers_v2, {})
     postgresql_servers                 = try(var.database.postgresql_servers, {})
     synapse_workspaces                 = try(var.database.synapse_workspaces, {})
     data_explorer = {
