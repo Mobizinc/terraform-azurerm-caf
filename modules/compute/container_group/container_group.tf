@@ -129,8 +129,8 @@ resource "azurerm_container_group" "acg" {
           mount_path           = volume.value.mount_path
           read_only            = try(volume.value.read_only, false)
           empty_dir            = try(volume.value.empty_dir, false)
-          storage_account_name = try(volume.value.storage_account_name, null)
-          storage_account_key  = try(volume.value.storage_account_key, null)
+          storage_account_name = try(var.storage_account_name, null)
+          storage_account_key  = try(var.storage_account_access_key, null)
           share_name           = try(volume.value.share_name, null)
           secret               = try(volume.value.secret, null)
 
