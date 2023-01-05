@@ -14,3 +14,9 @@ variable "dynamic_keyvault_secrets" {
   description = "Provide credenrials for private image registries"
   default     = {}
 }
+variable "storage_account_access_key" {
+  default = null
+}
+variable "storage_account_name" {
+  default = null
+}
