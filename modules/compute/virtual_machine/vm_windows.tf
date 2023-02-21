@@ -186,7 +186,9 @@ resource "azurerm_windows_virtual_machine" "vm" {
       os_disk[0].name, #for ASR disk restores
       admin_username,  # Only used for initial deployment as it can be changed later by GPO
       admin_password,   # Only used for initial deployment as it can be changed later by GPO
-      tags["CE_Instance_Scheduler","CE_Patch_Group","CE_Backup_Selection"]
+      tags["CE_Instance_Scheduler"],
+      tags["CE_Patch_Group"],
+      tags["CE_Backup_Selection"]
     ]
   }
 
