@@ -204,12 +204,14 @@ resource "azurerm_virtual_machine" "vm" {
   }
 
   license_type = try(each.value.license_type, null)
-
-  # lifecycle {
-  #   ignore_changes = [
-  #     resource_group_name, location
-  #   ]
-  # }
+    
+  lifecycle {
+    ignore_changes = [
+      tags["CE_Instance_Scheduler"],
+      tags["CE_Patch_Group"],
+      tags["CE_Backup_Selection"]
+    ]
+  }
 
 }
 
