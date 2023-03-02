@@ -246,6 +246,11 @@ module "example" {
   }
 
   shared_services = {
+    automations                    = var.automations
+    automation_schedules           = var.automation_schedules
+    automation_runbooks            = var.automation_runbooks
+    automation_log_analytics_links = var.automation_log_analytics_links
+    automation_webhooks            = var.automation_webhooks
     consumption_budgets            = var.consumption_budgets
     image_definitions              = var.image_definitions
     log_analytics_storage_insights = var.log_analytics_storage_insights
