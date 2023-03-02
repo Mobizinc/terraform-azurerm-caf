@@ -84,6 +84,8 @@ locals {
     postgresql_servers                             = try(local.combined_objects_postgresql_servers, null)
     postgresql_flexible_servers_v2                 = try(local.combined_objects_postgresql_flexible_servers_v2, null)
     private_dns                                    = try(local.combined_objects_private_dns, null)
+    private_dns_resolvers                          = try(local.combined_objects_private_dns_resolvers, null)
+    private_dns_forwarding                         = try(local.combined_objects_private_dns_forwarding, null)
     private_endpoints                              = try(local.combined_objects_private_endpoints, null)
     proximity_placement_groups                     = try(local.combined_objects_proximity_placement_groups, null)
     public_ip_addresses                            = try(local.combined_objects_public_ip_addresses, null)

@@ -275,6 +275,8 @@ locals {
     network_security_group_definition                       = try(var.networking.network_security_group_definition, {})
     network_watchers                                        = try(var.networking.network_watchers, {})
     private_dns                                             = try(var.networking.private_dns, {})
+    private_dns_resolvers                                   = try(var.networking.private_dns_resolvers, {})
+    private_dns_forwarding                                  = try(var.networking.private_dns_forwarding, {})
     private_dns_vnet_links                                  = try(var.networking.private_dns_vnet_links, {})
     private_link_service                                    = try(var.networking.private_link_service, {})
     public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
