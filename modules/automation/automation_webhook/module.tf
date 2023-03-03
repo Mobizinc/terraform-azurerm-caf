@@ -16,7 +16,7 @@ resource "azurerm_automation_webhook" "automation_webhook" {
   automation_account_name = var.automation_account_name
   expiry_time             = var.settings.expiry_time
   enabled                 = try(var.settings.enabled, true)
-  runbook_name            = var.settings.runbook_name
+  runbook_name            = var.runbook_name
   run_on_worker_group     = try(var.settings.run_on_worker_group, null)
   parameters              = try(var.settings.parameters, null)
   uri                     = try(var.settings.uri, null)

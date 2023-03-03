@@ -15,6 +15,8 @@ locals {
     application_insights                           = try(local.combined_objects_application_insights, null)
     application_security_groups                    = try(local.combined_objects_application_security_groups, null)
     automations                                    = try(local.combined_objects_automations, null)
+    automation_runbooks                            = try(local.combined_objects_automation_runbooks, null)
+    automation_webhooks                            = try(local.combined_objects_automation_webhooks, null)
     availability_sets                              = try(local.combined_objects_availability_sets, null)
     azure_container_registries                     = try(local.combined_objects_azure_container_registries, null)
     azuread_applications                           = try(local.combined_objects_azuread_applications, null)

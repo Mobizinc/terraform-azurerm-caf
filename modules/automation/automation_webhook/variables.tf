@@ -23,3 +23,5 @@ variable "remote_objects" {
 }
 
 variable "client_config" {}
+
+variable "runbook_name" {}

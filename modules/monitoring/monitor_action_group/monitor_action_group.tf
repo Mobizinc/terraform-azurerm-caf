@@ -27,11 +27,11 @@ resource "azurerm_monitor_action_group" "this" {
     for_each = try(var.settings.automation_runbook_receiver, {})
     content {
       name                    = automation_runbook_receiver.value.name
-      automation_account_id   = automation_runbook_receiver.value.automation_account_id
-      runbook_name            = automation_runbook_receiver.value.runbook_name
-      webhook_resource_id     = automation_runbook_receiver.value.webhook_resource_id
+      automation_account_id   = can(automation_runbook_receiver.value.automation_account_id) ? automation_runbook_receiver.value.automation_account_id : local.combined_objects_automations[try(automation_runbook_receiver.value.lz_key, local.client_config.landingzone_key)][automation_runbook_receiver.value.automation_account_key].id
+      runbook_name            = can(automation_runbook_receiver.value.runbook_name) ? automation_runbook_receiver.value.runbook_name : local.combined_objects_automation_runbooks[try(automation_runbook_receiver.value.lz_key, local.client_config.landingzone_key)][automation_runbook_receiver.value.automation_runbook_key].name
+      webhook_resource_id     = can(automation_runbook_receiver.value.webhook_resource_id) ? automation_runbook_receiver.value.webhook_resource_id : local.combined_objects_automation_webhooks[try(automation_runbook_receiver.value.lz_key, local.client_config.landingzone_key)][automation_runbook_receiver.value.automation_webhook_key].id
       is_global_runbook       = automation_runbook_receiver.value.is_global_runbook
-      service_uri             = automation_runbook_receiver.value.service_uri
+      service_uri             = can(automation_runbook_receiver.value.webhook_resource_id) ? automation_runbook_receiver.value.webhook_resource_id : local.combined_objects_automation_webhooks[try(automation_runbook_receiver.value.lz_key, local.client_config.landingzone_key)][automation_runbook_receiver.value.automation_webhook_key].uri
       use_common_alert_schema = try(automation_runbook_receiver.value.use_common_alert_schema, false)
     }
   }

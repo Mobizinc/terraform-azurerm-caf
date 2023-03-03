@@ -17,6 +17,8 @@ locals {
   combined_objects_application_insights                           = merge(tomap({ (local.client_config.landingzone_key) = module.azurerm_application_insights }), try(var.remote_objects.azurerm_application_insights, {}))
   combined_objects_application_security_groups                    = merge(tomap({ (local.client_config.landingzone_key) = module.application_security_groups }), try(var.remote_objects.application_security_groups, {}))
   combined_objects_automations                                    = merge(tomap({ (local.client_config.landingzone_key) = module.automations }), try(var.remote_objects.automations, {}))
+  combined_objects_automation_runbooks                            = merge(tomap({ (local.client_config.landingzone_key) = module.automation_runbooks }), try(var.remote_objects.automation_runbooks, {}))
+  combined_objects_automation_webhooks                            = merge(tomap({ (local.client_config.landingzone_key) = module.automation_webhooks }), try(var.remote_objects.automation_webhooks, {}))
   combined_objects_availability_sets                              = merge(tomap({ (local.client_config.landingzone_key) = module.availability_sets }), try(var.remote_objects.availability_sets, {}))
   combined_objects_azure_container_registries                     = merge(tomap({ (local.client_config.landingzone_key) = module.container_registry }), try(var.remote_objects.container_registry, {}))
   combined_objects_cosmos_dbs                                     = merge(tomap({ (local.client_config.landingzone_key) = module.cosmos_dbs }), try(var.remote_objects.cosmos_dbs, {}))
