@@ -31,7 +31,7 @@ resource "azurerm_monitor_action_group" "this" {
       runbook_name            = can(automation_runbook_receiver.value.runbook_name) ? automation_runbook_receiver.value.runbook_name : var.combined_objects_automation_runbooks[try(automation_runbook_receiver.value.lz_key, var.client_config.landingzone_key)][automation_runbook_receiver.value.automation_runbook_key].name
       webhook_resource_id     = can(automation_runbook_receiver.value.webhook_resource_id) ? automation_runbook_receiver.value.webhook_resource_id : var.combined_objects_automation_webhooks[try(automation_runbook_receiver.value.lz_key, var.client_config.landingzone_key)][automation_runbook_receiver.value.automation_webhook_key].id
       is_global_runbook       = automation_runbook_receiver.value.is_global_runbook
-      service_uri             = can(automation_runbook_receiver.value.webhook_resource_id) ? automation_runbook_receiver.value.webhook_resource_id : var.combined_objects_automation_webhooks[try(automation_runbook_receiver.value.lz_key, var.client_config.landingzone_key)][automation_runbook_receiver.value.automation_webhook_key].uri
+      service_uri             = can(automation_runbook_receiver.value.service_uri) ? automation_runbook_receiver.value.service_uri : var.combined_objects_automation_webhooks[try(automation_runbook_receiver.value.lz_key, var.client_config.landingzone_key)][automation_runbook_receiver.value.automation_webhook_key].uri
       use_common_alert_schema = try(automation_runbook_receiver.value.use_common_alert_schema, false)
     }
   }

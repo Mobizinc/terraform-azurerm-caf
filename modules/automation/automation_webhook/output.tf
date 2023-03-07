@@ -5,5 +5,5 @@ output "id" {
 
 output "uri" {
   description = "Generated URI for this Webhook."
-  value       = azurerm_automation_webhook.automation_webhook.id
+  value       = azurerm_automation_webhook.automation_webhook.uri
 }
