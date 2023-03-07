@@ -188,6 +188,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
       admin_password,   # Only used for initial deployment as it can be changed later by GPO
       tags["CE_Instance_Scheduler"],
       tags["CE_Patch_Group"],
+      tags["CE_Backup_selection"],
       tags["CE_Backup_Selection"]
     ]
   }
