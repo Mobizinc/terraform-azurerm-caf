@@ -35,7 +35,11 @@ resource "azurerm_managed_disk" "disk" {
   lifecycle {
     ignore_changes = [
       name, #for ASR disk restores
-      resource_group_name, location, create_option
+      resource_group_name, location, create_option,
+      tags["CE_Instance_Scheduler"],
+      tags["CE_Patch_Group"],
+      tags["CE_Backup_selection"],
+      tags["CE_Backup_Selection"]
     ]
   }
 
