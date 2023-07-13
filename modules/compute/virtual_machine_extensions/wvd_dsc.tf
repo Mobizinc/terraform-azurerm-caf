@@ -9,8 +9,8 @@ resource "azurerm_virtual_machine_extension" "session_host_dscextension" {
 
   settings = jsonencode(
     {
-      "modulesURL" : format("%s", var.extension.base_url),
-      # "modulesURL" : format("%s/DSC/Configuration.zip", var.extension.base_url),
+      # "modulesURL" : format("%s", var.extension.base_url),
+      "modulesURL" : format("%s/DSC/Configuration.zip", var.extension.base_url),
       "configurationFunction" : "Configuration.ps1\\AddSessionHost",
       "properties" : {
         "HostPoolName" : coalesce(
