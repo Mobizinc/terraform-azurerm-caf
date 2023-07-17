@@ -27,6 +27,11 @@ resource "azurerm_virtual_desktop_host_pool" "wvdpool" {
   custom_rdp_properties            = try(var.settings.custom_rdp_properties, null)
   start_vm_on_connect              = try(var.settings.start_vm_on_connect, null)
   tags                             = local.tags
+  lifecycle {
+    ignore_changes = [
+      personal_desktop_assignment_type
+    ]
+  }
 }
 
 # Last review :  AzureRM version 2.97.0
