@@ -4,6 +4,7 @@
 
 module "vm_extension_monitoring_agent" {
   source = "./modules/compute/virtual_machine_extensions"
+  depends_on = [module.dynamic_keyvault_secrets]
 
   for_each = {
     for key, value in try(local.compute.virtual_machines, {}) : key => value
