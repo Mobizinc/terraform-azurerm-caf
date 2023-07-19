@@ -57,7 +57,7 @@ module "vm_extension_microsoft_azure_domainjoin" {
 
 module "vm_extension_session_host_dscextension" {
   source     = "./modules/compute/virtual_machine_extensions"
-  depends_on = [module.vm_extension_microsoft_azure_domainjoin] #refer landingzone.tf for the correct module name.
+  depends_on = [module.vm_extension_microsoft_azure_domainjoin, module.dynamic_keyvault_secrets] #refer landingzone.tf for the correct module name.
 
   for_each = {
     for key, value in try(local.compute.virtual_machines, {}) : key => value
