@@ -9,7 +9,7 @@ resource "azurecaf_name" "postgresql_flexible_server" {
 }
 
 resource "azapi_resource" "postgres_flexible_server" {
-  type = "Microsoft.DBforPostgreSQL/flexibleServers@2022-01-20-preview"
+  type = "Microsoft.DBforPostgreSQL/flexibleServers@2023-03-01-preview"
   name = azurecaf_name.postgresql_flexible_server.result
   location = var.location
   parent_id = var.resource_group_name
