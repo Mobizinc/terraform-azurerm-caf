@@ -11,6 +11,7 @@ resource "azurecaf_name" "postgresql_flexible_server" {
 resource "azapi_resource" "postgres_flexible_server" {
   type = "Microsoft.DBforPostgreSQL/flexibleServers@2023-03-01-preview"
   name = azurecaf_name.postgresql_flexible_server.result
+  schema_validation_enabled = false
   location = var.location
   parent_id = var.resource_group_name
   tags = merge(local.tags, lookup(var.settings, "tags", {}))
