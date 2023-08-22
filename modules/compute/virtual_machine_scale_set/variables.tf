@@ -75,3 +75,6 @@ variable "lbs" {
 variable "lb_backend_address_pool" {
   default = {}
 }
+variable "storage_accounts" {
+  default = {}
+}

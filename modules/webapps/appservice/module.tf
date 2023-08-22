@@ -59,6 +59,7 @@ resource "azurerm_app_service" "app_service" {
       remote_debugging_enabled  = lookup(var.settings.site_config, "remote_debugging_enabled", null)
       remote_debugging_version  = lookup(var.settings.site_config, "remote_debugging_version", null)
       use_32_bit_worker_process = lookup(var.settings.site_config, "use_32_bit_worker_process", false)
+      vnet_route_all_enabled    = lookup(var.settings.site_config, "vnet_route_all_enabled", false)
       websockets_enabled        = lookup(var.settings.site_config, "websockets_enabled", false)
       scm_type                  = lookup(var.settings.site_config, "scm_type", null)
       number_of_workers         = can(var.settings.numberOfWorkers) || can(var.settings.site_config.number_of_workers) ? try(var.settings.numberOfWorkers, var.settings.site_config.number_of_workers) : 1
@@ -284,4 +285,25 @@ resource "azurerm_app_service_custom_hostname_binding" "app_service" {
   hostname            = each.value.hostname
   ssl_state           = try(each.value.ssl_state, null)
   thumbprint          = try(each.value.thumbprint, null)
+}
+
+resource "null_resource" "webapps_publish_profile" {
+    count  = var.publish_profile == "true" ? 1 : 0
+    depends_on = [azurerm_app_service.app_service]
+    provisioner "local-exec" {
+         
+         command = <<-EOT
+           az webapp deployment list-publishing-profiles -g $resource_group -n $app_name --xml > $file_name
+           az keyvault secret set --name $secret_name --file $file_name  --vault-name $key_vault  -o none 
+           rm -f $file_name
+         EOT
+
+         environment = {
+          resource_group =  var.resource_group_name
+          app_name       =  var.name
+          key_vault      =  var.keyvault_name
+          secret_name    =  format("%s-publish-profile", var.name)
+          file_name      =  format("%s-profile.xml", var.name)
+    }
+    }
 }

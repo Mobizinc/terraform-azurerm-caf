@@ -13,6 +13,7 @@ module "virtual_machine_scale_sets" {
     module.packer_build,
     module.packer_service_principal,
     module.proximity_placement_groups,
+    module.storage_accounts,
     time_sleep.azurerm_role_assignment_for.0
   ]
   for_each = local.compute.virtual_machine_scale_sets
@@ -38,6 +39,7 @@ module "virtual_machine_scale_sets" {
   recovery_vaults             = local.combined_objects_recovery_vaults
   settings                    = each.value
   vnets                       = local.combined_objects_networking
+  storage_accounts            = local.combined_objects_storage_accounts
 
   # if boot_diagnostics_storage_account_key is points to a valid storage account, pass the endpoint
   # if boot_diagnostics_storage_account_key is empty string, pass empty string

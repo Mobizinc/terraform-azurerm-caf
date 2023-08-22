@@ -193,10 +193,11 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   lifecycle {
     ignore_changes = [
-      name,
-      computer_name,
       os_disk[0].name, #for ASR disk restores
-      admin_ssh_key
+      tags["CE_Instance_Scheduler"],
+      tags["CE_Patch_Group"],
+      tags["CE_Backup_selection"],
+      tags["CE_Backup_Selection"]
     ]
   }
 

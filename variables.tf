@@ -433,3 +433,7 @@ variable "preview_features" {
 variable "powerbi_embedded" {
   default = {}
 }
+variable "marketplace_agreements" {
+  description = "Marketplace Agreement"
+  default = {}
+}

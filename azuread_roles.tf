@@ -77,3 +77,11 @@ module "azuread_roles_mssql_server" {
   settings      = each.value
   azuread_roles = each.value.roles
 }
+
+module "azuread_roles_mssql_mi" {
+  source   = "./modules/azuread/roles"
+  for_each = try(local.azuread.azuread_roles.mssql_mi, {})
+
+  object_id     = module.mssql_mi[each.key].principal_id
+  azuread_roles = each.value.roles
+}

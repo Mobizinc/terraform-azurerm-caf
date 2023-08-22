@@ -29,6 +29,11 @@ variable "sku_tier" {
   }
 }
 
+variable "resource_groups" {
+  description = "combined objetcs of the resource groups. Either resource_group_name or resource_groups is required."
+  default     = {}
+}
+
 variable "sku_size" {
   description = "Specifies the SKU size of the Static Web App. Possible values are Free or Standard. Defaults to Free."
   type        = string
@@ -60,6 +65,34 @@ variable "diagnostics" {
   default = null
 }
 
-variable "custom_domains" {
+variable "application_insight" {
+  default = null
+}
+
+variable "remote_objects" {
+  default = null
+}
+
+variable "app_settings" {
+  default = null
+}
+
+variable "dynamic_app_settings" {
+  default = {}
+}
+
+variable "combined_objects" {
+  default = {}
+}
+
+variable "api_token_name" {
+  default = {}
+}
+
+variable "keyvault_id" {
+  default = {}
+}
+
+variable "settings" {
   default = {}
 }

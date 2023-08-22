@@ -134,6 +134,7 @@ locals {
     keyvaults                                  = local.combined_objects_keyvaults
     kusto_clusters                             = local.combined_objects_kusto_clusters
     log_analytics                              = local.current_objects_log_analytics
+    logic_app_standard                         = local.combined_objects_logic_app_standard
     logged_in                                  = local.logged_in
     machine_learning_compute_instance          = module.machine_learning_compute_instance
     machine_learning_workspaces                = local.combined_objects_machine_learning
@@ -143,6 +144,7 @@ locals {
     mssql_elastic_pools                        = local.combined_objects_mssql_elastic_pools
     mssql_managed_databases                    = local.combined_objects_mssql_managed_databases
     mssql_managed_instances                    = local.combined_objects_mssql_managed_instances
+    mssql_mi                                   = local.combined_objects_mssql_mi
     mssql_servers                              = local.combined_objects_mssql_servers
     mysql_servers                              = local.combined_objects_mysql_servers
     network_watchers                           = local.combined_objects_network_watchers

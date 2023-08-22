@@ -27,6 +27,9 @@ module "app_services" {
   private_dns                         = local.combined_objects_private_dns
   azuread_applications                = local.combined_objects_azuread_applications
   azuread_service_principal_passwords = local.combined_objects_azuread_service_principal_passwords
+  slots_vnet                          = try(each.value.slots_vnet, {})
+  publish_profile                     = try(each.value.publish_profile, {})
+  keyvault_name                       = can(each.value.keyvault.key) ? local.combined_objects_keyvaults[try(each.value.keyvault.lz_key, local.client_config.landingzone_key)][each.value.keyvault.key].name : null
 
   base_tags           = local.global_settings.inherit_tags
   resource_group      = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]

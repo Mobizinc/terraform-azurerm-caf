@@ -1,6 +1,7 @@
 module "private_endpoint" {
   source   = "../../networking/private_endpoint"
   for_each = var.private_endpoints
+  depends_on = [azurerm_function_app.function_app,azurerm_function_app_slot.slots]
 
   resource_id         = azurerm_function_app.function_app.id
   name                = each.value.name

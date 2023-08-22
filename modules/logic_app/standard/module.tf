@@ -42,6 +42,16 @@ resource "azurerm_logic_app_standard" "logic_app_standard" {
       }
     }
   }
+
+  dynamic "identity" {
+    for_each = try(var.identity, null) == null ? [] : [1]
+
+    content {
+      type         = var.identity.type
+      identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
+    }
+  }
+
 }
 
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
