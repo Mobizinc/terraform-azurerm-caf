@@ -96,3 +96,6 @@ variable "keyvault_id" {
 variable "settings" {
   default = {}
 }
+variable "custom_domains" {
+  default = {}
+}
