@@ -5,7 +5,7 @@ variable "client_config" {}
 variable "settings" {}
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = bool
 }
 variable "subnet_id" {}
 variable "resource_group_name" {
