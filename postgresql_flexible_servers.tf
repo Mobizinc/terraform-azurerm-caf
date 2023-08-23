@@ -26,7 +26,7 @@ output "postgresql_flexible_servers_v2" {
 }
 
 module "postgresql_flexible_servers_v2" {
-  source     = "./modules/databases/postgresql_flexible_servers_v2"
+  source     = "./modules/databases/postgresql_flexible_server_v2"
   depends_on = [module.keyvaults, module.networking]
   for_each   = local.database.postgresql_flexible_servers_v2
 
