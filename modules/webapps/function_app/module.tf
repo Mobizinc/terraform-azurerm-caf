@@ -138,7 +138,7 @@ resource "azurerm_function_app" "function_app" {
       vnet_route_all_enabled           = lookup(var.settings.site_config, "vnet_route_all_enabled", null)
 
       dynamic "cors" {
-        for_each = try(var.settings.site_config.cors, {})
+        for_each = try(var.settings.site_config.cors, {})[*]
 
         content {
           allowed_origins     = lookup(cors.value, "allowed_origins", null)
