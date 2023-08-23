@@ -141,8 +141,8 @@ resource "azurerm_function_app" "function_app" {
         for_each = try(var.settings.site_config.cors, {})
 
         content {
-          allowed_origins     = lookup(cors.value, "allowed_origins", null)
-          support_credentials = lookup(cors.value, "support_credentials", null)
+          allowed_origins     = lookup(cors, "allowed_origins", null)
+          support_credentials = lookup(cors, "support_credentials", null)
         }
       }
       dynamic "ip_restriction" {
