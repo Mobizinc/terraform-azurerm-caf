@@ -138,11 +138,11 @@ resource "azurerm_function_app" "function_app" {
       vnet_route_all_enabled           = lookup(var.settings.site_config, "vnet_route_all_enabled", null)
 
       dynamic "cors" {
-        for_each = try(var.settings.site_config.cors, {})[*]
+        for_each = lookup(var.settings.site_config, "cors", {}) != {} ? [1] : []
 
         content {
-          allowed_origins     = lookup(cors.value, "allowed_origins", null)
-          support_credentials = lookup(cors.value, "support_credentials", null)
+          allowed_origins     = lookup(var.settings.site_config.cors, "allowed_origins", null)
+          support_credentials = lookup(var.settings.site_config.cors, "support_credentials", null)
         }
       }
       dynamic "ip_restriction" {
