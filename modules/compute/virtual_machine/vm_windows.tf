@@ -45,14 +45,14 @@ resource "azurerm_windows_virtual_machine" "vm" {
   admin_username               = try(each.value.admin_username_key, null) == null ? each.value.admin_username : local.admin_username
   allow_extension_operations   = try(each.value.allow_extension_operations, null)
   availability_set_id          = can(each.value.availability_set_key) || can(each.value.availability_set.key) ? var.availability_sets[try(var.client_config.landingzone_key, each.value.availability_set.lz_key)][try(each.value.availability_set_key, each.value.availability_set.key)].id : try(each.value.availability_set.id, each.value.availability_set_id, null)
-  computer_name                = data.azurecaf_name.windows_computer_name[each.key].result
+  computer_name                = azurecaf_name.windows_computer_name[each.key].result
   enable_automatic_updates     = try(each.value.enable_automatic_updates, null)
   encryption_at_host_enabled   = try(each.value.encryption_at_host_enabled, null)
   eviction_policy              = try(each.value.eviction_policy, null)
   license_type                 = try(each.value.license_type, null)
   location                     = local.location
   max_bid_price                = try(each.value.max_bid_price, null)
-  name                         = data.azurecaf_name.windows[each.key].result
+  name                         = azurecaf_name.windows[each.key].result
   network_interface_ids        = local.nic_ids
   priority                     = try(each.value.priority, null)
   patch_mode                   = try(each.value.patch_mode, "AutomaticByOS")
@@ -75,7 +75,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   os_disk {
     caching                   = each.value.os_disk.caching
     disk_size_gb              = try(each.value.os_disk.disk_size_gb, null)
-    name                      = data.azurecaf_name.os_disk_windows[each.key].result
+    name                      = azurecaf_name.os_disk_windows[each.key].result
     storage_account_type      = each.value.os_disk.storage_account_type
     write_accelerator_enabled = try(each.value.os_disk.write_accelerator_enabled, false)
     disk_encryption_set_id    = try(each.value.os_disk.disk_encryption_set_key, null) == null ? null : try(var.disk_encryption_sets[var.client_config.landingzone_key][each.value.os_disk.disk_encryption_set_key].id, var.disk_encryption_sets[each.value.os_disk.lz_key][each.value.os_disk.disk_encryption_set_key].id, null)
