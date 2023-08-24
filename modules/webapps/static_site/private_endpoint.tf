@@ -9,7 +9,6 @@ module "private_endpoint" {
   subnet_id           = try(var.remote_objects.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, var.remote_objects.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
   settings            = each.value
   global_settings     = var.global_settings
-  tags                = local.tags
   base_tags           = var.global_settings.inherit_tags
   private_dns         = var.remote_objects.private_dns
   client_config       = var.client_config
