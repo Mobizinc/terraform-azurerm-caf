@@ -1,5 +1,5 @@
 resource "azurecaf_name" "disk" {
-  for_each = lookup(var.settings, "_disks", {})
+  for_each = lookup(var.settings, "data_disks", {})
 
   name          = each.value.name
   resource_type = "azurerm_managed_disk"
