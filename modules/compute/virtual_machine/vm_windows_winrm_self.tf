@@ -46,7 +46,7 @@ resource "azurerm_key_vault_certificate" "self_signed_winrm" {
         "keyEncipherment",
       ]
 
-      subject            = try(format("CN=%s", dazurecaf_name.windows[each.key].result), format("CN=%s", azurecaf_name.legacy[each.key].result))
+      subject            = try(format("CN=%s", azurecaf_name.windows[each.key].result), format("CN=%s", azurecaf_name.legacy[each.key].result))
       validity_in_months = 12
 
       subject_alternative_names {
