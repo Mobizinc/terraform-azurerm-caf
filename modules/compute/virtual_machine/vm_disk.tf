@@ -43,7 +43,7 @@ resource "azurerm_managed_disk" "disk" {
 
 }
 
-resource "azurerm_virtual_machine__disk_attachment" "disk" {
+resource "azurerm_virtual_machine_disk_attachment" "disk" {
   for_each = lookup(var.settings, "_disks", {})
 
   managed_disk_id           = can(azurerm_managed_disk.disk[each.key].id) ? azurerm_managed_disk.disk[each.key].id : each.value.restored_disk_id
