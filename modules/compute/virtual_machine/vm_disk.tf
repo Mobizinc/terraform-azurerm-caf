@@ -1,5 +1,5 @@
-data "azurecaf_name" "disk" {
-  for_each = lookup(var.settings, "data_disks", {})
+resource "azurecaf_name" "disk" {
+  for_each = lookup(var.settings, "_disks", {})
 
   name          = each.value.name
   resource_type = "azurerm_managed_disk"
@@ -8,12 +8,17 @@ data "azurecaf_name" "disk" {
   clean_input   = true
   passthrough   = var.global_settings.passthrough
   use_slug      = var.global_settings.use_slug
+  lifecycle {
+    ignore_changes = [
+      name #for ASR disk restores
+    ]
+  }
 }
 
 resource "azurerm_managed_disk" "disk" {
   for_each = lookup(var.settings, "data_disks", {})
 
-  name                   = data.azurecaf_name.disk[each.key].result
+  name                   = azurecaf_name.disk[each.key].result
   location               = local.location
   resource_group_name    = local.resource_group_name
   storage_account_type   = each.value.storage_account_type
@@ -38,8 +43,8 @@ resource "azurerm_managed_disk" "disk" {
 
 }
 
-resource "azurerm_virtual_machine_data_disk_attachment" "disk" {
-  for_each = lookup(var.settings, "data_disks", {})
+resource "azurerm_virtual_machine__disk_attachment" "disk" {
+  for_each = lookup(var.settings, "_disks", {})
 
   managed_disk_id           = can(azurerm_managed_disk.disk[each.key].id) ? azurerm_managed_disk.disk[each.key].id : each.value.restored_disk_id
   virtual_machine_id        = local.os_type == "linux" ? azurerm_linux_virtual_machine.vm["linux"].id : azurerm_windows_virtual_machine.vm["windows"].id
