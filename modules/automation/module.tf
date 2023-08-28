@@ -16,4 +16,13 @@ resource "azurerm_automation_account" "auto_account" {
   tags                = try(local.tags, {})
 
   sku_name = "Basic" #only Basic is supported at this time.
+
+  dynamic "identity" {
+    for_each = try(var.settings.identity, null) == null ? [] : [1]
+
+    content {
+      type         = var.settings.identity.type
+      identity_ids = local.managed_identities
+    }
+  }
 }
