@@ -8,7 +8,7 @@ resource "azurecaf_name" "logic_app_standard_name" {
   use_slug      = var.global_settings.use_slug
 }
 
-resource "azurerm_logic_app_standard" "logic_app_standard" {
+resource "azurerm_logic_app_standard" "logic_app" {
   name                       = azurecaf_name.logic_app_standard_name.result
   location                   = lookup(var.settings, "region", null) == null ? local.resource_group.location : var.global_settings.regions[var.settings.region]
   resource_group_name        = local.resource_group.name
@@ -55,10 +55,10 @@ resource "azurerm_logic_app_standard" "logic_app_standard" {
 }
 
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
-  depends_on = [azurerm_logic_app_standard.logic_app_standard]
+  depends_on = [azurerm_logic_app_standard.logic_app]
   count      = lookup(var.settings, "vnet_integration", {}) != {} ? 1 : 0
 
-  app_service_id = azurerm_logic_app_standard.logic_app_standard.id
+  app_service_id = azurerm_logic_app_standard.logic_app.id
   subnet_id = can(var.vnet_integration.subnet_id) ? var.vnet_integration.subnet_id : try(var.vnets[try(var.vnet_integration.lz_key, var.client_config.landingzone_key)][var.vnet_integration.vnet_key].subnets[var.vnet_integration.subnet_key].id,
   try(var.virtual_subnets[var.client_config.landingzone_key][var.vnet_integration.subnet_key].id, var.virtual_subnets[var.vnet_integration.lz_key][var.vnet_integration.subnet_key].id))
 
