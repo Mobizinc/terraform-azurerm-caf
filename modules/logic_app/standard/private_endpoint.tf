@@ -2,7 +2,7 @@ module "private_endpoint" {
   source   = "../../networking/private_endpoint"
   for_each = var.private_endpoints
 
-  resource_id         = azurerm_logic_app_standard.logic_app_standard.id
+  resource_id         = azurerm_logic_app_standard.logic_app.id
   name                = each.value.name
   location            = lookup(var.settings, "region", null) == null ? local.resource_group.location : var.global_settings.regions[var.settings.region]
   resource_group_name = local.resource_group.name
