@@ -311,7 +311,7 @@ resource "null_resource" "webapps_publish_profile" {
       else
         # Create a new secret
         az webapp deployment list-publishing-profiles -g $resource_group -n $app_name --xml > $file_name
-        az keyvault secret set --name $secret_name --value $file_name --vault-name $key_vault -o none
+        az keyvault secret set --name $secret_name --file $file_name  --vault-name $key_vault  -o none
       fi
       
       rm -f $file_name
