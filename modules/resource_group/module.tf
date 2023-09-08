@@ -20,7 +20,7 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_management_lock" "resource_group_lock" {
-  count      = try(var.settings.lock_resource, false) ? 1 : 0
+  count      = var.settings.lock_resource == "true" ? 1 : 0
   name       = format("%s-Lock", azurerm_resource_group.rg.name )
   scope      = azurerm_resource_group.rg.id
   lock_level = "CanNotDelete"
