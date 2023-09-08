@@ -10,7 +10,7 @@ module "resource_groups" {
   settings            = each.value
   global_settings     = local.global_settings
   tags                = merge(lookup(each.value, "tags", {}), var.tags)
-  lock_resource       = try(each.value.lock_resource , null)
+  lock_resource       = try(each.value.lock_resource , false)
 }
 
 
