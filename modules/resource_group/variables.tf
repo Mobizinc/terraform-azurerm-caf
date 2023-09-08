@@ -11,4 +11,5 @@ variable "resource_group_name" {
   type        = string
 }
 variable "lock_resource" {
+  default = false
 }
