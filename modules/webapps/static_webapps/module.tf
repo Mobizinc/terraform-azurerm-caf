@@ -1,15 +1,12 @@
 resource "azapi_resource" "static_webapps" {
   type = "Microsoft.Web/staticSites@2022-09-01"
-  name = "string"
-  location = "string"
-  parent_id = "string"
-  tags = {
-    tagName1 = "tagValue1"
-    tagName2 = "tagValue2"
-  }
+  name = var.name
+  location = var.location
+  parent_id = var.resource_group_name
+  tags = local.tags
   identity {
-    type = "string"
-    identity_ids = []
+    type = var.identity.type
+    identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
   }
   body = jsonencode({
     properties = {
