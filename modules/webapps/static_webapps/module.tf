@@ -9,7 +9,7 @@ resource "azapi_resource" "static_webapps" {
   name = var.name
   location = var.location
   parent_id = var.resource_group_name
-  
+  tags  = local.tags
   identity {
     type = var.settings.sku == "Standard" ? var.identity.type : null
     identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
