@@ -84,7 +84,9 @@ variable "combined_objects" {
 variable "keyvault_id" {
   default = {}
 }
-
+variable "key_vault_secret" {
+  default = {}
+}
 variable "settings" {
   default = {}
 }
