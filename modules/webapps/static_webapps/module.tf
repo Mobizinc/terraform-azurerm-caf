@@ -11,7 +11,7 @@ resource "azapi_resource" "static_webapps" {
   parent_id = var.resource_group_name
   tags  = local.tags
   identity {
-    type = var.settings.sku == "Standard" ? var.identity.type : null
+    type = try (var.identity.type , null)
     identity_ids = []
   }
   body = jsonencode({
