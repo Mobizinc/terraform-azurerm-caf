@@ -4,7 +4,7 @@ resource "azapi_resource" "static_webapps" {
   location = var.location
   parent_id = var.resource_group_name
   identity {
-    type = var.identity.type
+    type = try( var.identity.type , null)
     identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
   }
   body = jsonencode({
