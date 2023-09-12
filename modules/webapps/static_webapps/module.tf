@@ -12,7 +12,7 @@ resource "azapi_resource" "static_webapps" {
   tags  = local.tags
   identity {
     type = var.settings.sku == "Standard" ? var.identity.type : null
-    identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
+    identity_ids = []
   }
   body = jsonencode({
     properties = {
