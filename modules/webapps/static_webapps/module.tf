@@ -1,5 +1,5 @@
 data "azurerm_key_vault_secret" "static_webapps_token" {
-  count          = var.key_vault_secret != "" && var.remote_objects.keyvault_id != "" ? 1 : 0
+  count          = var.settings.repositoryurl != null && var.settings.branch ? 1 : 0
   name           = var.key_vault_secret
   key_vault_id   = var.remote_objects.keyvault_id
 }
