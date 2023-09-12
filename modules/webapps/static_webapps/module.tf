@@ -3,6 +3,43 @@ resource "azapi_resource" "static_webapps" {
   name = var.name
   location = var.location
   parent_id = var.resource_group_name
+  identity {
+    type = var.identity.type
+    identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
+  }
+  body = jsonencode({
+    properties = {
+      branch = try(each.value.branch, null)
+      buildProperties = {
+        appLocation = try(each.value.applocation, null)
+        githubActionSecretNameOverride = try(each.value.githubactionsecretname, null)
+        apiLocation = try(each.value.apilocation, null)
+
+      }
+      publicNetworkAccess = try(each.value.publicNetworkAccess, "Enabled")
+      repositoryToken = data.azurerm_key_vault_secret.example.value
+      repositoryUrl = try(each.value.repositoryurl, null)
+    }
+    sku = {
+      name = try(each.value.sku , "Free"
+      tier = try(each.value.sku , "Free"
+    }
+
+  })
+
+ response_export_values = [
+    "id",
+    "location"
+  ]
+}
+
+
+
+resource "azapi_resource" "static_webapps" {
+  type = "Microsoft.Web/staticSites@2022-09-01"
+  name = var.name
+  location = var.location
+  parent_id = var.resource_group_name
   tags = local.tags
   identity {
     type = var.identity.type
