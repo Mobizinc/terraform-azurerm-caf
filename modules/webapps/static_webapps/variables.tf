@@ -60,9 +60,6 @@ variable "combined_objects" {
   default = {}
 }
 
-variable "keyvault_id" {
-  default = {}
-}
 variable "key_vault_secret" {
   default = {}
 }
