@@ -54,7 +54,7 @@ module "static_webapps" {
   diagnostic_profiles = try(each.value.diagnostic_profiles, null)
   diagnostics         = local.combined_diagnostics
   tags                = try(each.value.tags, null)
-
+  key_vault_secret    = try(each.value.key_vault_secret , null)
   
   remote_objects = {
     subnets            = try(local.combined_objects_networking[try(each.value.settings.lz_key, local.client_config.landingzone_key)][each.value.settings.vnet_key].subnets, null)
