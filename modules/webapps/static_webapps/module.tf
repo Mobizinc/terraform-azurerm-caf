@@ -23,7 +23,7 @@ resource "azapi_resource" "static_webapps" {
 
       }
       publicNetworkAccess = try(each.value.publicNetworkAccess, "Enabled")
-      repositoryToken = data.azurerm_key_vault_secret.example.value
+      repositoryToken = try( data.azurerm_key_vault_secret.static_webapps_token[0].value , null)
       repositoryUrl = try(each.value.repositoryurl, null)
     }
     sku = {
