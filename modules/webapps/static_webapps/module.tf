@@ -46,7 +46,7 @@ module "private_endpoint" {
   resource_id         = azapi_resource.static_webapps.id
   location            = var.location
   name                = each.value.name
-  resource_group_name = var.resource_group_name
+  resource_group_name = var.resource_groups[try(each.value.resource_group.lz_key, var.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].name
   subnet_id           = try(var.remote_objects.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, var.remote_objects.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
   settings            = each.value
   global_settings     = var.global_settings
