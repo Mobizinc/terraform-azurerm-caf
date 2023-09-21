@@ -6,7 +6,7 @@ resource "tls_private_key" "ssh" {
 }
 
 # Name of the VM in the Azure Control Plane
-data "azurecaf_name" "linux" {
+resource "azurecaf_name" "linux" {
   for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
 
   name          = each.value.name
@@ -20,7 +20,7 @@ data "azurecaf_name" "linux" {
 
 
 # Name of the Linux computer name
-data "azurecaf_name" "linux_computer_name" {
+resource "azurecaf_name" "linux_computer_name" {
   depends_on = [azurerm_network_interface.nic, azurerm_network_interface_security_group_association.nic_nsg]
   for_each   = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
 
@@ -34,7 +34,7 @@ data "azurecaf_name" "linux_computer_name" {
 }
 
 # Name for the OS disk
-data "azurecaf_name" "os_disk_linux" {
+resource "azurecaf_name" "os_disk_linux" {
   for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
 
   name          = try(each.value.os_disk.name, null)
@@ -53,14 +53,14 @@ resource "azurerm_linux_virtual_machine" "vm" {
   admin_username                  = each.value.admin_username
   allow_extension_operations      = try(each.value.allow_extension_operations, null)
   availability_set_id             = can(each.value.availability_set_key) || can(each.value.availability_set.key) ? var.availability_sets[try(var.client_config.landingzone_key, each.value.availability_set.lz_key)][try(each.value.availability_set_key, each.value.availability_set.key)].id : try(each.value.availability_set.id, each.value.availability_set_id, null)
-  computer_name                   = data.azurecaf_name.linux_computer_name[each.key].result
+  computer_name                   = azurecaf_name.linux_computer_name[each.key].result
   disable_password_authentication = try(each.value.disable_password_authentication, true)
   encryption_at_host_enabled      = try(each.value.encryption_at_host_enabled, null)
   eviction_policy                 = try(each.value.eviction_policy, null)
   license_type                    = try(each.value.license_type, null)
   location                        = local.location
   max_bid_price                   = try(each.value.max_bid_price, null)
-  name                            = data.azurecaf_name.linux[each.key].result
+  name                            = azurecaf_name.linux[each.key].result
   network_interface_ids           = local.nic_ids
   # (Optional) Specifies the mode of in-guest patching to this Linux Virtual Machine. Possible values are AutomaticByPlatform and ImageDefault. Defaults to ImageDefault. For more information on patch modes please see the product documentation.
   patch_mode                   = try(each.value.patch_mode, "ImageDefault")
@@ -135,7 +135,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   os_disk {
     caching                   = try(each.value.os_disk.caching, null)
     disk_size_gb              = try(each.value.os_disk.disk_size_gb, null)
-    name                      = try(data.azurecaf_name.os_disk_linux[each.key].result, null)
+    name                      = try(azurecaf_name.os_disk_linux[each.key].result, null)
     storage_account_type      = try(each.value.os_disk.storage_account_type, null)
     write_accelerator_enabled = try(each.value.os_disk.write_accelerator_enabled, false)
     disk_encryption_set_id    = try(each.value.os_disk.disk_encryption_set_key, null) == null ? null : try(var.disk_encryption_sets[var.client_config.landingzone_key][each.value.os_disk.disk_encryption_set_key].id, var.disk_encryption_sets[each.value.os_disk.lz_key][each.value.os_disk.disk_encryption_set_key].id, null)
