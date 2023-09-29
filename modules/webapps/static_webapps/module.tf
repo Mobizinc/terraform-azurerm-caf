@@ -35,6 +35,8 @@ resource "azapi_resource" "static_webapps" {
  response_export_values = [
     "id",
     "location"
+    "properties.branch"
+    "properties.repositoryUrl"
   ]
 }
 
