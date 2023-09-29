@@ -34,8 +34,9 @@ resource "azapi_resource" "static_webapps" {
  schema_validation_enabled = false
  response_export_values = [
     "id",
-    "location"
-    "properties.branch"
+    "location",
+    "name",
+    "properties.branch",
     "properties.repositoryUrl"
   ]
 }
