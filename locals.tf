@@ -141,7 +141,7 @@ locals {
     postgresql_flexible_servers_v2     = try(var.database.postgresql_flexible_servers_v2, {})
     postgresql_servers                 = try(var.database.postgresql_servers, {})
     synapse_workspaces                 = try(var.database.synapse_workspaces, {})
-    mysql_flexible_server              = try(var.database.mysql_flexible_server, {})
+    mysql_flexible_servers             = try(var.database.mysql_flexible_servers, {})
 
     data_explorer = {
       kusto_clusters                         = try(var.database.data_explorer.kusto_clusters, {})
