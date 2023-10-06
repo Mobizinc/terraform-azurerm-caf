@@ -20,8 +20,7 @@ resource "azurerm_netapp_volume" "volume" {
   protocols           = try(var.settings.protocols, [])
   subnet_id           = var.subnet_id
   storage_quota_in_gb = try(var.settings.storage_quota_in_gb, 100)
-  azure_vmware_data_store_enabled = try(var.settings.azure_vmware_data_store_enabled , null)
-  create_from_snapshot_resource_id = try(var.settings.create_from_snapshot_resource_id, null)
+
 
   dynamic "export_policy_rule" {
     for_each = var.export_policy_rule
