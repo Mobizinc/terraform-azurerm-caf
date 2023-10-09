@@ -13,6 +13,10 @@ resource "azurecaf_name" "dhg" {
 
 
 resource "azurerm_dedicated_host_group" "dhg" {
+  #To avoid redeploy with existing customer
+  lifecycle {
+    ignore_changes = [resource_group_name]
+  }
   name                        = azurecaf_name.dhg.result
   resource_group_name         = var.resource_group_name
   location                    = var.location
