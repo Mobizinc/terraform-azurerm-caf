@@ -26,3 +26,4 @@ variable "remote_objects" {}
 variable "azuread_groups" {}
 variable "active_directory_administrator" {}
 variable "retentiondays" {}
+variable "ltr_policy" {}
