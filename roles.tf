@@ -38,18 +38,18 @@ resource "azurerm_role_assignment" "for_deferred" {
   scope                = each.value.scope_lz_key == null ? local.services_roles_deferred[each.value.scope_resource_key][var.current_landingzone_key][each.value.scope_key_resource].id : local.services_roles_deferred[each.value.scope_resource_key][each.value.scope_lz_key][each.value.scope_key_resource].id
 }
 
-resource "time_sleep" "azurerm_role_assignment_for" {
-  depends_on = [azurerm_role_assignment.for]
-  count = length(
-    {
-      for key, value in try(local.roles_to_process, {}) : key => value
-      if contains(keys(local.services_roles), value.scope_resource_key)
-    }
-  ) > 0 ? 1 : 0
-
-  # 2 mins timer on creation
-  create_duration = "3m"
-}
+#resource "time_sleep" "azurerm_role_assignment_for" {
+#  depends_on = [azurerm_role_assignment.for]
+#  count = length(
+#    {
+#      for key, value in try(local.roles_to_process, {}) : key => value
+#      if contains(keys(local.services_roles), value.scope_resource_key)
+#    }
+#  ) > 0 ? 1 : 0
+#
+#  # 2 mins timer on creation
+#  create_duration = "3m"
+#}
 
 resource "time_sleep" "azurerm_role_assignment_for_deferred" {
   depends_on = [azurerm_role_assignment.for_deferred]
