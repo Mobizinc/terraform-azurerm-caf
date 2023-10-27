@@ -122,7 +122,7 @@ resource "time_sleep" "wait_for_logic_app" {
   create_duration = "60s"
 }
 
-resource "null_resource" "logicapp_api_permission_dev" {
+resource "null_resource" "logicapp_api_permission_dev1" {
   depends_on = [time_sleep.wait_for_logic_app]
   count      = try(var.name, null) == "iam-automation-nonprod-dev" ? 1 : 0     #var.name == "iam-automation-nonprod-dev" ? 1 : 0
 
@@ -132,7 +132,7 @@ resource "null_resource" "logicapp_api_permission_dev" {
   }
 }
 
-resource "null_resource" "logicapp_api_permission_uat" {
+resource "null_resource" "logicapp_api_permission_uat1" {
   depends_on = [time_sleep.wait_for_logic_app]
   count      = try(var.name, null) == "iam-automation-nonprod-uat" ? 1 : 0     #var.name == "iam-automation-nonprod-uat" ? 1 : 0
 
