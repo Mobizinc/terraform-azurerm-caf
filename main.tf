@@ -10,7 +10,7 @@ terraform {
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = "~> 1.4.0"
+      version = "~> 2.44.0"
     }
     azurecaf = {
       source  = "aztfmod/azurecaf"
