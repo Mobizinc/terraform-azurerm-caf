@@ -14,7 +14,7 @@ module "virtual_machine_scale_sets" {
     module.packer_service_principal,
     module.proximity_placement_groups,
     module.storage_accounts,
-    
+    time_sleep.azurerm_role_assignment_for.0
   ]
   for_each = local.compute.virtual_machine_scale_sets
 
