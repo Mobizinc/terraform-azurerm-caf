@@ -18,3 +18,10 @@ resource "azurerm_resource_group" "rg" {
     lookup(var.settings, "tags", {})
   )
 }
+
+resource "azurerm_management_lock" "resource_group_lock" {
+  count      = var.lock_resource == "true" ? 1 : 0
+  name       = format("%s-Lock", azurerm_resource_group.rg.name )
+  scope      = azurerm_resource_group.rg.id
+  lock_level = "CanNotDelete"
+}
