@@ -33,7 +33,7 @@ resource "azurerm_managed_disk" "disk" {
   disk_encryption_set_id = try(each.value.disk_encryption_set_key, null) == null ? null : var.disk_encryption_sets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.disk_encryption_set_key].id
   source_resource_id   =  try(each.value.source_resource_id, null)
   hyper_v_generation = try(each.value.hyper_v_generation, null)
-
+  on_demand_bursting_enabled = try(each.value.on_demand_bursting_enabled, null)
   lifecycle {
     ignore_changes = [
       name, #for ASR disk restores
