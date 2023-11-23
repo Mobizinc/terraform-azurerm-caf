@@ -16,6 +16,7 @@ resource "azurerm_netapp_pool" "pool" {
   location            = var.location
   service_level       = try(var.settings.service_level, "Standard")
   size_in_tb          = try(var.settings.size_in_tb, 4)
+  qos_type            = try(var.settings.qos_type , null)
   tags                = merge(var.base_tags, try(var.settings.tags, {}))
   lifecycle {
     ignore_changes = [resource_group_name, location, name]
