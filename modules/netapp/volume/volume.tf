@@ -20,6 +20,7 @@ resource "azurerm_netapp_volume" "volume" {
   protocols           = try(var.settings.protocols, [])
   subnet_id           = var.subnet_id
   storage_quota_in_gb = try(var.settings.storage_quota_in_gb, 100)
+  throughput_in_mibps = try(var.settings.throughput_in_mibps , null)
   dynamic "export_policy_rule" {
     for_each = var.export_policy_rule
 
