@@ -189,7 +189,8 @@ resource "azurerm_windows_virtual_machine" "vm" {
       tags["CE_Instance_Scheduler"],
       tags["CE_Patch_Group"],
       tags["CE_Backup_selection"],
-      tags["CE_Backup_Selection"]
+      tags["CE_Backup_Selection"],
+      source_image_id
     ]
   }
 
