@@ -62,6 +62,7 @@ resource "azurerm_app_service" "app_service" {
       vnet_route_all_enabled    = lookup(var.settings.site_config, "vnet_route_all_enabled", false)
       websockets_enabled        = lookup(var.settings.site_config, "websockets_enabled", false)
       scm_type                  = lookup(var.settings.site_config, "scm_type", null)
+      health_check_path         = lookup(var.settings.site_config, "health_check_path", null)
 
       dynamic "cors" {
         for_each = lookup(var.settings.site_config, "cors", {}) != {} ? [1] : []
