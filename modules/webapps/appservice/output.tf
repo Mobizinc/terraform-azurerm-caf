@@ -2,10 +2,6 @@ output "id" {
   value       = azurerm_app_service.app_service.id
   description = "The ID of the App Service."
 }
-output "name" {
-  value       = azurerm_app_service.app_service.name
-  description = "The name of the App Service."
-}
 output "default_site_hostname" {
   value       = azurerm_app_service.app_service.default_site_hostname
   description = "The Default Hostname associated with the App Service"
