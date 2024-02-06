@@ -88,3 +88,6 @@ variable "appservice" {
 variable "private_dns" {
   default = {}
 }
+variable "app_service_name" {
+  default = {}
+}
