@@ -78,7 +78,7 @@ module "app_services_slots" {
   tags                 = try(each.value.tags, null)
   publish_profile      = try(each.value.publish_profile, null)
   app_service_name     = each.value.app_service_name
-  app_service          = local.combined_objects_app_services
+  app_service          = try(local.combined_objects_app_services[try(each.value.app_services.lz_key, local.client_config.landingzone_key)][each.value.app_services.key].id, null)
   private_dns          = local.combined_objects_private_dns  
   keyvault_name        = can(each.value.keyvault.key) ? local.combined_objects_keyvaults[try(each.value.keyvault.lz_key, local.client_config.landingzone_key)][each.value.keyvault.key].name : null
   remote_objects = {
