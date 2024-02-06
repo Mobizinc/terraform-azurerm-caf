@@ -72,7 +72,7 @@ resource "time_sleep" "wait_for_logic_app" {
 
 resource "null_resource" "logicapp_api_permission_dev1" {
   depends_on = [time_sleep.wait_for_logic_app]
-  count      = try(var.name, null) == "iam-automation-nonprod-dev" ? 1 : 0     #var.name == "iam-automation-nonprod-dev" ? 1 : 0
+  count      = try(var.settings.name, null) == "iam-automation-nonprod-dev" ? 1 : 0     #var.name == "iam-automation-nonprod-dev" ? 1 : 0
 
   provisioner "local-exec" {
     command     = format("%s/scripts/api_permission_dev.sh", path.module)
@@ -82,7 +82,7 @@ resource "null_resource" "logicapp_api_permission_dev1" {
 
 resource "null_resource" "logicapp_api_permission_uat1" {
   depends_on = [time_sleep.wait_for_logic_app]
-  count      = try(var.name, null) == "iam-automation-nonprod-uat" ? 1 : 0     #var.name == "iam-automation-nonprod-uat" ? 1 : 0
+  count      = try(var.settings.name, null) == "iam-automation-nonprod-uat" ? 1 : 0     #var.name == "iam-automation-nonprod-uat" ? 1 : 0
 
   provisioner "local-exec" {
     command     = format("%s/scripts/api_permission_uat.sh", path.module)
