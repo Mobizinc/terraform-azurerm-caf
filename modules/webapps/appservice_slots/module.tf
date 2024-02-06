@@ -1,4 +1,8 @@
-# Per options https://www.terraform.io/docs/providers/azurerm/r/app_service.html
+data "azurerm_app_service" "app_services_name" {
+  name                = var.app_service_name
+  resource_group_name = var.resource_group_name
+}
+
 
 resource "azurerm_app_service_slot_virtual_network_swift_connection" "vnet_config" {
  for_each   = var.slots_vnet
