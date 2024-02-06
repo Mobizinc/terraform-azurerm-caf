@@ -14,7 +14,7 @@ resource "azurerm_app_service_slot" "slots" {
   location            = var.location
   resource_group_name = var.resource_group_name
   app_service_plan_id = var.app_service_plan_id
-  app_service_name    = azurerm_app_service.app_service.name
+  app_service_name    = try(local.combined_objects_app_services[try(each.value.app_services.lz_key, local.client_config.landingzone_key)][each.value.app_services.key].name, null)
   tags                = local.tags
 
   client_affinity_enabled = lookup(var.settings, "client_affinity_enabled", null)
