@@ -77,10 +77,6 @@ variable "keyvault_name" {
 variable "publish_profile" {
   default = {}
 }
-
-variable "appservice" {
-  default = {}
-}
 variable "private_dns" {
   default = {}
 }
