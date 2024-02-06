@@ -63,3 +63,29 @@ resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
   try(var.virtual_subnets[var.client_config.landingzone_key][var.vnet_integration.subnet_key].id, var.virtual_subnets[var.vnet_integration.lz_key][var.vnet_integration.subnet_key].id))
 
 }
+
+resource "time_sleep" "wait_for_logic_app" {
+  depends_on = [azurerm_logic_app_standard.logic_app]
+
+  create_duration = "60s"
+}
+
+resource "null_resource" "logicapp_api_permission_dev1" {
+  depends_on = [time_sleep.wait_for_logic_app]
+  count      = try(var.name, null) == "iam-automation-nonprod-dev" ? 1 : 0     #var.name == "iam-automation-nonprod-dev" ? 1 : 0
+
+  provisioner "local-exec" {
+    command     = format("%s/scripts/api_permission_dev.sh", path.module)
+    interpreter = ["/bin/bash"]
+  }
+}
+
+resource "null_resource" "logicapp_api_permission_uat1" {
+  depends_on = [time_sleep.wait_for_logic_app]
+  count      = try(var.name, null) == "iam-automation-nonprod-uat" ? 1 : 0     #var.name == "iam-automation-nonprod-uat" ? 1 : 0
+
+  provisioner "local-exec" {
+    command     = format("%s/scripts/api_permission_uat.sh", path.module)
+    interpreter = ["/bin/bash"]
+  }
+}
