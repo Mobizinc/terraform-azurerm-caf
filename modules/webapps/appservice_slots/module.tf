@@ -4,7 +4,7 @@ resource "azurerm_app_service_slot_virtual_network_swift_connection" "vnet_confi
  for_each   = var.slots_vnet
 
  slot_name      = var.name
- app_service_id = try(local.combined_objects_app_services[try(each.value.app_services.lz_key, local.client_config.landingzone_key)][each.value.app_services.key].id, null)
+ app_service_id = try(var.remote_objects.app_services, null)
  subnet_id      = try(var.remote_objects.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, var.remote_objects.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
 }
 
