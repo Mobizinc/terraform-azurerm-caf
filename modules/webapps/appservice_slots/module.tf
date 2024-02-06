@@ -36,7 +36,7 @@ resource "azurerm_app_service_slot" "slots" {
     for_each = lookup(var.settings, "site_config", {}) != {} ? [1] : []
 
     content {
-      # numberOfWorkers           = lookup(each.value.site_config, "numberOfWorkers", 1)  # defined in ARM template below
+      
       always_on                 = lookup(var.settings.site_config, "always_on", false)
       app_command_line          = lookup(var.settings.site_config, "app_command_line", null)
       default_documents         = lookup(var.settings.site_config, "default_documents", null)
