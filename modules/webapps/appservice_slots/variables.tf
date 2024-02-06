@@ -37,10 +37,6 @@ variable "dynamic_app_settings" {
   default = {}
 }
 
-variable "slots" {
-  default = {}
-}
-
 variable "application_insight" {
   default = null
 }
