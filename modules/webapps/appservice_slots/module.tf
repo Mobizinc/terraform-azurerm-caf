@@ -1,21 +1,13 @@
-data "azurerm_app_service" "app_services_name" {
-  name                = var.app_service_name
-  resource_group_name = var.resource_group_name
+data "azurerm_subscription" "current" {
 }
-
 
 resource "azurerm_app_service_slot_virtual_network_swift_connection" "vnet_config" {
  depends_on = [azurerm_app_service_slot.slots]
  for_each  =  var.vnet_integration
 
  slot_name      = var.name
- app_service_id = data.azurerm_app_service.app_services_name.id
+ app_service_id = format("/subscriptions/%s/resourceGroups/%s/providers/Microsoft.Web/sites/%s", data.azurerm_subscription.current.subscription_id, var.resource_group_name, var.app_service_name)
  subnet_id      = try(var.remote_objects.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, var.remote_objects.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
- lifecycle {
-    ignore_changes = [
-      app_service_id
-    ]
-  }
 }
 
 resource "azurerm_app_service_slot" "slots" {
