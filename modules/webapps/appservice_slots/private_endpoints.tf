@@ -13,5 +13,10 @@ module "private_endpoint" {
   base_tags           = var.base_tags
   private_dns         = var.private_dns
   client_config       = var.client_config
+  lifecycle {
+      ignore_changes = [
+         resource_id
+      ]
+    }
 }
 
