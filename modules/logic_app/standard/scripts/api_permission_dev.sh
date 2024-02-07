@@ -2,10 +2,11 @@
 
 set -x
 
-appName="Sanofi Mobiz testemail dev" #"iam-automation-nonprod-dev"
+appName="iam-automation-nonprod-dev"
 graphId=$(az ad sp list --query "[?appDisplayName=='Microsoft Graph'].appId | [0]" --all --out tsv)
 echo "graphId is $graphId"
-principalId=$(az resource list -n $appName --query [*].identity.principalId --out tsv)
+#principalId=$(az resource list -n $appName --query [*].identity.principalId --out tsv)
+principalId="42c89358-21df-44dd-8437-f9071772c038"
 echo "principalId is $principalId"
 graphResourceId=$(az ad sp list --display-name "Microsoft Graph" --query [0].id --out tsv)
 echo "graphResourceId is $graphResourceId"
