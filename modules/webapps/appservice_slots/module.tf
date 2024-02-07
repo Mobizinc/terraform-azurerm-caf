@@ -5,7 +5,7 @@ data "azurerm_app_service" "app_services_name" {
 
 
 resource "azurerm_app_service_slot_virtual_network_swift_connection" "vnet_config" {
- for_each   = var.slots_vnet
+ for_each  =  var.vnet_integration
 
  slot_name      = var.name
  app_service_id = data.azurerm_app_service.app_services_name.id
