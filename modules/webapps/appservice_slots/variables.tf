@@ -83,6 +83,6 @@ variable "private_dns" {
 variable "app_service_name" {
   default = {}
 }
-variable "slots_vnet" {
+variable "vnet_integration" {
   default = {}
 }
