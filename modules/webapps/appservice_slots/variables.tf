@@ -86,3 +86,6 @@ variable "app_service_name" {
 variable "vnet_integration" {
   default = {}
 }
+variable "app_service" {
+  default = {}
+}
