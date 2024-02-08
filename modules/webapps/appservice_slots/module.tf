@@ -6,7 +6,7 @@ resource "azurerm_app_service_slot_virtual_network_swift_connection" "vnet_confi
  for_each  =  var.vnet_integration
 
  slot_name      = var.name
- app_service_id = try(var.remote_objects.app_services[try(each.value.app_services.lz_key, var.client_config.landingzone_key)][each.value.app_services.key].id, null)
+ app_service_id = local.combined_objects_app_services[try(each.value.app_services.lz_key, var.client_config.landingzone_key)][each.value.app_services.key].id : null
  subnet_id      = try(var.remote_objects.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, var.remote_objects.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
 }
 
@@ -16,7 +16,7 @@ resource "azurerm_app_service_slot" "slots" {
   location            = var.location
   resource_group_name = var.resource_group_name
   app_service_plan_id = var.app_service_plan_id
-  app_service_name    = try(var.remote_objects.app_services[try(each.value.app_services.lz_key, var.client_config.landingzone_key)][each.value.app_services.key].name, null)
+  app_service_name    = local.combined_objects_app_services[try(each.value.app_services.lz_key, var.client_config.landingzone_key)][each.value.app_services.key].name : null
   tags                = local.tags
 
   client_affinity_enabled = lookup(var.settings, "client_affinity_enabled", null)
