@@ -3,7 +3,7 @@ module "private_endpoint" {
   for_each = var.remote_objects.private_endpoints
   depends_on = [azurerm_app_service_slot.slots]
 
-  resource_id         = try(var.remote_objects.app_services[try(each.value.app_services.lz_key, local.client_config.landingzone_key)][each.value.app_services.key].id, null)
+  resource_id         = try(var.remote_objects.app_services[try(each.value.app_services.lz_key, var.client_config.landingzone_key)][each.value.app_services.key].id, null)
   location            = var.location
   name                = each.value.name
   resource_group_name = var.resource_group_name
