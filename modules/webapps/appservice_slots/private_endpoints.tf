@@ -4,7 +4,7 @@ module "private_endpoint" {
   for_each = var.remote_objects.private_endpoints
   depends_on = [azurerm_app_service_slot.slots]
 
-  resource_id         = local.combined_objects_app_services[try(each.value.app_services.lz_key, var.client_config.landingzone_key)][each.value.app_services.key].id : null
+  resource_id         = format("/subscriptions/%s/resourceGroups/%s/providers/Microsoft.Web/sites/%s", data.azurerm_subscription.current.subscription_id, var.resource_group_name, var.app_service_name)
   location            = var.location
   name                = each.value.name
   resource_group_name = var.resource_group_name
