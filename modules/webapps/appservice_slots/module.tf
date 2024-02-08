@@ -6,7 +6,7 @@ resource "azurerm_app_service_slot_virtual_network_swift_connection" "vnet_confi
  for_each  =  var.vnet_integration
 
  slot_name      = var.name
- app_service_id = format("/subscriptions/%s/resourceGroups/%s/providers/Microsoft.Web/sites/%s", data.azurerm_subscription.current.subscription_id, var.resource_group_name, var.app_service_name)
+ app_service_id = try(var.remote_objects.app_services, null)
  subnet_id      = try(var.remote_objects.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, var.remote_objects.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
 }
 
