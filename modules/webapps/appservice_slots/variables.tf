@@ -33,9 +33,6 @@ variable "app_settings" {
   default = null
 }
 
-variable "dynamic_app_settings" {
-  default = {}
-}
 
 variable "application_insight" {
   default = null
