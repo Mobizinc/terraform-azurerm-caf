@@ -1,4 +1,4 @@
-/*
+
 locals {
   # Expected Variable: dynamic_app_settings = {
   #                      "KEYVAULT_URL" = {
@@ -26,4 +26,3 @@ locals {
     ) : setting.key => setting.value
   }
 }
-*/
