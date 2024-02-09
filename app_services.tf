@@ -69,7 +69,6 @@ module "app_services_slots" {
   connection_strings   = try(each.value.connection_strings, {})
   app_settings         = try(each.value.app_settings, null)
   global_settings      = local.global_settings
-  dynamic_app_settings = try(each.value.dynamic_app_settings, {})
   combined_objects     = local.dynamic_app_settings_combined_objects
   base_tags            = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
   application_insight  = try(each.value.application_insight_key, null) == null ? null : module.azurerm_application_insights[each.value.application_insight_key]
