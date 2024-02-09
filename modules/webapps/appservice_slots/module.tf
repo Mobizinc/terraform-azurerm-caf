@@ -1,5 +1,3 @@
-data "azurerm_subscription" "current" {
-}
 
 resource "azurerm_app_service_slot_virtual_network_swift_connection" "vnet_config" {
  depends_on = [azurerm_app_service_slot.slots]
