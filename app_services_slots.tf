@@ -31,7 +31,6 @@ module "app_services_slots" {
     subnets            = try(local.combined_objects_networking[try(each.value.settings.lz_key, local.client_config.landingzone_key)][each.value.settings.vnet_key].subnets, null)
     vnets              = local.combined_objects_networking
     private_endpoints  = try(each.value.private_endpoints, {})
-    
   }  
 }
 
