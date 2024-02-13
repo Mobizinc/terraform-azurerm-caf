@@ -27,7 +27,7 @@ resource "azurerm_logic_app_standard" "logic_app" {
   storage_account_name       = local.storage_account.name
   storage_account_access_key = local.storage_account.primary_access_key
   storage_account_share_name = try(var.settings.storage_account_share_name, null)
-  tags                       = local.tags
+  # tags                       = local.tags
 
   app_settings = local.app_settings
 
