@@ -8,7 +8,7 @@ resource "azurecaf_name" "logic_app_standard_name" {
   use_slug      = var.global_settings.use_slug
 }
 
-resource "azurerm_logic_app_standard" "logic_app_standard" {
+resource "azurerm_logic_app_standard" "logic_app" {
   name                       = azurecaf_name.logic_app_standard_name.result
   location                   = lookup(var.settings, "region", null) == null ? local.resource_group.location : var.global_settings.regions[var.settings.region]
   resource_group_name        = local.resource_group.name
