@@ -149,7 +149,6 @@ module "logic_app_standard" {
   app_settings      = try(each.value.app_settings, null)
   subnets           = local.combined_objects_networking
   identity          = try(each.value.identity, null)
-  connection_strings = try(each.value.connection_strings, {})
   private_endpoints = try(each.value.private_endpoints, {})
   private_dns       = local.combined_objects_private_dns
   vnets             = local.combined_objects_networking
