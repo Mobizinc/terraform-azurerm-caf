@@ -47,6 +47,6 @@ variable "virtual_subnets" {
 variable "vnet_integration" {
   default = {}
 }
-variable "connection_string" {
+variable "connection_strings" {
   default = {}
 }
