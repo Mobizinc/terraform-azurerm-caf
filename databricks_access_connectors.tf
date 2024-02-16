@@ -8,7 +8,6 @@ module "databricks_access_connectors" {
   settings          = each.value
   resource_groups   = local.combined_objects_resource_groups
   base_tags         = local.global_settings.inherit_tags
-  location          = try(local.global_settings.regions[each.value.region], null)
   remote_objects = {
     managed_identities = local.combined_objects_managed_identities
   }
