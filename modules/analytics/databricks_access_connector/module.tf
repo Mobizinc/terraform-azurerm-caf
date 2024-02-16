@@ -1,7 +1,7 @@
 resource "azurerm_databricks_access_connector" "databricks_access_connector" {
   name                = var.name
   resource_group_name = local.resource_group.name
-  location            = var.location
+  location            = lookup(var.settings, "region", null) == null ? local.resource_group.location : var.global_settings.regions[var.settings.region]
   tags                = local.tags
 
   dynamic "identity" {
