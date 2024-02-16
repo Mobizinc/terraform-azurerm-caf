@@ -4,6 +4,7 @@ module "databricks_access_connectors" {
 
   client_config     = local.client_config
   global_settings   = local.global_settings
+  name              = each.value.name
   settings          = each.value
   resource_groups   = local.combined_objects_resource_groups
   base_tags         = local.global_settings.inherit_tags
