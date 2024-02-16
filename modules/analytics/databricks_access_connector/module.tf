@@ -1,6 +1,6 @@
 resource "azurerm_databricks_access_connector" "databricks_access_connector" {
   name                = var.name
-  resource_group_name = var.resource_group
+  resource_group_name = local.resource_group.name
   location            = var.location
   tags                = local.tags
 
