@@ -5,11 +5,10 @@ resource "azurerm_databricks_access_connector" "databricks_access_connector" {
   tags                = local.tags
 
   dynamic "identity" {
-    for_each = try(var.identity, null) == null ? [] : [1]
-
+    for_each = can(var.settings.identity) ? [var.settings.identity] : []
     content {
-      type         = var.identity.type
-      identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
+      type         = identity.value.type
+      identity_ids = concat(local.managed_identities, try(identity.value.identity_ids, []))
     }
   }
   
