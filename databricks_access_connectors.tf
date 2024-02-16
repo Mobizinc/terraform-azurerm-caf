@@ -9,6 +9,7 @@ module "databricks_access_connectors" {
   base_tags         = local.global_settings.inherit_tags
   resource_group    = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key).name]
   location          = try(local.global_settings.regions[each.value.region], null)
+  identity                            = try(each.value.identity, null) 
 }
 
 output "databricks_access_connectors" {
