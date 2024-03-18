@@ -10,3 +10,7 @@ variable "resource_group_name" {
 variable "settings" {
   description = "Configuration object for the monitor action group"
 }
+
+variable "client_config" {
+  description = "Client configuration object"
+}
