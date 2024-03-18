@@ -49,6 +49,7 @@ locals {
     dns_zones                                      = try(local.combined_objects_dns_zones, null)
     ddos_services                                  = try(local.combined_objects_ddos_services, null)
     event_hub_namespaces                           = try(local.combined_objects_event_hub_namespaces, null)
+    event_hubs                                     = try(local.combined_objects_event_hubs, null)
     express_route_circuit_authorizations           = try(local.combined_objects_express_route_circuit_authorizations, null)
     express_route_circuit_peerings                 = try(local.combined_objects_express_route_circuit_peerings, null)
     express_route_circuits                         = try(local.combined_objects_express_route_circuits, null)
