@@ -101,6 +101,10 @@ module "event_hubs" {
 
 }
 
+output "event_hubs" {
+  value = module.event_hubs
+}
+
 module "event_hub_auth_rules" {
   source   = "./modules/event_hubs/hubs/auth_rules"
   for_each = try(var.event_hub_auth_rules, {})
