@@ -11,6 +11,10 @@ variable "settings" {
   description = "Configuration object for the monitor action group"
 }
 
+variable "remote_objects" {
+  description = "Handle remote combined objects"
+}
+
 variable "client_config" {
   description = "Client configuration object"
 }
