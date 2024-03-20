@@ -350,11 +350,7 @@ resource "azurerm_application_gateway" "agw" {
       }
     }
   }
-lifecycle {
-    ignore_changes = [
-      trusted_root_certificate
-    ]
-  }
+
 }
 
 output "certificate_keys" {
