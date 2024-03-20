@@ -74,7 +74,7 @@ resource "azurerm_application_gateway" "agw" {
       }
     }
   }
-/*
+
   dynamic "ssl_policy" {
     for_each = try(var.settings.ssl_policy, null) == null ? [] : [1]
     content {
@@ -85,7 +85,7 @@ resource "azurerm_application_gateway" "agw" {
       min_protocol_version = try(var.settings.ssl_policy.min_protocol_version, null)
     }
   }
-*/
+
   dynamic "autoscale_configuration" {
     for_each = try(var.settings.capacity.autoscale, null) == null ? [] : [1]
 
