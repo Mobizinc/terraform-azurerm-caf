@@ -55,6 +55,26 @@ resource "azurerm_application_gateway" "agw" {
     subnet_id = local.ip_configuration["gateway"].subnet_id
   }
 
+  dynamic "ssl_profile" {
+    for_each = try(var.settings.ssl_profiles, {})
+    content {
+      name                             = ssl_profile.value.name
+      trusted_client_certificate_names = try(ssl_profile.trusted_client_certificate_names, null)
+      verify_client_cert_issuer_dn     = try(ssl_profile.verify_client_cert_issuer_dn, null)
+
+      dynamic "ssl_policy" {
+        for_each = try(ssl_profile.value.ssl_policy, null) == null ? [] : [ssl_profile.value.ssl_policy]
+        content {
+          disabled_protocols   = try(ssl_policy.value.disabled_protocols, null)
+          policy_type          = try(ssl_policy.value.policy_type, null)
+          policy_name          = try(ssl_policy.value.policy_name, null)
+          cipher_suites        = try(ssl_policy.value.cipher_suites, null)
+          min_protocol_version = try(ssl_policy.value.min_protocol_version, null)
+        }
+      }
+    }
+  }
+/*
   dynamic "ssl_policy" {
     for_each = try(var.settings.ssl_policy, null) == null ? [] : [1]
     content {
@@ -65,7 +85,7 @@ resource "azurerm_application_gateway" "agw" {
       min_protocol_version = try(var.settings.ssl_policy.min_protocol_version, null)
     }
   }
-
+*/
   dynamic "autoscale_configuration" {
     for_each = try(var.settings.capacity.autoscale, null) == null ? [] : [1]
 
