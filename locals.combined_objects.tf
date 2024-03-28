@@ -57,6 +57,7 @@ locals {
   combined_objects_express_route_circuit_authorizations           = merge(tomap({ (local.client_config.landingzone_key) = module.express_route_circuit_authorizations }), try(var.remote_objects.express_route_circuit_authorizations, {}))
   combined_objects_express_route_circuit_peerings                 = merge(tomap({ (local.client_config.landingzone_key) = module.express_route_circuit_peerings }), try(var.remote_objects.express_route_circuit_peerings, {}))
   combined_objects_express_route_circuits                         = merge(tomap({ (local.client_config.landingzone_key) = module.express_route_circuits }), try(var.remote_objects.express_route_circuits, {}))
+  combined_objects_function_apps                                  = merge(tomap({ (local.client_config.landingzone_key) = module.function_apps }), try(var.remote_objects.function_apps, {}))
   combined_objects_front_door                                     = merge(tomap({ (local.client_config.landingzone_key) = module.front_doors }), try(var.remote_objects.front_doors, {}))
   combined_objects_front_door_waf_policies                        = merge(tomap({ (local.client_config.landingzone_key) = module.front_door_waf_policies }), try(var.remote_objects.front_door_waf_policies, {}))
   combined_objects_image_definitions                              = merge(tomap({ (local.client_config.landingzone_key) = module.image_definitions }), try(var.remote_objects.image_definitions, {}))
