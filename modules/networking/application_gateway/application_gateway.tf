@@ -263,6 +263,15 @@ resource "azurerm_application_gateway" "agw" {
     }
   }
 
+  dynamic "ssl_certificate" {
+    for_each = {
+      for key, value in try(var.settings.ssl_certificate, {}) : key => value
+    }
+    content {
+      name = ssl_certificate.value.name
+      key_vault_secret_id = try(ssl_certificate.value.key_vault_secret_id , null)
+    }
+  }
 
   # ssl_policy {
 
