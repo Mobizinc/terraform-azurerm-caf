@@ -301,6 +301,15 @@ resource "azurerm_application_gateway" "agw" {
     }
   }
 
+
+  dynamic "ssl_certificate" {
+    for_each = try(var.settings.ssl_certificate, {})
+    content {
+      name                = ssl_certificate.value.name
+      key_vault_secret_id = ssl_certificate.value.secret_id
+    }
+  }
+
   dynamic "waf_configuration" {
     for_each = try(var.settings.waf_configuration, null) == null ? [] : [1]
     content {
