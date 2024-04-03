@@ -1,6 +1,6 @@
 resource "azurecaf_name" "static_site" {
   name          = var.name
-  resource_type = "azurerm_static_site"
+  resource_type = "azurerm_app_service"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
