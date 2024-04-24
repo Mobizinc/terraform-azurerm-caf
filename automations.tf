@@ -14,6 +14,8 @@ module "automations" {
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
   remote_objects = {
     managed_identities = local.combined_objects_managed_identities
+    private_dns        = local.combined_objects_private_dns
+    vnets              = local.combined_objects_networking
   }
 }
 
