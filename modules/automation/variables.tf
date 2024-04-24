@@ -33,3 +33,4 @@ variable "remote_objects" {
   default     = {}
 }
 variable "client_config" {}
+variable "private_endpoints" {}
