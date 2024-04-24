@@ -16,6 +16,7 @@ resource "azurerm_automation_account" "auto_account" {
   tags                = try(local.tags, {})
 
   sku_name = "Basic" #only Basic is supported at this time.
+  public_network_access_enabled = try(var.settings.public_network_access_enabled, "true")
 
   dynamic "identity" {
     for_each = try(var.settings.identity, null) == null ? [] : [1]
