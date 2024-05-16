@@ -14,7 +14,7 @@ resource "azapi_resource" "postgres_flexible_server" {
   location = var.location
   parent_id = var.resource_group_name
   tags = merge(local.tags, lookup(var.settings, "tags", {}))
-
+  schema_validation_enabled = false
   body = jsonencode({
     properties = {
       administratorLogin = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_username, "pgadmin") : null
