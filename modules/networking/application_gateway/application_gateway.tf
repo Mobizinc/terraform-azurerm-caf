@@ -13,12 +13,8 @@ data "azurerm_key_vault_certificate" "trustedcas" {
     for key, value in try(var.settings.trusted_root_certificate, {}) : key => value
     if try(value.keyvault_key, null) != null
   }
-  name = each.value.name
-  key_vault_id = try(
-    var.keyvaults[var.client_config.landingzone_key][each.value.keyvault_key].id,
-    var.keyvaults[each.value.lz_key][each.value.keyvault_key].id,
-    each.value.keyvault_id
-  )
+  name         = each.value.name
+  key_vault_id = can(each.value.keyvault_id) ? each.value.keyvault_id : var.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.keyvault_key].id
 }
 
 data "azurerm_key_vault_certificate" "manual_certs" {
