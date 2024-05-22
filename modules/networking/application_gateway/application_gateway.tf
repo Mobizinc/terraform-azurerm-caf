@@ -224,7 +224,7 @@ resource "azurerm_application_gateway" "agw" {
     }
     content {
       name = trusted_root_certificate.value.name
-      key_vault_secret_id = var.keyvault_certificates[trusted_root_certificate.value].secret_id
+      key_vault_secret_id = try(trusted_root_certificate.value.key_vault_secret_id, null) == null ? null : trusted_root_certificate.value.key_vault_secret_id
       # data = try(trusted_root_certificate.value.data, data.azurerm_key_vault_certificate.trustedcas[trusted_root_certificate.key].certificate_data_base64)
     }
   }
