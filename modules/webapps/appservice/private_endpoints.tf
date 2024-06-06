@@ -11,6 +11,6 @@ module "private_endpoint" {
   settings            = each.value
   global_settings     = var.global_settings
   base_tags           = var.base_tags
-  private_dns         = var.private_dns
+  private_dns         = try(var.private_dns ,each.value.private_dns.ids)
   client_config       = var.client_config
 }

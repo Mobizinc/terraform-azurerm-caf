@@ -99,6 +99,7 @@ locals {
     signalr_services                               = try(local.combined_objects_signalr_services, null)
     storage_accounts                               = try(local.combined_objects_storage_accounts, null)
     storage_containers                             = try(local.combined_objects_storage_containers, null)
+    static_webapps                                 = try(local.combined_objects_static_webapps, null)
     synapse_workspaces                             = try(local.combined_objects_synapse_workspaces, null)
     virtual_hub_connections                        = try(local.combined_objects_virtual_hub_connections, null)
     virtual_hub_route_tables                       = try(local.combined_objects_virtual_hub_route_tables, null)
