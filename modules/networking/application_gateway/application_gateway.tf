@@ -55,6 +55,26 @@ resource "azurerm_application_gateway" "agw" {
     subnet_id = local.ip_configuration["gateway"].subnet_id
   }
 
+  dynamic "ssl_profile" {
+    for_each = try(var.settings.ssl_profiles, {})
+    content {
+      name                             = ssl_profile.value.name
+      trusted_client_certificate_names = try(ssl_profile.trusted_client_certificate_names, null)
+      verify_client_cert_issuer_dn     = try(ssl_profile.verify_client_cert_issuer_dn, null)
+
+      dynamic "ssl_policy" {
+        for_each = try(ssl_profile.value.ssl_policy, null) == null ? [] : [ssl_profile.value.ssl_policy]
+        content {
+          disabled_protocols   = try(ssl_policy.value.disabled_protocols, null)
+          policy_type          = try(ssl_policy.value.policy_type, null)
+          policy_name          = try(ssl_policy.value.policy_name, null)
+          cipher_suites        = try(ssl_policy.value.cipher_suites, null)
+          min_protocol_version = try(ssl_policy.value.min_protocol_version, null)
+        }
+      }
+    }
+  }
+
   dynamic "ssl_policy" {
     for_each = try(var.settings.ssl_policy, null) == null ? [] : [1]
     content {
@@ -107,7 +127,13 @@ resource "azurerm_application_gateway" "agw" {
       host_name                      = try(trimsuffix((try(http_listener.value.host_names, null) == null ? try(var.dns_zones[try(http_listener.value.dns_zone.lz_key, var.client_config.landingzone_key)][http_listener.value.dns_zone.key].records[0][http_listener.value.dns_zone.record_type][http_listener.value.dns_zone.record_key].fqdn, http_listener.value.host_name) : null), "."), null)
       host_names                     = try(http_listener.value.host_name, null) == null ? try(http_listener.value.host_names, null) : null
       require_sni                    = try(http_listener.value.require_sni, false)
-      ssl_certificate_name           = try(try(try(http_listener.value.keyvault_certificate_request.key, http_listener.value.keyvault_certificate.certificate_key), data.azurerm_key_vault_certificate.manual_certs[http_listener.key].name), null)
+      #ssl_certificate_name          = try(try(try(http_listener.value.keyvault_certificate.ssl_certificate_name, http_listener.value.keyvault_certificate.certificate_key), data.azurerm_key_vault_certificate.manual_certs[http_listener.key].name), null)
+      ssl_certificate_name = try(coalesce(
+        try(http_listener.value.keyvault_certificate.ssl_certificate_name , null),
+        try(http_listener.value.keyvault_certificate_request.key , null),
+        try(http_listener.value.keyvault_certificate.certificate_key , null),
+        try( data.azurerm_key_vault_certificate.manual_certs[http_listener.key].name, null)
+      ), null)
       firewall_policy_id             = try(var.application_gateway_waf_policies[try(http_listener.value.waf_policy.lz_key, var.client_config.landingzone_key)][http_listener.value.waf_policy.key].id, null)
     }
   }
@@ -116,14 +142,24 @@ resource "azurerm_application_gateway" "agw" {
     for_each = local.listeners
 
     content {
-      name                       = "${try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.prefix, "")}${request_routing_rule.value.name}"
-      rule_type                  = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.rule_type, "Basic")
-      http_listener_name         = request_routing_rule.value.name
-      backend_http_settings_name = local.backend_http_settings[request_routing_rule.value.app_key].name
-      backend_address_pool_name  = local.backend_pools[request_routing_rule.value.app_key].name
-      url_path_map_name = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_name,
-      try(local.url_path_maps[format("%s-%s", request_routing_rule.value.app_key, local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_key)].name, null))
+      name               = "${try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.prefix, "")}${request_routing_rule.value.name}"
+      rule_type          = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.rule_type, "Basic")
+      http_listener_name = request_routing_rule.value.name
+
+      # backend_http_settings_name and backend_address_pool_name are mutually exclusive with redirect_configuration_name
+      backend_http_settings_name  = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.redirect_configuration_name, null) == null ? local.backend_http_settings[request_routing_rule.value.app_key].name : null
+      backend_address_pool_name   = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.redirect_configuration_name, null) == null ? local.backend_pools[request_routing_rule.value.app_key].name : null
+      redirect_configuration_name = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.redirect_configuration_name, null)
+
+      url_path_map_name = try(
+        local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_name,
+        try(
+          local.url_path_maps[format("%s-%s", request_routing_rule.value.app_key, local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_key)].name,
+          null
+        )
+      )
       rewrite_rule_set_name = try(local.rewrite_rule_sets[format("%s-%s", request_routing_rule.value.app_key, local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.rewrite_rule_set_key)].name, null)
+      priority              = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.priority, null)
     }
   }
 
@@ -228,10 +264,20 @@ resource "azurerm_application_gateway" "agw" {
     }
     content {
       name = trusted_root_certificate.value.name
-      data = try(trusted_root_certificate.value.data, data.azurerm_key_vault_certificate.trustedcas[trusted_root_certificate.key].certificate_data_base64)
+      data = try(trusted_root_certificate.value.data, null)
+      key_vault_secret_id = try(trusted_root_certificate.value.key_vault_secret_id , null)
     }
   }
 
+  dynamic "ssl_certificate" {
+    for_each = {
+      for key, value in try(var.settings.ssl_certificate, {}) : key => value
+    }
+    content {
+      name = ssl_certificate.value.name
+      key_vault_secret_id = try(ssl_certificate.value.key_vault_secret_id , null)
+    }
+  }
 
   # ssl_policy {
 
@@ -270,6 +316,7 @@ resource "azurerm_application_gateway" "agw" {
     }
   }
 
+
   dynamic "waf_configuration" {
     for_each = try(var.settings.waf_configuration, null) == null ? [] : [1]
     content {
@@ -301,7 +348,18 @@ resource "azurerm_application_gateway" "agw" {
   # custom_error_configuration {}
 
   # redirect_configuration {}
+  dynamic "redirect_configuration" {
+    for_each = try(var.settings.redirect_configurations, {})
 
+    content {
+      name                 = redirect_configuration.value.name
+      redirect_type        = redirect_configuration.value.redirect_type
+      target_listener_name = try(redirect_configuration.value.target_listener_name, null)
+      target_url           = try(redirect_configuration.value.target_url, null)
+      include_path         = try(redirect_configuration.value.include_path, false)
+      include_query_string = try(redirect_configuration.value.include_query_string, false)
+    }
+  }
   # autoscale_configuration {}
 
   dynamic "rewrite_rule_set" {
@@ -349,6 +407,7 @@ resource "azurerm_application_gateway" "agw" {
       }
     }
   }
+
 }
 
 output "certificate_keys" {
