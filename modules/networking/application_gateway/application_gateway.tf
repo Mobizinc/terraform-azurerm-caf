@@ -218,6 +218,7 @@ resource "azurerm_application_gateway" "agw" {
       port                                = backend_http_settings.value.port
       protocol                            = backend_http_settings.value.protocol
       request_timeout                     = try(backend_http_settings.value.request_timeout, 30)
+      path                                = try(backend_http_settings.value.path, null)
       pick_host_name_from_backend_address = try(backend_http_settings.value.pick_host_name_from_backend_address, false)
       trusted_root_certificate_names      = try(backend_http_settings.value.trusted_root_certificate_names, null)
       host_name                           = try(backend_http_settings.value.host_name, null)
